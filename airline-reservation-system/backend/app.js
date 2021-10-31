@@ -6,13 +6,12 @@ const cors = require('cors');
 require('dotenv').config();
 
 //App variables
+var bodyParser = require('body-parser');
+
 const app = express();
+app.use(cors());
 const port = process.env.PORT || "8000";
-
-app.use(router);
-app.use(cors);
 app.use(express.json());
-
 // CONNECTING WITH THE DB!!
 
 const MongoURI = process.env.MONGO_URI;

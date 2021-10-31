@@ -12,7 +12,7 @@ const port = process.env.PORT || "8000";
 
 const MongoURI = process.env.MONGO_URI;
 mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(result =>console.log("MongoDB is now connected") )
+  .then(result =>console.log("MongoDB is now connected ya negm") )
   .catch(err => console.log(err));
 
 app.use(router);
