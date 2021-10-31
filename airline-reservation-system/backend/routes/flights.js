@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Flight = require('../models/flight');
+router.use(express.urlencoded({ extended: true }));
 
 /* GET home page. */
 router.get('/', (req, res) => {
