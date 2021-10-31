@@ -1,7 +1,32 @@
 import React, { Component, useState, useEffect } from 'react';
 import axios from 'axios';
+//import NodeFetch from 'node-fetch' ;
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+
+
+const handleSubmit = (event) => {
+    event.preventDefault()
+    saveGames() // Save games when form is submitted
+  }
+  const saveGames = () => {
+    const data = { username: 'test123' }; 
+     fetch('http://localhost:8000/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+       // 'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: JSON.stringify(data),
+    }) .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+     
+  }
 
 export default class CreateFlight extends Component {
     constructor(props) {
@@ -85,127 +110,159 @@ export default class CreateFlight extends Component {
         })
     }
 
+    // onSubmit(e) {
+    //     e.preventDefault();
+
+    //     const flight = {
+    //         FlightNo: this.state.FlightNo,
+    //         DepartureDate: this.state.DepartureDate,
+    //         ArrivalDate: this.state.ArrivalDate,
+    //         DepartureTime: this.state.DepartureTime,
+    //         ArrivalTime: this.state.ArrivalTime,
+    //         EconomySeats: this.state.EconomySeats,
+    //         BusinessClassSeats: this.state.BusinessClassSeats,
+    //         DepartureAirport: this.state.DepartureAirport,
+    //         ArrivalAirport: this.state.ArrivalAirport
+    //     }
+    //     console.log(flight);
+    //     console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaa");
+    //     axios.post('http://localhost:8000/create', flight)
+    //         .then(res => console.log(res.data));
+
+    //     window.location = '/';
+    // }
+
     onSubmit(e) {
+        
         e.preventDefault();
 
         const flight = {
-            FlightNo: this.state.FlightNo,
-            DepartureDate: this.state.DepartureDate,
-            ArrivalDate: this.state.ArrivalDate,
-            DepartureTime: this.state.DepartureTime,
-            ArrivalTime: this.state.ArrivalTime,
-            EconomySeats: this.state.EconomySeats,
-            BusinessClassSeats: this.state.BusinessClassSeats,
-            DepartureAirport: this.state.DepartureAirport,
-            ArrivalAirport: this.state.ArrivalAirport
+            FlightNo: 23,
+            DepartureDate: new Date(2018, 11, 24),
+            ArrivalDate: new Date(2018, 11, 23),
+            DepartureTime: "alo",
+            ArrivalTime: "alo",
+            EconomySeats: 3,
+            BusinessClassSeats: 3,
+            DepartureAirport: "alo",
+            ArrivalAirport: "alo"
         }
-        axios.post('http://localhost:8000/flights/create', flight)
+        console.log(flight);
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaa");
+        axios.post('http://localhost:8000/create', flight)
             .then(res => console.log(res.data));
 
-        window.location = '/';
+       // window.location = '/';
     }
+
 
     render() {
+       
         return (
-            <div>
-                <h3>Create New Flight</h3>
-                <form onSubmit={this.onSubmit} className="row g-3">
+           <button onClick={handleSubmit}>ya3adra</button> 
 
-                    <div className="form-group">
-                        <label>Flight Number: </label>
-                        <input type="number"
-                            required
-                            className="form-control"
-                            value={this.state.FlightNo}
-                            onChange={this.onChangeFlightNo}
-                        />
-                    </div>
+           
+            // <div>
+            //     <button>
+            //     <h3>Create New Flight</h3>
+            //     <form onSubmit={handleSubmit} className="row g-3">
 
-                    <div className="form-group">
-                        <label>Departure Date: </label>
-                        <div>
-                            <DatePicker
-                                selected={this.state.DepartureDate}
-                                onChange={this.onChangeDepartureDate}
-                            />
-                        </div>
-                    </div>
+            //         <div className="form-group">
+            //             <label>Flight Number: </label>
+            //             <input type="number"
+            //                 required
+            //                 className="form-control"
+            //                 value={this.state.FlightNo}
+            //                 onChange={this.onChangeFlightNo}
+            //             />
+            //         </div>
 
-                    <div className="form-group">
-                        <label>Arrival Date: </label>
-                        <div>
-                            <DatePicker
-                                selected={this.state.ArrivalDate}
-                                onChange={this.onChangeArrivalDate}
-                            />
-                        </div>
-                    </div>
+            //         <div className="form-group">
+            //             <label>Departure Date: </label>
+            //             <div>
+            //                 <DatePicker
+            //                     selected={this.state.DepartureDate}
+            //                     onChange={this.onChangeDepartureDate}
+            //                 />
+            //             </div>
+            //         </div>
 
-                    <div className="form-group" className="col-md-6">
-                        <label>Departure Time: </label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={this.state.DepartureTime}
-                            onChange={this.onChangeDepartureTime}
-                        />
-                    </div>
+            //         <div className="form-group">
+            //             <label>Arrival Date: </label>
+            //             <div>
+            //                 <DatePicker
+            //                     selected={this.state.ArrivalDate}
+            //                     onChange={this.onChangeArrivalDate}
+            //                 />
+            //             </div>
+            //         </div>
 
-                    <div className="form-group" className="col-md-6">
-                        <label>Arrival Time: </label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={this.state.ArrivalTime}
-                            onChange={this.onChangeArrivalTime}
-                        />
-                    </div>
+            //         <div className="form-group" className="col-md-6">
+            //             <label>Departure Time: </label>
+            //             <input
+            //                 type="text"
+            //                 className="form-control"
+            //                 value={this.state.DepartureTime}
+            //                 onChange={this.onChangeDepartureTime}
+            //             />
+            //         </div>
 
-                    <div className="form-group">
-                        <label>Economy Seats: </label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            value={this.state.EconomySeats}
-                            onChange={this.onChangeEconomySeats}
-                        />
-                    </div>
+            //         <div className="form-group" className="col-md-6">
+            //             <label>Arrival Time: </label>
+            //             <input
+            //                 type="text"
+            //                 className="form-control"
+            //                 value={this.state.ArrivalTime}
+            //                 onChange={this.onChangeArrivalTime}
+            //             />
+            //         </div>
 
-                    <div className="form-group">
-                        <label>Business Class Seats: </label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            value={this.state.BusinessClassSeats}
-                            onChange={this.onChangeBusinessClassSeats}
-                        />
-                    </div>
+            //         <div className="form-group">
+            //             <label>Economy Seats: </label>
+            //             <input
+            //                 type="number"
+            //                 className="form-control"
+            //                 value={this.state.EconomySeats}
+            //                 onChange={this.onChangeEconomySeats}
+            //             />
+            //         </div>
 
-                    <div className="form-group" className="col-md-6">
-                        <label>Departure Airport: </label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={this.state.DepartureAirport}
-                            onChange={this.onChangeDepartureAirport}
-                        />
-                    </div>
+            //         <div className="form-group">
+            //             <label>Business Class Seats: </label>
+            //             <input
+            //                 type="number"
+            //                 className="form-control"
+            //                 value={this.state.BusinessClassSeats}
+            //                 onChange={this.onChangeBusinessClassSeats}
+            //             />
+            //         </div>
 
-                    <div className="form-group" className="col-md-6">
-                        <label>Arrival Airport: </label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={this.state.ArrivalAirport}
-                            onChange={this.onChangeArrivalAirport}
-                        />
-                    </div>
-                    <br />
-                    <div className="form-group">
-                        <input type="submit" value="Create Flight" className="btn btn-dark" />
-                    </div>
-                </form>
-            </div>
+            //         <div className="form-group" className="col-md-6">
+            //             <label>Departure Airport: </label>
+            //             <input
+            //                 type="text"
+            //                 className="form-control"
+            //                 value={this.state.DepartureAirport}
+            //                 onChange={this.onChangeDepartureAirport}
+            //             />
+            //         </div>
+
+            //         <div className="form-group" className="col-md-6">
+            //             <label>Arrival Airport: </label>
+            //             <input
+            //                 type="text"
+            //                 className="form-control"
+            //                 value={this.state.ArrivalAirport}
+            //                 onChange={this.onChangeArrivalAirport}
+            //             />
+            //         </div>
+            //         <br />
+            //         <div className="form-group">
+            //             <input type="submit" value="Create Flight" className="btn btn-dark" />
+            //         </div>
+            //     </form>
+            // </div>
         )
     }
+    
 }
