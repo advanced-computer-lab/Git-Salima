@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const router = require('./routes/flights');
 const cors = require('cors');
 require('dotenv').config();
-const cors = require('cors');
+
 //App variables
 var bodyParser = require('body-parser');
 

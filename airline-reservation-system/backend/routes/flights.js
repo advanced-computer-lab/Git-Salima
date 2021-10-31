@@ -9,26 +9,26 @@ router.get('/', (req, res) => {
 });
 
 router.post('/create', async (req, res) => {
-    // const FlightNo = Number(req.body.FlightNo);
-    // const DepartureDate = Date.parse(req.body.DepartureDate);
-    // const ArrivalDate = Date.parse(req.body.ArrivalDate);
-    // const DepartureTime = req.body.DepartureTime;
-    // const ArrivalTime = req.body.ArrivalTime;
-    // const EconomySeats = Number(req.body.EconomySeats);
-    // const BusinessClassSeats = Number(req.body.BusinessClassSeats);
-    // const DepartureAirport = req.body.DepartureAirport;
-    // const ArrivalAirport = req.body.ArrivalAirport;
+    const FlightNo = Number(req.body.FlightNo);
+    const DepartureDate = Date.parse(req.body.DepartureDate);
+    const ArrivalDate = Date.parse(req.body.ArrivalDate);
+    const DepartureTime = req.body.DepartureTime;
+    const ArrivalTime = req.body.ArrivalTime;
+    const EconomySeats = Number(req.body.EconomySeats);
+    const BusinessClassSeats = Number(req.body.BusinessClassSeats);
+    const DepartureAirport = req.body.DepartureAirport;
+    const ArrivalAirport = req.body.ArrivalAirport;
     console.dir(req.body);
-    console.log(req.body.username);
-    const FlightNo = 999
-    const DepartureDate = new Date(2018, 11, 24);
-    const ArrivalDate = new Date(2018, 11, 22);
-    const DepartureTime =req.body.username;
-    const ArrivalTime = req.body.username;
-    const EconomySeats = 12;
-    const BusinessClassSeats = 122
-    const DepartureAirport = "cai2";
-    const ArrivalAirport = "cafeaulait2";
+   // console.log(req.body.username);
+    // const FlightNo = 999
+    // const DepartureDate = new Date(2018, 11, 24);
+    // const ArrivalDate = new Date(2018, 11, 22);
+    // const DepartureTime =req.body.username;
+    // const ArrivalTime = req.body.username;
+    // const EconomySeats = 12;
+    // const BusinessClassSeats = 122
+    // const DepartureAirport = "cai2";
+    // const ArrivalAirport = "cafeaulait2";
 
     const newFlight = new Flight({
         FlightNo,
@@ -44,7 +44,7 @@ router.post('/create', async (req, res) => {
     //console.log(newFlight)
     const flightTest = await newFlight.save();
     res.send('gamed fash5')
-    console.log(flightTest);
+   // console.log(flightTest);
 
 
 });
