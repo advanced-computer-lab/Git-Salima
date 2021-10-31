@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Flight = require('../models/flight');
-router.use(express.urlencoded({ extended: true }));
+// router.use(express.urlencoded({ extended: true }));
 
 /* GET home page. */
 router.get('/', (req, res) => {
@@ -15,7 +15,7 @@ router.post('/create', async (req, res) => {
     const DepartureTime = req.body.DepartureTime;
     const ArrivalTime = req.body.ArrivalTime;
     const EconomySeats = req.body.EconomySeats;
-    const BusinessClassSeats = eq.body.BusinessClassSeats;
+    const BusinessClassSeats = req.body.BusinessClassSeats;
     const DepartureAirport = req.body.DepartureAirport;
     const ArrivalAirport = req.body.ArrivalAirport;
 
@@ -30,8 +30,15 @@ router.post('/create', async (req, res) => {
         DepartureAirport,
         ArrivalAirport
     });
-    const flightTest = await newFlight.save();
-    console.log(flightTest);
+    try {
+        const flightTest = await newFlight.save();
+        console.log(flightTest);
+    }
+    catch (e) {
+        console.log(error);
+    }
+
+
 
 
 });
