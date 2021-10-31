@@ -19,6 +19,7 @@ router.post('/create', async (req, res) => {
     const DepartureAirport = req.body.DepartureAirport;
     const ArrivalAirport = req.body.ArrivalAirport;
     console.dir(req.body);
+<<<<<<< HEAD
     // console.log(req.body.username);
     // const FlightNo = 999
     // const DepartureDate = new Date(2018, 11, 24);
@@ -29,6 +30,9 @@ router.post('/create', async (req, res) => {
     // const BusinessClassSeats = 122
     // const DepartureAirport = "cai2";
     // const ArrivalAirport = "cafeaulait2";
+=======
+ 
+>>>>>>> 8318446face7c1ab52addae9baee98a1d1bc35fd
 
     const newFlight = new Flight({
         FlightNo,
@@ -41,10 +45,15 @@ router.post('/create', async (req, res) => {
         DepartureAirport,
         ArrivalAirport
     });
-    //console.log(newFlight)
+    
     const flightTest = await newFlight.save();
+<<<<<<< HEAD
     res.send('gamed fash5')
     // console.log(flightTest);
+=======
+    
+  
+>>>>>>> 8318446face7c1ab52addae9baee98a1d1bc35fd
 
 
 });
@@ -56,23 +65,7 @@ router.get('/List', async (req, res) => {
     res.send(flights);
 });
 
-// router.post('/createTrial', async (req, res) => {
 
-//     const newFlight = new Flight({
-//         FlightNo: 890,
-//         DepartureDate: new Date(),
-//         ArrivalDate: new Date(),
-//         DepartureTime: '13:20',
-//         ArrivalTime: '18:20',
-//         EconomySeats: 80,
-//         BusinessClassSeats: 15,
-//         DepartureAirport: "CAI",
-//         ArrivalAirport: "JFL=K"
-//     });
-
-//     await newFlight.save();
-
-// });
 
 
 module.exports = router;
