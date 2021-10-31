@@ -2,9 +2,8 @@
 const express = require("express");
 const mongoose = require('mongoose');
 const router = require('./routes/flights');
-const cors = require('cors');
 require('dotenv').config();
-
+const cors = require('cors');
 //App variables
 var bodyParser = require('body-parser');
 
@@ -20,8 +19,6 @@ mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .catch(err => console.log(err));
 
 app.use(router);
-app.use(cors);
-app.use(express.urlencoded({ extended: true }));
 
 // Starting server
 app.listen(port, () => {

@@ -19,16 +19,7 @@ router.post('/create', async (req, res) => {
     const DepartureAirport = req.body.DepartureAirport;
     const ArrivalAirport = req.body.ArrivalAirport;
     console.dir(req.body);
-   // console.log(req.body.username);
-    // const FlightNo = 999
-    // const DepartureDate = new Date(2018, 11, 24);
-    // const ArrivalDate = new Date(2018, 11, 22);
-    // const DepartureTime =req.body.username;
-    // const ArrivalTime = req.body.username;
-    // const EconomySeats = 12;
-    // const BusinessClassSeats = 122
-    // const DepartureAirport = "cai2";
-    // const ArrivalAirport = "cafeaulait2";
+ 
 
     const newFlight = new Flight({
         FlightNo,
@@ -41,10 +32,10 @@ router.post('/create', async (req, res) => {
         DepartureAirport,
         ArrivalAirport
     });
-    //console.log(newFlight)
+    
     const flightTest = await newFlight.save();
-    res.send('gamed fash5')
-   // console.log(flightTest);
+    
+  
 
 
 });
@@ -56,23 +47,7 @@ router.get('/List', async (req, res) => {
     res.send(flights);
 });
 
-// router.post('/createTrial', async (req, res) => {
 
-//     const newFlight = new Flight({
-//         FlightNo: 890,
-//         DepartureDate: new Date(),
-//         ArrivalDate: new Date(),
-//         DepartureTime: '13:20',
-//         ArrivalTime: '18:20',
-//         EconomySeats: 80,
-//         BusinessClassSeats: 15,
-//         DepartureAirport: "CAI",
-//         ArrivalAirport: "JFL=K"
-//     });
-
-//     await newFlight.save();
-
-// });
 
 
 module.exports = router;
