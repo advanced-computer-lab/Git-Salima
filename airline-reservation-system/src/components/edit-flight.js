@@ -1,21 +1,33 @@
 import React, { useState } from 'react';
 
-const Flight = () => {
+let flight = {
+    FlightNo: 203,
+    DepartureDate: '2021-11-12',
+    ArrivalDate: '2021-11-10',
+    DepartureTime: '15:30',
+    ArrivalTime: '20:30',
+    EconomySeats: 100,
+    BusinessClassSeats: 12,
+    DepartureAirport: 'CAI',
+    ArrivalAirport: 'MILANO',
+}
 
-    const [FlightNo, setFlightNo] = useState("");
-    const [DepartureDate, setDepartureDate] = useState("");
-    const [ArrivalDate, setArrivalDate] = useState("");
-    const [DepartureTime, setDepartureTime] = useState("");
-    const [ArrivalTime, setArrivalTime] = useState("");
-    const [EconomySeats, setEconomySeats] = useState("");
-    const [BusinessClassSeats, setBusinessClassSeats] = useState("");
-    const [DepartureAirport, setDepartureAirport] = useState("");
-    const [ArrivalAirport, setArrivalAirport] = useState("");
+const UpdatedFlight = () => {
+
+    const [FlightNo, setFlightNo] = useState(flight.FlightNo);
+    const [DepartureDate, setDepartureDate] = useState(flight.DepartureDate);
+    const [ArrivalDate, setArrivalDate] = useState(flight.ArrivalDate);
+    const [DepartureTime, setDepartureTime] = useState(flight.DepartureTime);
+    const [ArrivalTime, setArrivalTime] = useState(flight.ArrivalTime);
+    const [EconomySeats, setEconomySeats] = useState(flight.EconomySeats);
+    const [BusinessClassSeats, setBusinessClassSeats] = useState(flight.BusinessClassSeats);
+    const [DepartureAirport, setDepartureAirport] = useState(flight.DepartureAirport);
+    const [ArrivalAirport, setArrivalAirport] = useState(flight.ArrivalAirport);
 
     const updateFlight = (e) => {
         e.preventDefault();
 
-        const flight = {
+        flight = {
             FlightNo: FlightNo,
             DepartureDate: DepartureDate,
             ArrivalDate: ArrivalDate,
@@ -26,25 +38,26 @@ const Flight = () => {
             DepartureAirport: DepartureAirport,
             ArrivalAirport: ArrivalAirport
         }
-        fetch('http://localhost:8000/create', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: JSON.stringify(flight),
-        }).then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+        console.log(flight);
+        // fetch('http://localhost:8000/create', {
+        //     method: 'PUT',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //         // 'Content-Type': 'application/x-www-form-urlencoded'
+        //     },
+        //     body: JSON.stringify(flight),
+        // }).then(response => response.json())
+        //     .then(data => {
+        //         console.log('Success:', data);
+        //     })
+        //     .catch((error) => {
+        //         console.error('Error:', error);
+        //     });
     }
 
     return (
         <div>
-            <h3>Create Flight</h3>
+            <h3>Edit Flight</h3>
             <form onSubmit={updateFlight} className="row g-3">
 
                 <div className="form-group">
@@ -144,10 +157,10 @@ const Flight = () => {
                 </div>
                 <br />
                 <div className="form-group">
-                    <input type="submit" value="Create Flight" className="btn btn-dark" />
+                    <input type="submit" value="Update Flight" className="btn btn-dark" />
                 </div>
             </form>
         </div>
     )
 }
-export default Flight;
+export default UpdatedFlight;

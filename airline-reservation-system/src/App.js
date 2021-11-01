@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Navbar from "./components/navbar";
 import Flight from "./components/create-flight";
+import UpdatedFlight from "./components/edit-flight";
 import Card from "./components/flightcard";
 
 function App() {
@@ -15,7 +16,10 @@ function App() {
         <Route path="/create" component={Flight} />
       </div>
       <div className="container">
-        <Route path="/Tickets" component={Card} />
+        <Route path="/edit" component={UpdatedFlight} />
+      </div>
+      <div className="container">
+        <Route path="/tickets" component={Card} />
       </div>
     </Router>
   );
