@@ -4,10 +4,7 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
-
-
-
-  const Flight = () => {
+const Flight = () => {
 
     const [FlightNo, setFlightNo] = useState("");
     const [DepartureDate, setDepartureDate] = useState("");
@@ -33,21 +30,20 @@ import "react-datepicker/dist/react-datepicker.css";
             DepartureAirport: DepartureAirport,
             ArrivalAirport: ArrivalAirport
         }
-        console.log(flight);
         fetch('http://localhost:8000/create', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
-             // 'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: JSON.stringify(flight),
-          }) .then(response => response.json())
-          .then(data => {
-            console.log('Success:', data);
-          })
-          .catch((error) => {
-            console.error('Error:', error);
-          });
+        }).then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 
     return (
