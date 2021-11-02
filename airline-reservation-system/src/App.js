@@ -6,6 +6,8 @@ import Navbar from "./components/navbar";
 import Flight from "./components/create-flight";
 import UpdatedFlight from "./components/edit-flight";
 import Card from "./components/flightcard";
+import SearchForm from "./components/search-flight";
+import SearchResults from "./components/search-results";
 
 function App() {
   return (
@@ -20,6 +22,12 @@ function App() {
       </div>
       <div className="container">
         <Route path="/tickets" component={Card} />
+      </div>
+      <div className="container">
+        <Route path="/search" component={SearchForm} />
+      </div>
+      <div className="container">
+        <Route path="/search-results" component={SearchResults} />
       </div>
     </Router>
   );
