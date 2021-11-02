@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import {createFlight} from '../apis'
 const Flight = () => {
 
     const [FlightNo, setFlightNo] = useState("");
@@ -26,20 +26,7 @@ const Flight = () => {
             DepartureAirport: DepartureAirport,
             ArrivalAirport: ArrivalAirport
         }
-        fetch('http://localhost:8000/create', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: JSON.stringify(flight),
-        }).then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+        createFlight(flight);
     }
 
     return (

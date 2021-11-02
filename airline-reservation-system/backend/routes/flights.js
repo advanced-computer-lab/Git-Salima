@@ -40,8 +40,6 @@ router.get("/List", async (req, res) => {
   res.send(flights);
 });
 
-router.get("/Tickets", async (req, res) => {
-  res.send("opa");
-});
+
 
 module.exports = router;

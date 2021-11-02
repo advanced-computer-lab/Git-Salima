@@ -7,9 +7,11 @@ const cors = require('cors');
 //App variables
 
 const app = express();
-app.use(cors());
+app.use(cors({origin: true, credentials:true}));
+
 const port = process.env.PORT || "8000";
 app.use(express.json());
+
 // CONNECTING WITH THE DB!!
 
 const MongoURI = process.env.MONGO_URI;
