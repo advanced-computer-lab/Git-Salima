@@ -36,9 +36,22 @@ router.post("/create", async (req, res) => {
 
 router.get("/List", async (req, res) => {
   const flights = await Flight.find({});
-  console.log(flights);
   res.send(flights);
 });
+
+router.get("/search", async(req, res) => {
+  const flight = req.body;
+  const query = {};
+  for(const p in flight){
+    if(flight[p] != null){
+      query[`${p}`] = flight[p];
+    }
+  }
+  Flight.find(query).then((result)=>{
+    res.send(result)})
+
+});
+
 
 
 
