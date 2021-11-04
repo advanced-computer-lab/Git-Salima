@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
@@ -7,6 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
+import axios from "axios";
 
 
 const theme = createTheme({
@@ -26,9 +27,18 @@ const ColorButton = styled(Button)(({ theme }) => ({
     backgroundColor: "#81d4fa",
   },
 }));
-export default function SimplePaper(props) {
 
-  return props.flights.map((flight) => {
+const AllFlights = () => {
+  const [allFlights, setAllFlights] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:8000/list")
+      .then((res) => {
+        setAllFlights(res.data);
+      });
+  }, [])
+
+  return allFlights.map((flight) => {
     return (
       <Card sx={{ maxWidth: 1024 }}>
         <ThemeProvider theme={theme}>
@@ -45,7 +55,7 @@ export default function SimplePaper(props) {
               </Typography>
               <Stack spacing={25} direction="row">
                 <Typography variant="body2" color="text.secondary">
-                  Departure From : {flight.DepartureAirport}
+                  Departure From: {flight.DepartureAirport}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   Arrive At: {flight.ArrivalAirport}
@@ -86,3 +96,4 @@ export default function SimplePaper(props) {
     );
   });
 }
+export default AllFlights;

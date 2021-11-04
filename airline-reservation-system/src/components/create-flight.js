@@ -11,7 +11,7 @@ const Flight = () => {
   const [DepartureAirport, setDepartureAirport] = useState("");
   const [ArrivalAirport, setArrivalAirport] = useState("");
 
-  const updateFlight = (e) => {
+  const createFlight = (e) => {
     e.preventDefault();
 
     const flight = {
@@ -31,7 +31,7 @@ const Flight = () => {
   return (
     <div>
       <h3>Create Flight</h3>
-      <form onSubmit={updateFlight} className="row g-3">
+      <form onSubmit={createFlight} className="row g-3">
         <div className="form-group">
           <label>Flight Number: </label>
           <input

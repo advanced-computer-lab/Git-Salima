@@ -39,20 +39,6 @@ const UpdatedFlight = () => {
             ArrivalAirport: ArrivalAirport
         }
         console.log(flight);
-        // fetch('http://localhost:8000/create', {
-        //     method: 'PUT',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //         // 'Content-Type': 'application/x-www-form-urlencoded'
-        //     },
-        //     body: JSON.stringify(flight),
-        // }).then(response => response.json())
-        //     .then(data => {
-        //         console.log('Success:', data);
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error:', error);
-        //     });
     }
 
     return (

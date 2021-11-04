@@ -14,7 +14,6 @@ const Flight = () => {
   const [ArrivalAirport, setArrivalAirport] = useState("");
   const [showResult, setshowResult] = useState("search");
   const [results, setresults] = useState([]);
-  const test = [{ FlightNo: 8887 }, { FlightNo: 7778 }];
 
   const searchFlight = async (e) => {
     e.preventDefault();
@@ -37,7 +36,10 @@ const Flight = () => {
 
     if (resu) {
       setresults(resu);
-    } else setshowResult("error");
+    }
+    else {
+      setshowResult("error");
+    }
   };
 
   return (
@@ -145,7 +147,7 @@ const Flight = () => {
           <SimplePaper flights={results} onClick={searchFlight}></SimplePaper>
         </div>
       )}
-      {showResult === "error" && <div>da error</div>}
+      {showResult === "error" && <div>Error</div>}
     </div>
   );
 };
