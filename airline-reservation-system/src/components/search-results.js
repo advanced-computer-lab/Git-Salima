@@ -29,18 +29,18 @@ const ColorButton = styled(Button)(({ theme }) => ({
     backgroundColor: "#81d4fa",
   },
 }));
-export default function SimplePaper() {
-  const [searchResults, setsearchResults] = useState([]); // <= reserved  w m4 hytrender kol mara nefta7
+export default function SimplePaper(props) {
+  // const [searchResults, setsearchResults] = useState([]); // <= reserved  w m4 hytrender kol mara nefta7
   //   useEffect(() => {
   //     setsearchResults(searchResultsAPI());
   //   }, []);
   //WORK THIS OUT needs to be in API
-  useEffect(() => {
-    axios.get(`http://localhost:8000/List`).then((res) => {
-      setsearchResults(res.data);
-    });
-  }, []);
-  return searchResults.map((flight) => {
+  // useEffect(() => {
+  //   //axios.get(`http://localhost:8000/List`).then((res) => {
+  //   // setsearchResults(res.data);
+  //   });
+  // }, []);
+  return props.flights.map((flight) => {
     return (
       <Card sx={{ maxWidth: 1024 }}>
         <ThemeProvider theme={theme}>

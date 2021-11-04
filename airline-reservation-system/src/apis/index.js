@@ -5,13 +5,17 @@ export const createFlightAPI = (flight) => {
 };
 
 export const searchFlightsAPI = (flight) => {
-  axios.put("http://localhost:8000/search", flight).then((res) => {
-    console.log("bravo kizo");
-  });
+  //return
+  axios.get("http://localhost:8000/List", flight);
+  //  .then((res) => {
+  //   console.log("bravo kizo");
+  //   return res.data;
+  // });
 };
 
 export const searchResultsAPI = () => {
   axios.get("http://localhost:8000/List").then((res) => {
+    // return res.data;
     //search-results
     //how to pass data from this function
     //const searchFlightResults = res.data;
