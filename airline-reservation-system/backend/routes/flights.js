@@ -34,23 +34,22 @@ router.post("/create", async (req, res) => {
   await newFlight.save();
 });
 
-router.get("/List", async (req, res) => {
+router.get("/list", async (req, res) => {
   const flights = await Flight.find({});
   res.send(flights);
 });
 
-router.get("/search", async(req, res) => {
- // console.dir( req.query);
+router.get("/search", (req, res) => {
   const flight = req.query;
-
   const query = {};
-  for(const p in flight){
-    if(!(flight[p] =="")){
+  for (const p in flight) {
+    if (!(flight[p] == "")) {
       query[`${p}`] = flight[p];
     }
   }
-  Flight.find(query).then((result)=>{
-    res.send(result)})
+  Flight.find(query).then((result) => {
+    res.send(result)
+  })
 
 });
 
