@@ -5,7 +5,7 @@ const router = require("./routes/flights");
 require("dotenv").config();
 const cors = require("cors");
 //App variables
-
+const axios = require('axios').default;
 const app = express();
 app.use(cors({ origin: true, credentials: true }));
 
