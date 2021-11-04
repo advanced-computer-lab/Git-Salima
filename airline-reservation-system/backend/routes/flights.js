@@ -41,41 +41,39 @@ router.get("/list", async (req, res) => {
 
 router.get("/search", (req, res) => {
   const flight = req.query;
-<<<<<<< HEAD
-=======
-  
->>>>>>> f3e42cd4ce2675eddd3905d2cb8c10ff5bc72b3f
+
+
   const query = {};
   for (const p in flight) {
     if (!(flight[p] == "")) {
       query[`${p}`] = flight[p];
     }
   }
-<<<<<<< HEAD
   Flight.find(query).then((result) => {
     res.send(result)
   })
-=======
+
   console.log(query);
-  Flight.find(query).then((result)=>{
-    res.send(result)})
->>>>>>> f3e42cd4ce2675eddd3905d2cb8c10ff5bc72b3f
+  Flight.find(query).then((result) => {
+    res.send(result)
+  })
+});
+
+router.get("/delete", async (req, res) => {
+
+  const flight = req.query;
+
+  const query = {};
+  for (const p in flight) {
+    if (!(flight[p] == "")) {
+      query[`${p}`] = flight[p];
+    }
+  }
+  Flight.remove(query).then((result) => {
+    res.send(result)
+  })
 
 });
-router.get("/delete", async(req, res) => {
- 
-  const flight = req.query;
- 
-   const query = {};
-   for(const p in flight){
-     if(!(flight[p] =="")){
-       query[`${p}`] = flight[p];
-     }
-   }
-   Flight.remove(query).then((result)=>{
-     res.send(result)})
- 
- });
 
 
 
