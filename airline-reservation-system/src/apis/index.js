@@ -5,12 +5,10 @@ export const createFlightAPI = (flight) => {
 };
 
 export const searchFlightsAPI = (flight) => {
-  //return
-  axios.get("http://localhost:8000/List", flight);
-  //  .then((res) => {
-  //   console.log("bravo kizo");
-  //   return res.data;
-  // });
+  return axios.get("http://localhost:8000/search", flight).then((res) => {
+    console.log(res.data);
+    return res.data;
+  });
 };
 
 export const searchResultsAPI = () => {

@@ -16,7 +16,7 @@ const Flight = () => {
   const [results, setresults] = useState([]);
   const test = [{ FlightNo: 8887 }, { FlightNo: 7778 }];
 
-  const searchFlight = (e) => {
+  const searchFlight = async (e) => {
     e.preventDefault();
 
     const flight = {
@@ -32,12 +32,12 @@ const Flight = () => {
     };
 
     setshowResult("available");
-    const resu = searchFlightsAPI(flight);
+    const resu = await searchFlightsAPI(flight);
+    console.dir(resu);
 
-    // if (resu) {
-
-    //   setresults(resu);
-    // } else setshowResult("error");
+    if (resu) {
+      setresults(resu);
+    } else setshowResult("error");
   };
 
   return (
@@ -142,7 +142,7 @@ const Flight = () => {
       )}
       {showResult === "available" && (
         <div>
-          <SimplePaper flights={test} onClick={searchFlight}></SimplePaper>
+          <SimplePaper flights={results} onClick={searchFlight}></SimplePaper>
         </div>
       )}
       {showResult === "error" && <div>da error</div>}
