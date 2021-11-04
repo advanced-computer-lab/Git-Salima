@@ -4,9 +4,13 @@ export const createFlightAPI = (flight) => {
   axios.post("http://localhost:8000/create", flight).then((res) => {});
 };
 
-export const searchFlightsAPI = (flight) => {
-  return axios.get("http://localhost:8000/search", flight).then((res) => {
-    console.log(res.data);
+export const searchFlightsAPI = async (flight) => {
+  //console.log(JSON.stringify(flight));
+  const temp=JSON.stringify(flight);
+  const temp2=JSON.parse(temp);
+  return await  axios.get("http://localhost:8000/search", { params: temp2}).then((res) => {
+    
+
     return res.data;
   });
 };

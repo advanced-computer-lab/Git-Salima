@@ -40,7 +40,8 @@ router.get("/List", async (req, res) => {
 });
 
 router.get("/search", async(req, res) => {
-  const flight = req.body;
+ // console.dir( req.query);
+  const flight = req.query;
 
   const query = {};
   for(const p in flight){
