@@ -18,24 +18,28 @@ const Flights = () => {
   }, [])
 
   // const editFlight = async (flight) => {
-  //   const temp = JSON.stringify(flight);
-  //   const temp2 = JSON.parse(temp);
-  //   setChosenFlight(temp2);
-  //   setShowEditFlight("showEditForm");
+  // const temp = JSON.stringify(flight);
+  // const temp2 = JSON.parse(temp);
+  // setChosenFlight(temp2);
   // };
 
-  // const clickHandlerParent = async () => {
+  const clickHandlerParent = async (input) => {
+    const temp = JSON.stringify(input);
+    const temp2 = JSON.parse(temp);
+    setChosenFlight(temp2);
+    setShowEditFlight("showEditForm");
+  };
 
-  // };
 
 
-  return allFlights.map((flight) => {
-    return (
-      <div>
-        {showEditFlight === "allFlights" && (
+  return (
+    <div>
+      {showEditFlight === "allFlights" && (
+        allFlights.map((flight) => (
           <div>
             <FlightCard
 
+              _id={flight._id}
               FlightNo={flight.FlightNo}
               DepartureDate={flight.DepartureDate}
               ArrivalDate={flight.ArrivalDate}
@@ -46,20 +50,23 @@ const Flights = () => {
               DepartureAirport={flight.DepartureAirport}
               ArrivalAirport={flight.ArrivalAirport}
 
-            // onClick={this.clickHandlerParent}
-            >
+              onClick={clickHandlerParent}>
 
             </FlightCard>
           </div>
 
-        )
-        }
-        {showEditFlight === "showEditForm" && (
-          <div>
-            <UpdatedFlight flightToEdit={chosenFlight}></UpdatedFlight>
-          </div>
-        )}
-      </div >);
-  })
+        ))
+
+      )
+      }
+      {showEditFlight === "showEditForm" && (
+        <div>
+          <UpdatedFlight flightToEdit={chosenFlight}></UpdatedFlight>
+        </div>
+      )}
+
+    </div >
+  );
+
 }
 export default Flights;

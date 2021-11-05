@@ -15,6 +15,7 @@ const UpdatedFlight = (props) => {
     const updateFlight = (e) => {
         e.preventDefault();
 
+
         props.flightToEdit.FlightNo = FlightNo;
         props.flightToEdit.DepartureDate = DepartureDate;
         props.flightToEdit.ArrivalDate = ArrivalDate;

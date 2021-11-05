@@ -28,11 +28,10 @@ const ColorButton = styled(Button)(({ theme }) => ({
 }));
 
 const FlightCard = (props) => {
-    // const [chosenFlight, setChosenFlight] = useState({});
 
-    // const clickHandler = () => {
-    //     this.props.onClick(chosenFlight);
-    // }
+    const clickHandler = () => {
+        props.onClick(props);
+    }
 
     return (
         <div>
@@ -84,7 +83,7 @@ const FlightCard = (props) => {
                         </CardContent>
                     </CardActionArea>
                     <CardActions>
-                        <ColorButton variant="contained">Edit</ColorButton>
+                        <ColorButton variant="contained" onClick={clickHandler}>Edit</ColorButton>
                         <ColorButton variant="contained">Delete</ColorButton>
                     </CardActions>
                 </ThemeProvider>
