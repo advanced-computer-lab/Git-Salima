@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {EditFlightsAPI} from '../apis';
 
 const UpdatedFlight = (props) => {
 
@@ -26,7 +27,8 @@ const UpdatedFlight = (props) => {
         props.flightToEdit.DepartureAirport = DepartureAirport;
         props.flightToEdit.ArrivalAirport = ArrivalAirport;
 
-        console.log(props.flightToEdit);
+        EditFlightsAPI(props.flightToEdit)
+        //console.log(props.flightToEdit);
     }
 
     return (
