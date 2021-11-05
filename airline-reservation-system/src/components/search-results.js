@@ -26,7 +26,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
     backgroundColor: "#81d4fa",
   },
 }));
-export default function SimplePaper(props) {
+const SearchResults = (props) => {
 
   return props.flights.map((flight) => {
     return (
@@ -86,3 +86,4 @@ export default function SimplePaper(props) {
     );
   });
 }
+export default SearchResults;
