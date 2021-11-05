@@ -1,58 +1,32 @@
 import React, { useState } from 'react';
 
-let flight = {
-    FlightNo: 203,
-    DepartureDate: '2021-11-12',
-    ArrivalDate: '2021-11-10',
-    DepartureTime: '15:30',
-    ArrivalTime: '20:30',
-    EconomySeats: 100,
-    BusinessClassSeats: 12,
-    DepartureAirport: 'CAI',
-    ArrivalAirport: 'MILANO',
-}
+const UpdatedFlight = (props) => {
 
-const UpdatedFlight = () => {
-
-    const [FlightNo, setFlightNo] = useState(flight.FlightNo);
-    const [DepartureDate, setDepartureDate] = useState(flight.DepartureDate);
-    const [ArrivalDate, setArrivalDate] = useState(flight.ArrivalDate);
-    const [DepartureTime, setDepartureTime] = useState(flight.DepartureTime);
-    const [ArrivalTime, setArrivalTime] = useState(flight.ArrivalTime);
-    const [EconomySeats, setEconomySeats] = useState(flight.EconomySeats);
-    const [BusinessClassSeats, setBusinessClassSeats] = useState(flight.BusinessClassSeats);
-    const [DepartureAirport, setDepartureAirport] = useState(flight.DepartureAirport);
-    const [ArrivalAirport, setArrivalAirport] = useState(flight.ArrivalAirport);
+    const [FlightNo, setFlightNo] = useState(props.flightToEdit.FlightNo);
+    const [DepartureDate, setDepartureDate] = useState(props.flightToEdit.DepartureDate);
+    const [ArrivalDate, setArrivalDate] = useState(props.flightToEdit.ArrivalDate);
+    const [DepartureTime, setDepartureTime] = useState(props.flightToEdit.DepartureTime);
+    const [ArrivalTime, setArrivalTime] = useState(props.flightToEdit.ArrivalTime);
+    const [EconomySeats, setEconomySeats] = useState(props.flightToEdit.EconomySeats);
+    const [BusinessClassSeats, setBusinessClassSeats] = useState(props.flightToEdit.BusinessClassSeats);
+    const [DepartureAirport, setDepartureAirport] = useState(props.flightToEdit.DepartureAirport);
+    const [ArrivalAirport, setArrivalAirport] = useState(props.flightToEdit.ArrivalAirport);
 
     const updateFlight = (e) => {
         e.preventDefault();
 
-        flight = {
-            FlightNo: FlightNo,
-            DepartureDate: DepartureDate,
-            ArrivalDate: ArrivalDate,
-            DepartureTime: DepartureTime,
-            ArrivalTime: ArrivalTime,
-            EconomySeats: EconomySeats,
-            BusinessClassSeats: BusinessClassSeats,
-            DepartureAirport: DepartureAirport,
-            ArrivalAirport: ArrivalAirport
-        }
-        console.log(flight);
-        // fetch('http://localhost:8000/create', {
-        //     method: 'PUT',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //         // 'Content-Type': 'application/x-www-form-urlencoded'
-        //     },
-        //     body: JSON.stringify(flight),
-        // }).then(response => response.json())
-        //     .then(data => {
-        //         console.log('Success:', data);
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error:', error);
-        //     });
+
+        props.flightToEdit.FlightNo = FlightNo;
+        props.flightToEdit.DepartureDate = DepartureDate;
+        props.flightToEdit.ArrivalDate = ArrivalDate;
+        props.flightToEdit.DepartureTime = DepartureTime;
+        props.flightToEdit.ArrivalTime = ArrivalTime;
+        props.flightToEdit.EconomySeats = EconomySeats;
+        props.flightToEdit.BusinessClassSeats = BusinessClassSeats;
+        props.flightToEdit.DepartureAirport = DepartureAirport;
+        props.flightToEdit.ArrivalAirport = ArrivalAirport;
+
+        console.log(props.flightToEdit);
     }
 
     return (
@@ -157,7 +131,7 @@ const UpdatedFlight = () => {
                 </div>
                 <br />
                 <div className="form-group">
-                    <input type="submit" value="Update Flight" className="btn btn-dark" />
+                    <input type="submit" value="Update" className="btn btn-dark" />
                 </div>
             </form>
         </div>

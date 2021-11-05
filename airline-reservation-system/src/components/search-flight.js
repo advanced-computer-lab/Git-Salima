@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { searchFlightsAPI } from "../apis";
-import SimplePaper from "./search-results";
+import SearchResults from "./search-results";
 
 const Flight = () => {
   const [FlightNo, setFlightNo] = useState("");
@@ -12,9 +12,8 @@ const Flight = () => {
   const [BusinessClassSeats, setBusinessClassSeats] = useState("");
   const [DepartureAirport, setDepartureAirport] = useState("");
   const [ArrivalAirport, setArrivalAirport] = useState("");
-  const [showResult, setshowResult] = useState("search");
-  const [results, setresults] = useState([]);
-  const test = [{ FlightNo: 8887 }, { FlightNo: 7778 }];
+  const [showResult, setShowResult] = useState("search");
+  const [results, setResults] = useState([]);
 
   const searchFlight = async (e) => {
     e.preventDefault();
@@ -31,13 +30,16 @@ const Flight = () => {
       ArrivalAirport: ArrivalAirport,
     };
 
-    setshowResult("available");
+    setShowResult("available");
     const resu = await searchFlightsAPI(flight);
     console.dir(resu);
 
     if (resu) {
-      setresults(resu);
-    } else setshowResult("error");
+      setResults(resu);
+    }
+    else {
+      setShowResult("error");
+    }
   };
 
   return (
@@ -142,10 +144,10 @@ const Flight = () => {
       )}
       {showResult === "available" && (
         <div>
-          <SimplePaper flights={results} onClick={searchFlight}></SimplePaper>
+          <SearchResults flights={results} onClick={searchFlight}></SearchResults>
         </div>
       )}
-      {showResult === "error" && <div>da error</div>}
+      {showResult === "error" && <div>Error</div>}
     </div>
   );
 };
