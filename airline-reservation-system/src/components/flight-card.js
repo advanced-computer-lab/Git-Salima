@@ -7,8 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
-import 'reactjs-popup/dist/index.css';
-import Popup from 'reactjs-popup';
+
 import {deleteFlightsAPI} from "../apis";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -56,6 +55,7 @@ export default function FlightCard (props)  {
     const deleteHandler = () => {
         props.onClickDelete(props);
         setOpen(false);
+        
     }
 
     

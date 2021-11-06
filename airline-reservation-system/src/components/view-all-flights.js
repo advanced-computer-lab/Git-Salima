@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UpdatedFlight from "./edit-flight";
 import FlightCard from "./flight-card";
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
+
 import {deleteFlightsAPI} from "../apis";
 
 
