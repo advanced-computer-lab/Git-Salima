@@ -75,4 +75,21 @@ router.get("/delete", async (req, res) => {
 
 });
 
+
+router.post("/update", async (req,res) => {
+  const flight = req.body;
+  console.log(flight)
+  const query = {};
+  for (const p in flight) {
+    if (!(flight[p] == flight._id)) {
+      query[`${p}`] = flight[p];
+    }
+  }
+  Flight.findByIdAndUpdate(flight._id,query)
+  .then((result) => {
+    res.send(result)
+  })
+
+
+});
 module.exports = router;

@@ -25,6 +25,13 @@ export const deleteFlightsAPI = async (flight) => {
     });
 };
 
+export const EditFlightsAPI = async (flight) => {
+  return await axios.post("http://localhost:8000/update", flight)
+    .then((res) => {
+      return res.data;
+    });
+};
+
 // export const viewAllFlightsAPI = async () => {
 //   return await axios.get("http://localhost:8000/list")
 //     .then((res) => {
