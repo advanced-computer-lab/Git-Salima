@@ -8,6 +8,13 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 
+import {deleteFlightsAPI} from "../apis";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 
 const theme = createTheme({
     palette: {
@@ -27,11 +34,31 @@ const ColorButton = styled(Button)(({ theme }) => ({
     },
 }));
 
-const FlightCard = (props) => {
+    
+export default function FlightCard (props)  {
 
-    const clickHandler = () => {
-        props.onClick(props);
+     
+  
+        const [open, setOpen] = React.useState(false);
+        
+            const handleClickOpen = () => {
+            setOpen(true);
+            };
+        
+            const handleClose = () => {
+            setOpen(false);};
+
+    const editHandler = () => {
+        props.onClickEdit(props);
+    
     }
+    const deleteHandler = () => {
+        props.onClickDelete(props);
+        setOpen(false);
+        
+    }
+
+    
 
     return (
         <div>
@@ -83,11 +110,43 @@ const FlightCard = (props) => {
                         </CardContent>
                     </CardActionArea>
                     <CardActions>
-                        <ColorButton variant="contained" onClick={clickHandler}>Edit</ColorButton>
-                        <ColorButton variant="contained">Delete</ColorButton>
+                        <ColorButton variant="contained" onClick={editHandler}>Edit</ColorButton>
+                        <ColorButton variant="contained" onClick={handleClickOpen}>Delete</ColorButton>
+                        <Dialog
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">
+                        {"Use Google's location service?"}
+                        </DialogTitle>
+                        <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Are you sure you want to delete this flight?
+                        </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button onClick={deleteHandler} autoFocus>
+                            Confirm
+                        </Button>
+                        </DialogActions>
+                    </Dialog>
                     </CardActions>
                 </ThemeProvider>
             </Card>
         </div>);
 }
-export default FlightCard;
+
+
+
+//   return (
+//     <div>
+//       <Button variant="outlined" onClick={handleClickOpen}>
+//         Open alert dialog
+//       </Button>
+      
+//     </div>
+//   );
+// }

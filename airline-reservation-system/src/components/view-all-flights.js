@@ -3,10 +3,13 @@ import axios from "axios";
 import UpdatedFlight from "./edit-flight";
 import FlightCard from "./flight-card";
 
+import {deleteFlightsAPI} from "../apis";
+
 
 const Flights = () => {
   const [allFlights, setAllFlights] = useState([]);
   const [showEditFlight, setShowEditFlight] = useState("allFlights");
+  const [showDeleteAlert, setShowDeleteAlert] = useState("allFlights");
   const [chosenFlight, setChosenFlight] = useState({});
   // const test = [{},{}]
 
@@ -14,6 +17,7 @@ const Flights = () => {
     axios.get("http://localhost:8000/list")
       .then((res) => {
         setAllFlights(res.data);
+        console.log(res.data);
       });
   }, [])
 
@@ -23,18 +27,36 @@ const Flights = () => {
   // setChosenFlight(temp2);
   // };
 
-  const clickHandlerParent = async (input) => {
+  const clickHandlerEdit = async (input) => {
     const temp = JSON.stringify(input);
     const temp2 = JSON.parse(temp);
     setChosenFlight(temp2);
     setShowEditFlight("showEditForm");
   };
+  const clickHandlerDelete = async (input) => {
+    const temp = JSON.stringify(input);
+    const temp2 = JSON.parse(temp);
+    console.log(temp2);
+    deleteFlightsAPI(temp2);
+    setShowDeleteAlert("allFlights");
+    // setShowDeleteAlert("showDeleteAlert");
+    // onDelete(input);
+  };
+
+  // const onDelete = async (input) => {
+  //   const temp = JSON.stringify(input);
+  //   const temp2 = JSON.parse(temp);
+  //   deleteFlightsAPI(temp2);
+  //   setShowDeleteAlert("allFlights");
+  // };
+
+  
 
 
 
   return (
     <div>
-      {showEditFlight === "allFlights" && (
+      {showEditFlight === "allFlights" && showDeleteAlert === "allFlights" && (
         allFlights.map((flight) => (
           <div>
             <FlightCard
@@ -50,7 +72,8 @@ const Flights = () => {
               DepartureAirport={flight.DepartureAirport}
               ArrivalAirport={flight.ArrivalAirport}
 
-              onClick={clickHandlerParent}>
+              onClickEdit={clickHandlerEdit}
+              onClickDelete={clickHandlerDelete}>
 
             </FlightCard>
           </div>
@@ -59,14 +82,19 @@ const Flights = () => {
 
       )
       }
-      {showEditFlight === "showEditForm" && (
+      {showEditFlight === "showEditForm" && showDeleteAlert ==="allFlights" && (
         <div>
           <UpdatedFlight flightToEdit={chosenFlight}></UpdatedFlight>
         </div>
+        
       )}
+
 
     </div >
   );
 
 }
-export default Flights;
+ export default Flights;
+
+
+
