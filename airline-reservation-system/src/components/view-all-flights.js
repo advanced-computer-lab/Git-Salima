@@ -3,7 +3,7 @@ import axios from "axios";
 import UpdatedFlight from "./edit-flight";
 import FlightCard from "./flight-card";
 
-import {deleteFlightsAPI} from "../apis";
+import { deleteFlightsAPI } from "../apis";
 
 
 const Flights = () => {
@@ -11,7 +11,6 @@ const Flights = () => {
   const [showEditFlight, setShowEditFlight] = useState("allFlights");
   const [showDeleteAlert, setShowDeleteAlert] = useState("allFlights");
   const [chosenFlight, setChosenFlight] = useState({});
-  // const test = [{},{}]
 
   useEffect(() => {
     axios.get("http://localhost:8000/list")
@@ -20,12 +19,6 @@ const Flights = () => {
         console.log(res.data);
       });
   }, [])
-
-  // const editFlight = async (flight) => {
-  // const temp = JSON.stringify(flight);
-  // const temp2 = JSON.parse(temp);
-  // setChosenFlight(temp2);
-  // };
 
   const clickHandlerEdit = async (input) => {
     const temp = JSON.stringify(input);
@@ -39,20 +32,7 @@ const Flights = () => {
     console.log(temp2);
     deleteFlightsAPI(temp2);
     setShowDeleteAlert("allFlights");
-    // setShowDeleteAlert("showDeleteAlert");
-    // onDelete(input);
   };
-
-  // const onDelete = async (input) => {
-  //   const temp = JSON.stringify(input);
-  //   const temp2 = JSON.parse(temp);
-  //   deleteFlightsAPI(temp2);
-  //   setShowDeleteAlert("allFlights");
-  // };
-
-  
-
-
 
   return (
     <div>
@@ -77,24 +57,18 @@ const Flights = () => {
 
             </FlightCard>
           </div>
-
         ))
-
-      )
-      }
-      {showEditFlight === "showEditForm" && showDeleteAlert ==="allFlights" && (
+      )}
+      {showEditFlight === "showEditForm" && showDeleteAlert === "allFlights" && (
         <div>
           <UpdatedFlight flightToEdit={chosenFlight}></UpdatedFlight>
         </div>
-        
+
       )}
-
-
     </div >
   );
-
 }
- export default Flights;
+export default Flights;
 
 
 

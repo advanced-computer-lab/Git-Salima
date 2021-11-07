@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {EditFlightsAPI} from '../apis';
+import { editFlightsAPI } from '../apis';
 
 const UpdatedFlight = (props) => {
 
@@ -27,8 +27,7 @@ const UpdatedFlight = (props) => {
         props.flightToEdit.DepartureAirport = DepartureAirport;
         props.flightToEdit.ArrivalAirport = ArrivalAirport;
 
-        EditFlightsAPI(props.flightToEdit)
-        //console.log(props.flightToEdit);
+        editFlightsAPI(props.flightToEdit)
     }
 
     return (
@@ -69,7 +68,7 @@ const UpdatedFlight = (props) => {
                 <div className="form-group" className="col-md-6">
                     <label>Departure Time: </label>
                     <input
-                        type="text"
+                        type="time"
                         required
                         className="form-control"
                         value={DepartureTime}
@@ -80,7 +79,7 @@ const UpdatedFlight = (props) => {
                 <div className="form-group" className="col-md-6">
                     <label>Arrival Time: </label>
                     <input
-                        type="text"
+                        type="time"
                         required
                         className="form-control"
                         value={ArrivalTime}

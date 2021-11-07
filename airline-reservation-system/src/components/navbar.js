@@ -4,7 +4,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
       <div className="container-fluid">
-        <Link to="/" className="navbar-brand">
+        <Link to="/home" className="navbar-brand">
           Git Salima
         </Link>
         <button
