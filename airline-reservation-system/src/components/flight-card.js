@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { styled } from "@mui/material/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, CardActions } from "@mui/material";
-import { deleteFlightsAPI } from "../apis";
+import { Button, CardActions } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -68,12 +66,6 @@ export default function FlightCard(props) {
       <Card sx={{ maxWidth: { w }, fontFamily: "Roboto" }}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          {/* <CardMedia
-              component="img"
-              height="140"
-              image="https://c4.wallpaperflare.com/wallpaper/737/866/513/wing-airplane-plane-sky-clouds-hd-wallpaper-preview.jpg"
-              alt="green iguana"
-            /> */}
           <CardContent style={{ backgroundColor: "#EFEAE4" }}>
             <Typography marginLeft={w / 27} variant="h4" component="div">
               Flight Number: {props.FlightNo}
@@ -156,13 +148,3 @@ export default function FlightCard(props) {
     </div>
   );
 }
-
-//   return (
-//     <div>
-//       <Button variant="outlined" onClick={handleClickOpen}>
-//         Open alert dialog
-//       </Button>
-
-//     </div>
-//   );
-// }
