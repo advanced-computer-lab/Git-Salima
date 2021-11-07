@@ -16,7 +16,7 @@ function App() {
       <Navbar />
       <br />
       <div className="container">
-        <Route path="/home" component={WelcomeScreen} />
+        <Route exact path="/" Redirect to="/home" component={WelcomeScreen} />
       </div>
       <div className="container">
         <Route path="/create" component={Flight} />

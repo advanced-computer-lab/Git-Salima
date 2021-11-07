@@ -14,6 +14,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import CssBaseline from "@mui/material/CssBaseline";
+import FlightLandIcon from "@mui/icons-material/FlightLand";
+import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 
 const theme = createTheme({
   typography: {
@@ -78,12 +80,22 @@ export default function FlightCard(props) {
             </Typography>
             <br />
             <Stack spacing={25} direction="row">
-              <Typography variant="body2" color="text.secondary">
-                Departure From: {props.DepartureAirport}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Arrive At: {props.ArrivalAirport}
-              </Typography>
+              <Stack spacing={1} direction="row">
+                <FlightTakeoffIcon />
+                <Typography variant="body2" color="text.secondary">
+                  Departure From:
+                </Typography>
+
+                <Typography variant="body2" color="text.secondary">
+                  {props.DepartureAirport}
+                </Typography>
+              </Stack>
+              <Stack spacing={1} direction="row">
+                <FlightLandIcon />
+                <Typography variant="body2" color="text.secondary">
+                  Arrive At: {props.ArrivalAirport}
+                </Typography>
+              </Stack>
             </Stack>
             <Stack spacing={25} direction="row">
               <Typography variant="body2" color="text.secondary">
