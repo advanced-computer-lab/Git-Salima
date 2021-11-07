@@ -17,7 +17,6 @@ router.post("/create", async (req, res) => {
   const BusinessClassSeats = req.body.BusinessClassSeats;
   const DepartureAirport = req.body.DepartureAirport;
   const ArrivalAirport = req.body.ArrivalAirport;
-  // console.dir(req.body);
 
   const newFlight = new Flight({
     FlightNo,

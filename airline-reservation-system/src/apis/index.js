@@ -16,7 +16,6 @@ export const searchFlightsAPI = async (flight) => {
 }
 
 export const deleteFlightsAPI = async (flight) => {
-  //console.log(JSON.stringify(flight));
   const temp = JSON.stringify(flight);
   const temp2 = JSON.parse(temp);
   console.log(temp2);
@@ -32,10 +31,3 @@ export const EditFlightsAPI = async (flight) => {
       return res.data;
     });
 };
-
-// export const viewAllFlightsAPI = async () => {
-//   return await axios.get("http://localhost:8000/list")
-//     .then((res) => {
-//       return res.data;
-//     });
-// }

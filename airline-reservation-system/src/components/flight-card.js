@@ -107,10 +107,10 @@ export default function FlightCard(props) {
             </Stack>
             <Stack spacing={25} direction="row">
               <Typography variant="body2" color="text.secondary">
-                Departure Date: {props.DepartureDate}
+                Departure Date: {props.DepartureDate.substring(0, 10)}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Arrival Date: {props.ArrivalDate}
+                Arrival Date: {props.ArrivalDate.substring(0, 10)}
               </Typography>
             </Stack>
             <Stack spacing={25} direction="row">

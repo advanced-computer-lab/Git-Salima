@@ -80,7 +80,7 @@ const Flight = () => {
           <div className="form-group" className="col-md-6">
             <label>Departure Time: </label>
             <input
-              type="text"
+              type="time"
               className="form-control"
               value={DepartureTime}
               onChange={(e) => setDepartureTime(e.target.value)}
@@ -90,7 +90,7 @@ const Flight = () => {
           <div className="form-group" className="col-md-6">
             <label>Arrival Time: </label>
             <input
-              type="text"
+              type="time"
               className="form-control"
               value={ArrivalTime}
               onChange={(e) => setArrivalTime(e.target.value)}

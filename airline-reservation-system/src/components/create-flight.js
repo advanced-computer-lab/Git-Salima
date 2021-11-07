@@ -68,7 +68,7 @@ const Flight = () => {
         <div className="form-group" className="col-md-6">
           <label>Departure Time: </label>
           <input
-            type="text"
+            type="time"
             required
             className="form-control"
             value={DepartureTime}
@@ -79,7 +79,7 @@ const Flight = () => {
         <div className="form-group" className="col-md-6">
           <label>Arrival Time: </label>
           <input
-            type="text"
+            type="time"
             required
             className="form-control"
             value={ArrivalTime}
