@@ -8,6 +8,7 @@ const Flight = () => {
   const [ArrivalTime, setArrivalTime] = useState("");
   const [EconomySeats, setEconomySeats] = useState("");
   const [BusinessClassSeats, setBusinessClassSeats] = useState("");
+  const [FirstClassSeats, setFirstClassSeats] = useState("");
   const [DepartureAirport, setDepartureAirport] = useState("");
   const [ArrivalAirport, setArrivalAirport] = useState("");
 
@@ -22,6 +23,7 @@ const Flight = () => {
       ArrivalTime: ArrivalTime,
       EconomySeats: EconomySeats,
       BusinessClassSeats: BusinessClassSeats,
+      FirstClassSeats:FirstClassSeats,
       DepartureAirport: DepartureAirport,
       ArrivalAirport: ArrivalAirport,
     };
@@ -108,7 +110,16 @@ const Flight = () => {
             onChange={(e) => setBusinessClassSeats(e.target.value)}
           />
         </div>
-
+        <div className="form-group">
+          <label>First Class Seats: </label>
+          <input
+            type="number"
+            required
+            className="form-control"
+            value={FirstClassSeats}
+            onChange={(e) => setFirstClassSeats(e.target.value)}
+          />
+        </div>
         <div className="form-group" className="col-md-6">
           <label>Departure Airport: </label>
           <input
