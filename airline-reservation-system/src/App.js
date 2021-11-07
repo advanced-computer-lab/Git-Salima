@@ -8,12 +8,16 @@ import UpdatedFlight from "./components/edit-flight";
 import AllFlights from "./components/view-all-flights";
 import SearchForm from "./components/search-flight";
 import SearchResults from "./components/search-results";
+import WelcomeScreen from "./components/welcome-screen";
 
 function App() {
   return (
     <Router>
       <Navbar />
       <br />
+      <div className="container">
+        <Route path="/home" component={WelcomeScreen} />
+      </div>
       <div className="container">
         <Route path="/create" component={Flight} />
       </div>
