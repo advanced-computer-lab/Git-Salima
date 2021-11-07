@@ -10,6 +10,7 @@ const UpdatedFlight = (props) => {
     const [ArrivalTime, setArrivalTime] = useState(props.flightToEdit.ArrivalTime);
     const [EconomySeats, setEconomySeats] = useState(props.flightToEdit.EconomySeats);
     const [BusinessClassSeats, setBusinessClassSeats] = useState(props.flightToEdit.BusinessClassSeats);
+    const [FirstClassSeats, setFirstClassSeats] = useState(props.flightToEdit.FirstClassSeats);
     const [DepartureAirport, setDepartureAirport] = useState(props.flightToEdit.DepartureAirport);
     const [ArrivalAirport, setArrivalAirport] = useState(props.flightToEdit.ArrivalAirport);
 
@@ -24,6 +25,7 @@ const UpdatedFlight = (props) => {
         props.flightToEdit.ArrivalTime = ArrivalTime;
         props.flightToEdit.EconomySeats = EconomySeats;
         props.flightToEdit.BusinessClassSeats = BusinessClassSeats;
+        props.flightToEdit.FirstClassSeats = FirstClassSeats;
         props.flightToEdit.DepartureAirport = DepartureAirport;
         props.flightToEdit.ArrivalAirport = ArrivalAirport;
 
@@ -106,6 +108,18 @@ const UpdatedFlight = (props) => {
                         className="form-control"
                         value={BusinessClassSeats}
                         onChange={(e) => setBusinessClassSeats(e.target.value)}
+                    />
+                </div>
+
+
+                <div className="form-group">
+                    <label>First Class Seats: </label>
+                    <input
+                        type="number"
+                        required
+                        className="form-control"
+                        value={FirstClassSeats}
+                        onChange={(e) => setFirstClassSeats(e.target.value)}
                     />
                 </div>
 

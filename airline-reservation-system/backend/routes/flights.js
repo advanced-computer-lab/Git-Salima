@@ -15,6 +15,7 @@ router.post("/create", async (req, res) => {
   const ArrivalTime = req.body.ArrivalTime;
   const EconomySeats = req.body.EconomySeats;
   const BusinessClassSeats = req.body.BusinessClassSeats;
+  const FirstClassSeats = req.body.FirstClassSeats;
   const DepartureAirport = req.body.DepartureAirport;
   const ArrivalAirport = req.body.ArrivalAirport;
 
@@ -26,6 +27,7 @@ router.post("/create", async (req, res) => {
     ArrivalTime,
     EconomySeats,
     BusinessClassSeats,
+    FirstClassSeats,
     DepartureAirport,
     ArrivalAirport,
   });
@@ -38,7 +40,7 @@ router.get("/list", async (req, res) => {
   res.send(flights);
 });
 
-router.get("/search", (req, res) => {
+ router.get("/search",  (req, res) => {
   const flight = req.query;
 
   const query = {};
@@ -51,10 +53,7 @@ router.get("/search", (req, res) => {
     res.send(result)
   })
 
-  console.log(query);
-  Flight.find(query).then((result) => {
-    res.send(result)
-  })
+
 });
 
 router.get("/delete", async (req, res) => {

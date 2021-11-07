@@ -106,12 +106,16 @@ export default function FlightCard(props) {
               </Typography>
             </Stack>
             <Stack spacing={25} direction="row">
+            <Typography variant="body2" color="text.secondary">
+                First Class Seats: {props.FirstClassSeats}
+              </Typography>
               <Typography variant="body2" color="text.secondary">
                 Business Class Seats: {props.BusinessClassSeats}
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 Economy Seats: {props.EconomySeats}
               </Typography>
+
             </Stack>
             <CardActions>
               <ColorButton variant="contained" onClick={editHandler}>

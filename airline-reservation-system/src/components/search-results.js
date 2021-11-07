@@ -37,6 +37,7 @@ const SearchResults = (props) => {
               ArrivalTime={flight.ArrivalTime}
               EconomySeats={flight.EconomySeats}
               BusinessClassSeats={flight.BusinessClassSeats}
+              FirstClassSeats={flight.FirstClassSeats}
               DepartureAirport={flight.DepartureAirport}
               ArrivalAirport={flight.ArrivalAirport}
 
