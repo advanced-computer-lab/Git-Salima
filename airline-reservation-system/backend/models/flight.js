@@ -30,6 +30,10 @@ const flightSchema = new Schema({
         type: Number,
         required: true
     },
+    FirstClassSeats: {
+        type: Number,
+        required: true
+    },
     DepartureAirport: {
         type: String,
         required: true
