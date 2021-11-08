@@ -6,16 +6,11 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import Paper from "@mui/material/Paper";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Photo from "./PlaneTakeOff.JPG";
 import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
 import CF from "./createImg.jpg";
 import AF from "./allFlightsImg.jpg";
 import SR from "./searchIMG.jpg";
@@ -84,7 +79,7 @@ export default function Home() {
       </Box>
       <Box sx={{ fontFamily: "Roboto" }}>
         <Stack direction="row" spacing={4.5}>
-          <Card sx={{ width: 380, height: 300, backgroundColor: "#3D44C2" }}>
+          <Card sx={{ width: 380, height: 300, backgroundColor: "#3D44C2", marginLeft: "40px" }}>
             <CardActionArea>
               <Link href="/create" underline="none">
                 <CardMedia

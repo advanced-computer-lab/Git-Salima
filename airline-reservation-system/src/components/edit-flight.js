@@ -199,7 +199,7 @@ const UpdatedFlight = (props) => {
       <div className="form-group">
         <input
           type="button"
-          value="Create Flight"
+          value="Update Flight"
           className="btn btn-dark"
           onClick={handleClickOpen}
         />
@@ -215,7 +215,7 @@ const UpdatedFlight = (props) => {
           <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Flight Edited Successfully
+              Flight Updated Successfully
             </DialogContentText>
           </DialogContent>
           <DialogActions>
