@@ -106,7 +106,7 @@ export default function FlightCard(props) {
               </Typography>
             </Stack>
             <Stack spacing={25} direction="row">
-            <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.secondary">
                 First Class Seats: {props.FirstClassSeats}
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -118,12 +118,12 @@ export default function FlightCard(props) {
 
             </Stack>
             <CardActions>
-              <ColorButton variant="contained" onClick={editHandler}>
+              <Button variant="contained" onClick={editHandler} color="success">
                 Edit
-              </ColorButton>
-              <ColorButton variant="contained" onClick={handleClickOpen}>
+              </Button>
+              <Button variant="contained" onClick={handleClickOpen} color="error">
                 Delete
-              </ColorButton>
+              </Button>
               <Dialog
                 open={open}
                 onClose={handleClose}

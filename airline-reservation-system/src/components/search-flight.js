@@ -147,7 +147,7 @@ const Flight = () => {
           </div>
           <br />
           <div className="form-group">
-            <input type="submit" value="Search" className="btn btn-dark" />
+            <input type="submit" value="Search Flight" className="btn btn-dark" />
           </div>
         </form>
       )}
