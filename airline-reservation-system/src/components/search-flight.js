@@ -38,8 +38,7 @@ const Flight = () => {
 
     if (resu) {
       setResults(resu);
-    }
-    else {
+    } else {
       setShowResult("error");
     }
   };
@@ -154,7 +153,10 @@ const Flight = () => {
       )}
       {showResult === "available" && (
         <div>
-          <SearchResults flights={results} onClick={searchFlight}></SearchResults>
+          <SearchResults
+            flights={results}
+            onClick={searchFlight}
+          ></SearchResults>
         </div>
       )}
       {showResult === "error" && <div>Error</div>}
