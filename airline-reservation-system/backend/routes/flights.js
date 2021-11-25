@@ -55,7 +55,29 @@ router.get("/list", async (req, res) => {
 
 
 });
+router.get("/user/search",  (req, res) => {
+  const flight = req.query;
+  
+  const query = {};
+  for (const p in flight) {
+   
+    if (!(flight[p] == "")) {
+      if(p=="EconomySeats"||p=="BusinessClassSeats"||p=="FirstClassSeats")
+      {
+        query[`${p}`] =  {$gte:flight[p]}
+       
+      }
+      else{
+      query[`${p}`] = flight[p];
+      }
+    }
+  }
+  Flight.find(query).then((result) => {
+    res.send(result)
+  })
 
+
+});
 router.get("/delete", async (req, res) => {
   const flight = req.query;
   const query = {};
