@@ -47,9 +47,13 @@ const Flights = () => {
               ArrivalDate={flight.ArrivalDate}
               DepartureTime={flight.DepartureTime}
               ArrivalTime={flight.ArrivalTime}
+              Terminal={flight.Terminal}
               EconomySeats={flight.EconomySeats}
               BusinessClassSeats={flight.BusinessClassSeats}
               FirstClassSeats={flight.FirstClassSeats}
+              EconomyLuggage={flight.EconomyLuggage}
+              BusinessClassLuggage={flight.BusinessClassLuggage}
+              FirstClassLuggage={flight.FirstClassLuggage}
               DepartureAirport={flight.DepartureAirport}
               ArrivalAirport={flight.ArrivalAirport}
 

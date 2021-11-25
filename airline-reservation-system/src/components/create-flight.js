@@ -7,9 +7,13 @@ const Flight = () => {
   const [ArrivalDate, setArrivalDate] = useState("");
   const [DepartureTime, setDepartureTime] = useState("");
   const [ArrivalTime, setArrivalTime] = useState("");
+  const [Terminal, setTerminal] = useState("");
   const [EconomySeats, setEconomySeats] = useState("");
   const [BusinessClassSeats, setBusinessClassSeats] = useState("");
   const [FirstClassSeats, setFirstClassSeats] = useState("");
+  const [EconomyLuggage, setEconomyLuggage] = useState("");
+  const [BusinessClassLuggage, setBusinessClassLuggage] = useState("");
+  const [FirstClassLuggage, setFirstClassLuggage] = useState("");
   const [DepartureAirport, setDepartureAirport] = useState("");
   const [ArrivalAirport, setArrivalAirport] = useState("");
 
@@ -22,9 +26,13 @@ const Flight = () => {
       ArrivalDate: ArrivalDate,
       DepartureTime: DepartureTime,
       ArrivalTime: ArrivalTime,
+      Terminal:Terminal,
       EconomySeats: EconomySeats,
       BusinessClassSeats: BusinessClassSeats,
       FirstClassSeats: FirstClassSeats,
+      EconomyLuggage:EconomyLuggage,
+      BusinessClassLuggage:BusinessClassLuggage,
+      FirstClassLuggage:FirstClassLuggage,
       DepartureAirport: DepartureAirport,
       ArrivalAirport: ArrivalAirport,
     };
@@ -89,8 +97,19 @@ const Flight = () => {
             value={ArrivalTime}
             onChange={(e) => setArrivalTime(e.target.value)}
           />
+          
         </div>
-
+        <div className="form-group">
+          <label>Terminal: </label>
+          <input
+            type="number"
+            required
+            className="form-control"
+            min="0"
+            value={Terminal}
+            onChange={(e) => setTerminal(e.target.value)}
+          />
+        </div>
         <div className="form-group">
           <label>Economy Seats: </label>
           <input
@@ -123,6 +142,40 @@ const Flight = () => {
             min="0"
             value={FirstClassSeats}
             onChange={(e) => setFirstClassSeats(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label>Economy Luggage: </label>
+          <input
+            type="number"
+            required
+            className="form-control"
+            min="0"
+            value={EconomyLuggage}
+            onChange={(e) => setEconomyLuggage(e.target.value)}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Business Class Luggage: </label>
+          <input
+            type="number"
+            required
+            className="form-control"
+            min="0"
+            value={BusinessClassLuggage}
+            onChange={(e) => setBusinessClassLuggage(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label>First Class Luggage: </label>
+          <input
+            type="number"
+            required
+            className="form-control"
+            min="0"
+            value={FirstClassLuggage}
+            onChange={(e) => setFirstClassLuggage(e.target.value)}
           />
         </div>
         <div className="form-group" className="col-md-6">
