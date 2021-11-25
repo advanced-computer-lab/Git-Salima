@@ -13,7 +13,7 @@ export const searchFlightsAPI = async (flight) => {
       return res.data;
     });
 }
-export const searchFlightsAPI = async (flight) => {
+export const userSearchFlightsAPI = async (flight) => {
   const temp1 = JSON.stringify(flight);
   const temp2 = JSON.parse(temp1);
 
