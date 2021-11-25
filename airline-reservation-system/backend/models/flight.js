@@ -22,6 +22,12 @@ const flightSchema = new Schema({
         type: String,
         required: true
     },
+    Terminal: {
+        type: String,
+        required: true
+    },
+ 
+
     EconomySeats: {
         type: Number,
         required: true
@@ -34,10 +40,23 @@ const flightSchema = new Schema({
         type: Number,
         required: true
     },
+    EconomyLuggage : {
+        type: Number,
+        required: true
+    },
+    BusinessClassLuggage : {
+        type: Number,
+        required: true
+    },
+    FirstClassLuggage  : {
+        type: Number,
+        required: true
+    },
     DepartureAirport: {
         type: String,
         required: true
     },
+    
     ArrivalAirport: {
         type: String,
         required: true

@@ -13,9 +13,13 @@ router.post("/create", async (req, res) => {
   const ArrivalDate = req.body.ArrivalDate;
   const DepartureTime = req.body.DepartureTime;
   const ArrivalTime = req.body.ArrivalTime;
+  const Terminal = req.body.Terminal;
   const EconomySeats = req.body.EconomySeats;
   const BusinessClassSeats = req.body.BusinessClassSeats;
   const FirstClassSeats = req.body.FirstClassSeats;
+  const EconomyLuggage = req.body.EconomyLuggage;
+  const BusinessClassLuggage = req.body.BusinessClassLuggage;
+  const FirstClassLuggage = req.body.FirstClassLuggage;
   const DepartureAirport = req.body.DepartureAirport;
   const ArrivalAirport = req.body.ArrivalAirport;
 
@@ -25,9 +29,13 @@ router.post("/create", async (req, res) => {
     ArrivalDate,
     DepartureTime,
     ArrivalTime,
+    Terminal,
     EconomySeats,
     BusinessClassSeats,
     FirstClassSeats,
+    EconomyLuggage,
+    BusinessClassLuggage,
+    FirstClassLuggage,
     DepartureAirport,
     ArrivalAirport,
   });
