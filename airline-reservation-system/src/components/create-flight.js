@@ -60,11 +60,14 @@ const Flight = () => {
     setOpen(false);
     window.location.reload(false);
   };
+  const handleCloseFalse = () => {
+    setOpen(false);
+    window.location.reload(false);
+  };
 
   return (
     <div>
       <h3>Create Flight</h3>
-
       <div className="form-group">
         <label>Flight Number: </label>
         <input
@@ -75,7 +78,6 @@ const Flight = () => {
           onChange={(e) => setFlightNo(e.target.value)}
         />
       </div>
-
       <div className="form-group" className="col-md-6">
         <label>Departure Date: </label>
         <input
@@ -86,7 +88,6 @@ const Flight = () => {
           onChange={(e) => setDepartureDate(e.target.value)}
         />
       </div>
-
       <div className="form-group" className="col-md-6">
         <label>Arrival Date: </label>
         <input
@@ -97,7 +98,6 @@ const Flight = () => {
           onChange={(e) => setArrivalDate(e.target.value)}
         />
       </div>
-
       <div className="form-group" className="col-md-6">
         <label>Departure Time: </label>
         <input
@@ -108,7 +108,6 @@ const Flight = () => {
           onChange={(e) => setDepartureTime(e.target.value)}
         />
       </div>
-
       <div className="form-group" className="col-md-6">
         <label>Arrival Time: </label>
         <input
@@ -119,7 +118,6 @@ const Flight = () => {
           onChange={(e) => setArrivalTime(e.target.value)}
         />
       </div>
-
       <div className="form-group">
         <label>Economy Seats: </label>
         <input
@@ -130,7 +128,6 @@ const Flight = () => {
           onChange={(e) => setEconomySeats(e.target.value)}
         />
       </div>
-
       <div className="form-group">
         <label>Business Class Seats: </label>
         <input
@@ -161,7 +158,6 @@ const Flight = () => {
           onChange={(e) => setDepartureAirport(e.target.value)}
         />
       </div>
-
       <div className="form-group" className="col-md-6">
         <label>Arrival Airport: </label>
         <input
@@ -181,25 +177,45 @@ const Flight = () => {
           onClick={handleClickOpen}
         />
       </div>
-
-      <Card>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Flight Created Successfully
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>OK</Button>
-          </DialogActions>
-        </Dialog>
-      </Card>
+      {{ FlightNo } === "" ? (
+        <Card>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                You must enter Flight Number
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>OK</Button>
+            </DialogActions>
+          </Dialog>
+        </Card>
+      ) : (
+        <Card>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Flight Created Successfully
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>OK</Button>
+            </DialogActions>
+          </Dialog>
+        </Card>
+      )}
     </div>
   );
 };
