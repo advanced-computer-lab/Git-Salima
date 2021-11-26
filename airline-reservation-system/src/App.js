@@ -10,6 +10,7 @@ import SearchResults from "./components/search-results";
 import WelcomeScreen from "./components/welcome-screen";
 import UserHome from "./components/user-home";
 import UserDepFlights from "./components/user-dep-flights";
+import UserRetFlights from "./components/user-ret-flights";
 
 function App() {
   return (
@@ -39,6 +40,9 @@ function App() {
       </div>
       <div className="container">
         <Route path="/user-dep-flights" component={UserDepFlights} />
+      </div>
+      <div className="container">
+        <Route path="/user-ret-flights" component={UserRetFlights} />
       </div>
     </Router>
   );
