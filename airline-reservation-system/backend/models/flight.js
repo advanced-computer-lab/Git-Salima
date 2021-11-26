@@ -43,7 +43,7 @@ const flightSchema = new Schema({
         required: true
     },
     TakenSeats: {
-        type: String,
+        type: Array,
         required: true
     }
 }, { timestamps: true });
