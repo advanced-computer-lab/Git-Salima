@@ -70,6 +70,7 @@ const Flight = () => {
     localStorage.setItem("UFSAAirport", ArrivalAirport);
     localStorage.setItem("UFSDDate", DepartureDate);
     localStorage.setItem("UFSADate", ArrivalDate);
+    localStorage.setItem("UFSFClass", FlightClass);
     console.log("local Storage");
     console.log(localStorage.getItem("UserFSCriteria"));
     history.push("/user-dep-flights");

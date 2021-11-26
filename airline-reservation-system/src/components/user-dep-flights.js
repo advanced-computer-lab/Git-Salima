@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UpdatedFlight from "./edit-flight";
-import FlightCard from "./flight-card";
+import UserFlightCard from "./user-flight-card";
 
+import { useHistory } from "react-router-dom";
 import { searchFlightsAPI } from "../apis";
 
 const Flights = () => {
   const [FlightNo, setFlightNo] = useState("");
-  const [DepartureDate, setDepartureDate] = useState("");
   const [ArrivalDate, setArrivalDate] = useState("");
   const [DepartureTime, setDepartureTime] = useState("");
   const [ArrivalTime, setArrivalTime] = useState("");
@@ -15,50 +15,55 @@ const Flights = () => {
   const [EconomySeats, setEconomySeats] = useState("");
   const [BusinessClassSeats, setBusinessClassSeats] = useState("");
   const [FirstClassSeats, setFirstClassSeats] = useState("");
-  const [DepartureAirport, setDepartureAirport] = useState("");
-  const [ArrivalAirport, setArrivalAirport] = useState("");
   const [EconomyLuggage, setEconomyLuggage] = useState("");
   const [BusinessClassLuggage, setBusinessClassLuggage] = useState("");
   const [FirstClassLuggage, setFirstClassLuggage] = useState("");
 
-  setDepartureDate(localStorage.getItem("UFSDDate"));
-  setArrivalDate(localStorage.getItem("UFSAAirport"));
-  setDepartureAirport(localStorage.getItem("UFSDAirport"));
-  setArrivalAirport(localStorage.getItem("UFSAAirport"));
   const [allFlights, setAllFlights] = useState([]);
-  const Flight = async (e) => {
-    e.preventDefault();
-    const flight = {
-      FlightNo: FlightNo,
-      DepartureDate: DepartureDate,
-      ArrivalDate: ArrivalDate,
-      DepartureTime: DepartureTime,
-      ArrivalTime: ArrivalTime,
-      Terminal: Terminal,
-      EconomySeats: EconomySeats,
-      BusinessClassSeats: BusinessClassSeats,
-      FirstClassSeats: FirstClassSeats,
-      EconomyLuggage: EconomyLuggage,
-      BusinessClassLuggage: BusinessClassLuggage,
-      FirstClassLuggage: FirstClassLuggage,
-      DepartureAirport: DepartureAirport,
-      ArrivalAirport: ArrivalAirport,
-    };
-    setDepartureDate(localStorage.getItem("UserFSCriteria"));
-    setArrivalDate(localStorage.getItem("UserFSCriteria"));
-    setDepartureAirport(localStorage.getItem("UserFSCriteria"));
-    setArrivalAirport(localStorage.getItem("UserFSCriteria"));
 
-    // console.log(localStorage.getItem("UserFSCriteria"));
-    const result = await searchFlightsAPI(flight);
-    // console.log(result);
-    setAllFlights(result);
+  console.log(localStorage.getItem("UFSDAirport"));
+
+  const flight = {
+    FlightNo: FlightNo,
+    DepartureDate: localStorage.getItem("UFSDDate"),
+    ArrivalDate: ArrivalDate,
+    DepartureTime: DepartureTime,
+    ArrivalTime: ArrivalTime,
+    Terminal: Terminal,
+    EconomySeats: EconomySeats,
+    BusinessClassSeats: BusinessClassSeats,
+    FirstClassSeats: FirstClassSeats,
+    EconomyLuggage: EconomyLuggage,
+    BusinessClassLuggage: BusinessClassLuggage,
+    FirstClassLuggage: FirstClassLuggage,
+    DepartureAirport: localStorage.getItem("UFSDAirport"),
+    ArrivalAirport: localStorage.getItem("UFSAAirport"),
   };
+
+  useEffect(() => {
+    const temp1 = JSON.stringify(flight);
+    const temp2 = JSON.parse(temp1);
+    axios.get("http://localhost:8000/search", { params: temp2 }).then((res) => {
+      setAllFlights(res.data);
+      console.log(res.data);
+    });
+  }, []);
+  let history = useHistory();
+  const clickHandlerSelect = async (input) => {
+    //the address of the results vvvv
+    history.push("/user-ret-flights");
+    // const temp = JSON.stringify(input);
+    // const temp2 = JSON.parse(temp);
+    // console.log(temp2);
+    // deleteFlightsAPI(temp2);
+    // setShowDeleteAlert("allFlights");
+  };
+
   return (
     <div>
       {allFlights.map((flight) => (
         <div>
-          <FlightCard
+          <UserFlightCard
             _id={flight._id}
             FlightNo={flight.FlightNo}
             DepartureDate={flight.DepartureDate}
@@ -74,6 +79,7 @@ const Flights = () => {
             FirstClassLuggage={flight.FirstClassLuggage}
             DepartureAirport={flight.DepartureAirport}
             ArrivalAirport={flight.ArrivalAirport}
+            onClickSelect={clickHandlerSelect}
           />
         </div>
       ))}
