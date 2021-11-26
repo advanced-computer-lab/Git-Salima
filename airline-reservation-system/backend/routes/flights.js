@@ -22,7 +22,7 @@ router.post("/create", async (req, res) => {
   const FirstClassLuggage = req.body.FirstClassLuggage;
   const DepartureAirport = req.body.DepartureAirport;
   const ArrivalAirport = req.body.ArrivalAirport;
-
+  const TakenSeats=[];
   const newFlight = new Flight({
     FlightNo,
     DepartureDate,
@@ -38,6 +38,7 @@ router.post("/create", async (req, res) => {
     FirstClassLuggage,
     DepartureAirport,
     ArrivalAirport,
+    TakenSeats,
   });
 
   await newFlight.save();
@@ -114,4 +115,38 @@ router.post("/update", async (req, res) => {
     })
 
 });
+router.get("/getAirports", async (req, res) => {
+  const flights = await Flight.find({});
+  const res1=["alo"];
+  for (const p of flights) {
+    const a=p.ArrivalAirport;
+    const b=p.DepartureAirport;
+    if(!res1.includes(a))
+    {
+      res1.push(a)
+      
+    }
+    if(!res1.includes(b))
+    {
+      res1.push(b)
+    }
+
+  }
+  console.dir(res1);
+  res.send(res1);
+});
+router.post("/updateSeats", async (req, res) => {
+  const flight = req.body;
+  for(const p of flight.TakenSeats){
+    
+  const query = {$push: { TakenSeats: p } };
+  
+ await  Flight.findByIdAndUpdate(flight._id, query)
+    
+  }
+  Flight.findById(flight._id).then((result) => {
+    res.send(result)
+  })
+}
+ );
 module.exports = router;

@@ -39,3 +39,19 @@ export const editFlightsAPI = async (flight) => {
       return res.data;
     });
 };
+
+export const updateSeatsAPI = async (flight) => {
+
+  return await axios.post("http://localhost:8000/updateSeats", flight)
+    .then((res) => {
+      return res.data;
+    });
+};
+export const getAirportsAPI = async () => {
+
+
+  return await axios.get("http://localhost:8000/getAirports")
+    .then((res) => {
+      return res.data;
+    });
+};
