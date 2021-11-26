@@ -8,6 +8,8 @@ import AllFlights from "./components/view-all-flights";
 import SearchForm from "./components/search-flight";
 import SearchResults from "./components/search-results";
 import WelcomeScreen from "./components/welcome-screen";
+import UserHome from "./components/user-home";
+import UserDepFlights from "./components/user-dep-flights";
 
 function App() {
   return (
@@ -31,6 +33,12 @@ function App() {
       </div>
       <div className="container">
         <Route path="/search-results" component={SearchResults} />
+      </div>
+      <div className="container">
+        <Route path="/user-home" component={UserHome} />
+      </div>
+      <div className="container">
+        <Route path="/user-dep-flights" component={UserDepFlights} />
       </div>
     </Router>
   );

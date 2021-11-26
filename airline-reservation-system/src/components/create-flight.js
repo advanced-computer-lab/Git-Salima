@@ -26,13 +26,13 @@ const Flight = () => {
       ArrivalDate: ArrivalDate,
       DepartureTime: DepartureTime,
       ArrivalTime: ArrivalTime,
-      Terminal:Terminal,
+      Terminal: Terminal,
       EconomySeats: EconomySeats,
       BusinessClassSeats: BusinessClassSeats,
       FirstClassSeats: FirstClassSeats,
-      EconomyLuggage:EconomyLuggage,
-      BusinessClassLuggage:BusinessClassLuggage,
-      FirstClassLuggage:FirstClassLuggage,
+      EconomyLuggage: EconomyLuggage,
+      BusinessClassLuggage: BusinessClassLuggage,
+      FirstClassLuggage: FirstClassLuggage,
       DepartureAirport: DepartureAirport,
       ArrivalAirport: ArrivalAirport,
     };
@@ -97,7 +97,6 @@ const Flight = () => {
             value={ArrivalTime}
             onChange={(e) => setArrivalTime(e.target.value)}
           />
-          
         </div>
         <div className="form-group">
           <label>Terminal: </label>
