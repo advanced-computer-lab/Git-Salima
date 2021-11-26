@@ -34,6 +34,7 @@ const w = window.innerWidth;
 const h = window.innerHeight;
 var thisFlightClass = localStorage.getItem("UFSFClass");
 export default function FlightCard(props) {
+
   const selectHandler = () => {
     props.onClickSelect(props);
   };

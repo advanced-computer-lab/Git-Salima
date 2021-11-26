@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { searchFlightsAPI } from "../apis";
 import { styled } from "@mui/material/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import SearchResults from "./search-results";
 import "@fontsource/philosopher";
 import { Typography } from "@mui/material";
-import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
 import axios from "axios";
-import dateAdapter from "@mui/lab/AdapterDateFns";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
@@ -64,15 +59,12 @@ const Flight = () => {
   let history = useHistory();
   const searchFlight = async (e) => {
     e.preventDefault();
-    //WRITE THIS THERE AND SET LOCAL STORAGE ONE VARIABLE PER ATTRIBUTE
 
     localStorage.setItem("UFSDAirport", DepartureAirport);
     localStorage.setItem("UFSAAirport", ArrivalAirport);
     localStorage.setItem("UFSDDate", DepartureDate);
     localStorage.setItem("UFSADate", ArrivalDate);
     localStorage.setItem("UFSFClass", FlightClass);
-    console.log("local Storage");
-    console.log(localStorage.getItem("UserFSCriteria"));
     history.push("/user-dep-flights");
   };
   const handleChange = (event) => {
@@ -90,112 +82,6 @@ const Flight = () => {
     <div>
       <ThemeProvider theme={theme}>
         <Typography variant="h2">Search Flight</Typography>
-        {/* <Box
-          component="form"
-          sx={{
-            "& .MuiTextField-root": { m: 1, width: "25ch" },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <div>
-            <Autocomplete
-              id="auto-complete"
-              autoComplete
-              includeInputInList
-              options={allFlights}
-              getOptionLabel={(option) => option.DepartureAirport.toString()}
-              sx={{ width: 300 }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Departure Airport"
-                  variant="standard"
-                />
-              )}
-            />
-
-            <TextField
-              required
-              id="filled-required"
-              label="Departure Airport"
-              defaultValue="Departure Airport"
-              variant="filled"
-              value={DepartureAirport}
-              onChange={(e) => setDepartureAirport(e.target.value)}
-            />
-            <TextField
-              required
-              id="filled-required"
-              label="Arrival Airport"
-              defaultValue="Arrival Airport"
-              variant="filled"
-              value={ArrivalAirport}
-              onChange={(e) => setArrivalAirport(e.target.value)}
-            />
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
-                label="Departure Date"
-                value={DepartureDate}
-                onChange={(newValue) => {
-                  setDepartureDate(newValue);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
-                label="Return Date"
-                value={ArrivalDate}
-                onChange={(newValue) => {
-                  setArrivalDate(newValue);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
-            <TextField
-              id="filled-number"
-              label="Number of Adults"
-              type="number"
-              defaultValue="1"
-              InputProps={{ inputProps: { min: 1 } }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              variant="filled"
-            />
-            <TextField
-              id="filled-number"
-              label="Number of Children"
-              type="number"
-              defaultValue="0"
-              InputProps={{ inputProps: { min: 0 } }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              variant="filled"
-            />
-            <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-simple-select-label">
-                Flight Class
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={FlightClass}
-                label="Class"
-                onChange={handleChange}
-              >
-                <MenuItem value={"Economy"}>Economy</MenuItem>
-                <MenuItem value={"Business"}>Business</MenuItem>
-                <MenuItem value={"First Class"}>First Class</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-          <ColorButton variant="contained" onClick={searchFlight}>
-            Search
-          </ColorButton>
-        </Box> */}
         <Card>
           <CardContent style={{ backgroundColor: "#EFEAE4" }}>
             <form onSubmit={searchFlight}>
