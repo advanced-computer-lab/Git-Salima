@@ -39,3 +39,11 @@ export const editFlightsAPI = async (flight) => {
       return res.data;
     });
 };
+export const getAirports = async () => {
+
+
+  return await axios.get("http://localhost:8000/getAirports")
+    .then((res) => {
+      return res.data;
+    });
+};

@@ -41,6 +41,10 @@ const flightSchema = new Schema({
     ArrivalAirport: {
         type: String,
         required: true
+    },
+    TakenSeats: {
+        type: String,
+        required: true
     }
 }, { timestamps: true });
 
