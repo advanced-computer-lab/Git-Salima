@@ -9,6 +9,7 @@ import SearchForm from "./components/search-flight";
 import SearchResults from "./components/search-results";
 import WelcomeScreen from "./components/welcome-screen";
 import UserHome from "./components/user-home";
+import UserDepFlights from "./components/user-dep-flights";
 
 function App() {
   return (
@@ -34,10 +35,10 @@ function App() {
         <Route path="/search-results" component={SearchResults} />
       </div>
       <div className="container">
-        <Route path="/userHome" component={UserHome} />
+        <Route path="/user-home" component={UserHome} />
       </div>
       <div className="container">
-        <Route path="/userDepFlight" component={UserHome} />
+        <Route path="/user-dep-flights" component={UserDepFlights} />
       </div>
     </Router>
   );

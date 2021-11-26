@@ -26,198 +26,22 @@ const Flight = () => {
       ArrivalDate: ArrivalDate,
       DepartureTime: DepartureTime,
       ArrivalTime: ArrivalTime,
-      Terminal:Terminal,
+      Terminal: Terminal,
       EconomySeats: EconomySeats,
       BusinessClassSeats: BusinessClassSeats,
       FirstClassSeats: FirstClassSeats,
-      EconomyLuggage:EconomyLuggage,
-      BusinessClassLuggage:BusinessClassLuggage,
-      FirstClassLuggage:FirstClassLuggage,
+      EconomyLuggage: EconomyLuggage,
+      BusinessClassLuggage: BusinessClassLuggage,
+      FirstClassLuggage: FirstClassLuggage,
       DepartureAirport: DepartureAirport,
       ArrivalAirport: ArrivalAirport,
     };
     createFlightAPI(flight);
   };
-<<<<<<< HEAD
-  const handleClose = (e) => {
-    e.preventDefault();
-
-    const flight = {
-      FlightNo: FlightNo,
-      DepartureDate: DepartureDate,
-      ArrivalDate: ArrivalDate,
-      DepartureTime: DepartureTime,
-      ArrivalTime: ArrivalTime,
-      EconomySeats: EconomySeats,
-      BusinessClassSeats: BusinessClassSeats,
-      FirstClassSeats: FirstClassSeats,
-      DepartureAirport: DepartureAirport,
-      ArrivalAirport: ArrivalAirport,
-    };
-    createFlightAPI(flight);
-    setOpen(false);
-    window.location.reload(false);
-  };
-  const handleCloseFalse = () => {
-    setOpen(false);
-    window.location.reload(false);
-  };
-=======
->>>>>>> f75470a91d718d302f5d26710f673fddb271ba85
 
   return (
     <div>
       <h3>Create Flight</h3>
-<<<<<<< HEAD
-      <div className="form-group">
-        <label>Flight Number: </label>
-        <input
-          type="number"
-          required
-          className="form-control"
-          value={FlightNo}
-          onChange={(e) => setFlightNo(e.target.value)}
-        />
-      </div>
-      <div className="form-group" className="col-md-6">
-        <label>Departure Date: </label>
-        <input
-          type="date"
-          required
-          className="form-control"
-          value={DepartureDate}
-          onChange={(e) => setDepartureDate(e.target.value)}
-        />
-      </div>
-      <div className="form-group" className="col-md-6">
-        <label>Arrival Date: </label>
-        <input
-          type="date"
-          required
-          className="form-control"
-          value={ArrivalDate}
-          onChange={(e) => setArrivalDate(e.target.value)}
-        />
-      </div>
-      <div className="form-group" className="col-md-6">
-        <label>Departure Time: </label>
-        <input
-          type="time"
-          required
-          className="form-control"
-          value={DepartureTime}
-          onChange={(e) => setDepartureTime(e.target.value)}
-        />
-      </div>
-      <div className="form-group" className="col-md-6">
-        <label>Arrival Time: </label>
-        <input
-          type="time"
-          required
-          className="form-control"
-          value={ArrivalTime}
-          onChange={(e) => setArrivalTime(e.target.value)}
-        />
-      </div>
-      <div className="form-group">
-        <label>Economy Seats: </label>
-        <input
-          type="number"
-          required
-          className="form-control"
-          value={EconomySeats}
-          onChange={(e) => setEconomySeats(e.target.value)}
-        />
-      </div>
-      <div className="form-group">
-        <label>Business Class Seats: </label>
-        <input
-          type="number"
-          required
-          className="form-control"
-          value={BusinessClassSeats}
-          onChange={(e) => setBusinessClassSeats(e.target.value)}
-        />
-      </div>
-      <div className="form-group">
-        <label>First Class Seats: </label>
-        <input
-          type="number"
-          required
-          className="form-control"
-          value={FirstClassSeats}
-          onChange={(e) => setFirstClassSeats(e.target.value)}
-        />
-      </div>
-      <div className="form-group" className="col-md-6">
-        <label>Departure Airport: </label>
-        <input
-          type="text"
-          required
-          className="form-control"
-          value={DepartureAirport}
-          onChange={(e) => setDepartureAirport(e.target.value)}
-        />
-      </div>
-      <div className="form-group" className="col-md-6">
-        <label>Arrival Airport: </label>
-        <input
-          type="text"
-          required
-          className="form-control"
-          value={ArrivalAirport}
-          onChange={(e) => setArrivalAirport(e.target.value)}
-        />
-      </div>
-      <br />
-      <div className="form-group">
-        <input
-          type="button"
-          value="Create Flight"
-          className="btn btn-dark"
-          onClick={handleClickOpen}
-        />
-      </div>
-      {{ FlightNo } === "" ? (
-        <Card>
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                You must enter Flight Number
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose}>OK</Button>
-            </DialogActions>
-          </Dialog>
-        </Card>
-      ) : (
-        <Card>
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Flight Created Successfully
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose}>OK</Button>
-            </DialogActions>
-          </Dialog>
-        </Card>
-      )}
-=======
       <form onSubmit={createFlight} className="row g-3">
         <div className="form-group">
           <label>Flight Number: </label>
@@ -273,7 +97,6 @@ const Flight = () => {
             value={ArrivalTime}
             onChange={(e) => setArrivalTime(e.target.value)}
           />
-          
         </div>
         <div className="form-group">
           <label>Terminal: </label>
@@ -380,7 +203,6 @@ const Flight = () => {
           <input type="submit" value="Create Flight" className="btn btn-dark" />
         </div>
       </form>
->>>>>>> f75470a91d718d302f5d26710f673fddb271ba85
     </div>
   );
 };
