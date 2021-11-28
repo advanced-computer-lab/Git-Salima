@@ -49,20 +49,11 @@ const DepartureFlights = () => {
   const clickHandlerSelect = async (input) => {
     const temp = JSON.stringify(input);
     const temp2 = JSON.parse(temp);
+
     localStorage.setItem("DepartureAirportAro", temp2.DepartureAirport);
     localStorage.setItem("ArrivalAirportAro", temp2.ArrivalAirport);
     localStorage.setItem("DepartureDateAro", temp2.DepartureDate.substring(0, 10));
     localStorage.setItem("ArrivalDateAro", temp2.ArrivalDate.substring(0, 10));
-    localStorage.setItem("FlightNoAro", temp2.FlightNo);
-    localStorage.setItem("DepartureTimeAro", temp2.DepartureTime);
-    localStorage.setItem("ArrivalTimeAro", temp2.ArrivalTime);
-    localStorage.setItem("TerminalAro", temp2.Terminal);
-    localStorage.setItem("EconomySeatsAro", temp2.EconomySeats);
-    localStorage.setItem("BusinessClassSeatsAro", temp2.BusinessClassSeats);
-    localStorage.setItem("FirstClassSeatsAro", temp2.FirstClassSeats);
-    localStorage.setItem("EconomyLuggageAro", temp2.EconomyLuggage);
-    localStorage.setItem("BusinessClassLuggageAro", temp2.BusinessClassLuggage);
-    localStorage.setItem("FirstClassLuggageAro", temp2.FirstClassLuggage);
     localStorage.setItem("FlightIDAro", temp2._id);
     history.push("/user-ret-flights");
   };
