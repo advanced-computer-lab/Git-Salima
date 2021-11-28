@@ -43,6 +43,17 @@ const UpdatedFlight = (props) => {
   const [FirstClassLuggage, setFirstClassLuggage] = useState(
     props.flightToEdit.FirstClassLuggage
   );
+
+  const [EconomyPrice, setEconomyPrice] = useState(
+    props.flightToEdit.EconomyPrice
+  );
+  const [BusinessClassPrice, setBusinessClassPrice] = useState(
+    props.flightToEdit.BusinessClassPrice
+  );
+  const [FirstClassPrice, setFirstClassPrice] = useState(
+    props.flightToEdit.FirstClassPrice
+  );
+
   const [DepartureAirport, setDepartureAirport] = useState(
     props.flightToEdit.DepartureAirport
   );
@@ -76,6 +87,9 @@ const UpdatedFlight = (props) => {
     props.flightToEdit.EconomyLuggage = EconomyLuggage;
     props.flightToEdit.BusinessClassLuggage = BusinessClassLuggage;
     props.flightToEdit.FirstClassLuggage = FirstClassLuggage;
+    props.flightToEdit.EconomyPrice = EconomyPrice;
+    props.flightToEdit.BusinessClassPrice = BusinessClassPrice;
+    props.flightToEdit.FirstClassPrice = FirstClassPrice;
     props.flightToEdit.DepartureAirport = DepartureAirport;
     props.flightToEdit.ArrivalAirport = ArrivalAirport;
 
@@ -96,6 +110,9 @@ const UpdatedFlight = (props) => {
     props.flightToEdit.EconomyLuggage = EconomyLuggage;
     props.flightToEdit.BusinessClassLuggage = BusinessClassLuggage;
     props.flightToEdit.FirstClassLuggage = FirstClassLuggage;
+    props.flightToEdit.EconomyPrice = EconomyPrice;
+    props.flightToEdit.BusinessClassPrice = BusinessClassPrice;
+    props.flightToEdit.FirstClassPrice = FirstClassPrice;
     props.flightToEdit.DepartureAirport = DepartureAirport;
     props.flightToEdit.ArrivalAirport = ArrivalAirport;
     editFlightsAPI(props.flightToEdit);

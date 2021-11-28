@@ -112,6 +112,23 @@ export default function FlightCard(props) {
                 </Typography>
               )}
             </Stack>
+            <Stack spacing={25} direction="row">
+              {localStorage.getItem("UFSFClass") === "First Class" && (
+                <Typography variant="body2" color="text.secondary">
+                  First Class Price: {props.FirstClassPrice}
+                </Typography>
+              )}
+              {localStorage.getItem("UFSFClass") === "Business" && (
+                <Typography variant="body2" color="text.secondary">
+                  Business Class Price: {props.BusinessClassPrice}
+                </Typography>
+              )}
+              {localStorage.getItem("UFSFClass") === "Economy" && (
+                <Typography variant="body2" color="text.secondary">
+                  Economy Price: {props.EconomyPrice}
+                </Typography>
+              )}
+            </Stack>
             <CardActions>
               <ColorButton variant="contained" onClick={selectHandler}>
                 Select
