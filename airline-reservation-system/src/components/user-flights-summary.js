@@ -45,6 +45,9 @@ const FlightsSummary = () => {
             EconomyLuggage={flight.EconomyLuggage}
             BusinessClassLuggage={flight.BusinessClassLuggage}
             FirstClassLuggage={flight.FirstClassLuggage}
+            EconomyPrice={flight.EconomyPrice}
+            BusinessClassPrice={flight.BusinessClassPrice}
+            FirstClassPrice={flight.FirstClassPrice}
             DepartureAirport={flight.DepartureAirport}
             ArrivalAirport={flight.ArrivalAirport}
             //onClickChooseSeats={clickHandlerChooseSeats}
