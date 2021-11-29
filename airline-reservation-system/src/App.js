@@ -12,6 +12,7 @@ import UserHome from "./components/user-home";
 import UserDepFlights from "./components/user-dep-flights";
 import UserRetFlights from "./components/user-ret-flights";
 import UserFlightsSummary from "./components/user-flights-summary";
+import UserFlightsItinerary from "./components/user-flights-itinerary";
 
 function App() {
   return (
@@ -47,6 +48,9 @@ function App() {
       </div>
       <div className="container">
         <Route path="/user-flights-summary" component={UserFlightsSummary} />
+      </div>
+      <div className="container">
+        <Route path="/user-flights-itinerary" component={UserFlightsItinerary} />
       </div>
     </Router>
   );

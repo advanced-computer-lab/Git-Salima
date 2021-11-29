@@ -81,7 +81,7 @@ const Flight = () => {
   return (
     <div>
       <ThemeProvider theme={theme}>
-        <Typography variant="h2">Search Flight</Typography>
+        <Typography variant="h2">Flight Search</Typography>
         <Card>
           <CardContent style={{ backgroundColor: "#EFEAE4" }}>
             <form onSubmit={searchFlight}>
