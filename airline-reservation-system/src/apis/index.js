@@ -13,7 +13,15 @@ export const searchFlightsAPI = async (flight) => {
       return res.data;
     });
 }
+export const userSearchFlightsAPI = async (flight) => {
+  const temp1 = JSON.stringify(flight);
+  const temp2 = JSON.parse(temp1);
 
+  return await axios.get("http://localhost:8000/user/search", { params: temp2 })
+    .then((res) => {
+      return res.data;
+    });
+}
 export const deleteFlightsAPI = async (flight) => {
   const temp = JSON.stringify(flight);
   const temp2 = JSON.parse(temp);
@@ -27,6 +35,21 @@ export const deleteFlightsAPI = async (flight) => {
 export const editFlightsAPI = async (flight) => {
 
   return await axios.post("http://localhost:8000/update", flight)
+    .then((res) => {
+      return res.data;
+    });
+};
+
+export const updateSeatsAPI = async (flight) => {
+
+  return await axios.post("http://localhost:8000/updateSeats", flight)
+    .then((res) => {
+      return res.data;
+    });
+};
+export const getAirportsAPI = async () => {
+
+  return await axios.get("http://localhost:8000/getAirports")
     .then((res) => {
       return res.data;
     });

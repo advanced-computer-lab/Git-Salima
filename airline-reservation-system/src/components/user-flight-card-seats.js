@@ -9,22 +9,14 @@ import { Button, CardActions } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import FlightLandIcon from "@mui/icons-material/FlightLand";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
-import CardMedia from "@mui/material/CardMedia";
-import EH from "./Economy Header.JPG";
-import track from "./track.png";
-import { View, Text } from "react";
 
 const theme = createTheme({
-    
   palette: {
     primary: {
       // light: will be calculated from palette.primary.main,
       main: "#082567",
       // dark: will be calculated from palette.primary.main,
       // contrastText: will be calculated to contrast with palette.primary.main
-    },
-    secondary: {
-      main: "#FBB404",
     },
   },
   typography: {
@@ -43,37 +35,40 @@ const h = window.innerHeight;
 var thisFlightClass = localStorage.getItem("UFSFClass");
 export default function FlightCard(props) {
 
-  const selectHandler = () => {
-    props.onClickSelect(props);
+  const seatsHandler = () => {
+    // props.onClickChooseSeats(props);
   };
 
   return (
     <div>
       <Card sx={{ maxWidth: { w } }}>
         <ThemeProvider theme={theme}>
-          <CardMedia component="img" alt="header" height="60" image={EH} />
           <CssBaseline />
           <CardContent style={{ backgroundColor: "#EFEAE4" }}>
-            <Typography
-              marginLeft={w / 25}
-              variant="h4"
-              component="div"
-              color="primary"
+            <Card
+              sx={{
+                maxWidth: { w },
+                maxHeight: "50px",
+                backgroundColor: "#082567",
+              }}
             >
-              Flight Number: {props.FlightNo}
-            </Typography>
-            <Stack spacing={1} direction="row" marginLeft="75px">
+              <Typography
+                marginLeft={w / 25}
+                variant="h4"
+                component="div"
+                color={theme.palette.getContrastText("#082567")}
+              >
+                Flight Number: {props.FlightNo}
+              </Typography>
+            </Card>
+            <br />
+            <Stack spacing={100} direction="row" marginLeft="75px">
               <Stack spacing={1} direction="row">
                 <Typography variant="h3" color="#082567">
                   {props.DepartureAirport}
                 </Typography>
                 <FlightTakeoffIcon sx={{ fontSize: 50 }} color="primary" />
               </Stack>
-              <div class="station-stop station-stop--multiple">
-                <span class="station-stop-detail">
-                  <em class="ico-airplane-2"></em>
-                </span>{" "}
-              </div>
               <Stack spacing={1} direction="row">
                 <FlightLandIcon sx={{ fontSize: 50 }} color="primary" />
                 <Typography variant="h3" color="#082567">
@@ -81,25 +76,10 @@ export default function FlightCard(props) {
                 </Typography>
               </Stack>
             </Stack>
-            <Stack spacing={45} direction="row" marginLeft="95px">
+            <Stack spacing={115} direction="row" marginLeft="95px">
               <Typography variant="h5" color="text.secondary">
                 {props.DepartureTime}
               </Typography>
-              {localStorage.getItem("UFSFClass") === "First Class" && (
-                <Typography variant="h5" color="text.secondary">
-                  First Class Luggage: {props.FirstClassLuggage}
-                </Typography>
-              )}
-              {localStorage.getItem("UFSFClass") === "Business" && (
-                <Typography variant="h5" color="text.secondary">
-                  Business Class Luggage: {props.BusinessClassLuggage}
-                </Typography>
-              )}
-              {localStorage.getItem("UFSFClass") === "Economy" && (
-                <Typography variant="h5" color="text.secondary">
-                  Economy Luggage: {props.EconomyLuggage}
-                </Typography>
-              )}
               <Typography variant="h5" color="text.secondary">
                 {props.ArrivalTime}
               </Typography>
@@ -112,12 +92,9 @@ export default function FlightCard(props) {
                 {props.ArrivalDate.substring(0, 10)}
               </Typography>
             </Stack>
-            <Typography variant="h5" color="text.secondary" marginLeft="70px">
+            <Typography variant="body2" color="text.secondary">
               Terminal: {props.Terminal}
             </Typography>
-<<<<<<< HEAD
-
-=======
             <Stack spacing={25} direction="row">
               {localStorage.getItem("UFSFClass") === "First Class" && (
                 <Typography variant="body2" color="text.secondary">
@@ -135,30 +112,10 @@ export default function FlightCard(props) {
                 </Typography>
               )}
             </Stack>
-            <Stack spacing={25} direction="row">
-              {localStorage.getItem("UFSFClass") === "First Class" && (
-                <Typography variant="body2" color="text.secondary">
-                  First Class Price: {props.FirstClassPrice}
-                </Typography>
-              )}
-              {localStorage.getItem("UFSFClass") === "Business" && (
-                <Typography variant="body2" color="text.secondary">
-                  Business Class Price: {props.BusinessClassPrice}
-                </Typography>
-              )}
-              {localStorage.getItem("UFSFClass") === "Economy" && (
-                <Typography variant="body2" color="text.secondary">
-                  Economy Price: {props.EconomyPrice}
-                </Typography>
-              )}
-            </Stack>
->>>>>>> 6c264b36bb3686c19071f07a632fc2e9dc7e8f92
             <CardActions>
-              <Stack spacing={105} direction="row" marginLeft="1050px">
-                <ColorButton variant="contained" onClick={selectHandler}>
-                  Select
-                </ColorButton>
-              </Stack>
+              <ColorButton variant="contained" onClick={seatsHandler}>
+                Choose Seats
+              </ColorButton>
             </CardActions>
           </CardContent>
         </ThemeProvider>

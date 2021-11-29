@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import UpdatedFlight from "./edit-flight";
 import UserFlightCard from "./user-flight-card";
-
 import { useHistory } from "react-router-dom";
-import { searchFlightsAPI } from "../apis";
 
-const Flights = () => {
+
+const DepartureFlights = () => {
   const [FlightNo, setFlightNo] = useState("");
   const [ArrivalDate, setArrivalDate] = useState("");
   const [DepartureTime, setDepartureTime] = useState("");
@@ -20,8 +18,6 @@ const Flights = () => {
   const [FirstClassLuggage, setFirstClassLuggage] = useState("");
 
   const [allFlights, setAllFlights] = useState([]);
-
-  console.log(localStorage.getItem("UFSDAirport"));
 
   const flight = {
     FlightNo: FlightNo,
@@ -43,20 +39,23 @@ const Flights = () => {
   useEffect(() => {
     const temp1 = JSON.stringify(flight);
     const temp2 = JSON.parse(temp1);
-    axios.get("http://localhost:8000/search", { params: temp2 }).then((res) => {
-      setAllFlights(res.data);
-      console.log(res.data);
-    });
+    axios.get("http://localhost:8000/search", { params: temp2 })
+      .then((res) => {
+        setAllFlights(res.data);
+      });
   }, []);
+
   let history = useHistory();
   const clickHandlerSelect = async (input) => {
-    //the address of the results vvvv
+    const temp = JSON.stringify(input);
+    const temp2 = JSON.parse(temp);
+
+    localStorage.setItem("DepartureAirportAro", temp2.DepartureAirport);
+    localStorage.setItem("ArrivalAirportAro", temp2.ArrivalAirport);
+    localStorage.setItem("DepartureDateAro", temp2.DepartureDate.substring(0, 10));
+    localStorage.setItem("ArrivalDateAro", temp2.ArrivalDate.substring(0, 10));
+    localStorage.setItem("FlightIDAro", temp2._id);
     history.push("/user-ret-flights");
-    // const temp = JSON.stringify(input);
-    // const temp2 = JSON.parse(temp);
-    // console.log(temp2);
-    // deleteFlightsAPI(temp2);
-    // setShowDeleteAlert("allFlights");
   };
 
   return (
@@ -77,6 +76,9 @@ const Flights = () => {
             EconomyLuggage={flight.EconomyLuggage}
             BusinessClassLuggage={flight.BusinessClassLuggage}
             FirstClassLuggage={flight.FirstClassLuggage}
+            EconomyPrice={flight.EconomyPrice}
+            BusinessClassPrice={flight.BusinessClassPrice}
+            FirstClassPrice={flight.FirstClassPrice}
             DepartureAirport={flight.DepartureAirport}
             ArrivalAirport={flight.ArrivalAirport}
             onClickSelect={clickHandlerSelect}
@@ -86,4 +88,4 @@ const Flights = () => {
     </div>
   );
 };
-export default Flights;
+export default DepartureFlights;

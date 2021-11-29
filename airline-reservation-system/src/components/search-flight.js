@@ -17,7 +17,9 @@ const Flight = () => {
   const [EconomyLuggage, setEconomyLuggage] = useState("");
   const [BusinessClassLuggage, setBusinessClassLuggage] = useState("");
   const [FirstClassLuggage, setFirstClassLuggage] = useState("");
-
+  const [EconomyPrice, setEconomyPrice] = useState("");
+  const [BusinessClassPrice, setBusinessClassPrice] = useState("");
+  const [FirstClassPrice, setFirstClassPrice] = useState("");
   const [showResult, setShowResult] = useState("search");
   const [results, setResults] = useState([]);
 
@@ -37,6 +39,9 @@ const Flight = () => {
       EconomyLuggage:EconomyLuggage,
       BusinessClassLuggage:BusinessClassLuggage,
       FirstClassLuggage:FirstClassLuggage,
+      EconomyPrice: EconomyPrice,
+      BusinessClassPrice: BusinessClassPrice,
+      FirstClassPrice: FirstClassPrice,
       DepartureAirport: DepartureAirport,
       ArrivalAirport: ArrivalAirport,
     };
@@ -172,6 +177,40 @@ const Flight = () => {
               onChange={(e) => setFirstClassLuggage(e.target.value)}
             />
           </div>
+          <div className="form-group">
+          <label>Economy Price: </label>
+          <input
+            type="number"
+            required
+            className="form-control"
+            min="0"
+            value={EconomyPrice}
+            onChange={(e) => setEconomyPrice(e.target.value)}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Business Class Price: </label>
+          <input
+            type="number"
+            required
+            className="form-control"
+            min="0"
+            value={BusinessClassPrice}
+            onChange={(e) => setBusinessClassPrice(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label>First Class Price: </label>
+          <input
+            type="number"
+            required
+            className="form-control"
+            min="0"
+            value={FirstClassPrice}
+            onChange={(e) => setFirstClassPrice(e.target.value)}
+          />
+        </div>
           <div className="form-group" className="col-md-6">
             <label>Departure Airport: </label>
             <input

@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { searchFlightsAPI } from "../apis";
 import { styled } from "@mui/material/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import SearchResults from "./search-results";
 import "@fontsource/philosopher";
 import { Typography } from "@mui/material";
-import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
 import axios from "axios";
-import dateAdapter from "@mui/lab/AdapterDateFns";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
@@ -67,15 +62,12 @@ const Flight = () => {
   let history = useHistory();
   const searchFlight = async (e) => {
     e.preventDefault();
-    //WRITE THIS THERE AND SET LOCAL STORAGE ONE VARIABLE PER ATTRIBUTE
 
     localStorage.setItem("UFSDAirport", DepartureAirport);
     localStorage.setItem("UFSAAirport", ArrivalAirport);
     localStorage.setItem("UFSDDate", DepartureDate);
     localStorage.setItem("UFSADate", ArrivalDate);
     localStorage.setItem("UFSFClass", FlightClass);
-    console.log("local Storage");
-    console.log(localStorage.getItem("UserFSCriteria"));
     history.push("/user-dep-flights");
   };
   const handleChange = (event) => {
@@ -92,6 +84,7 @@ const Flight = () => {
   return (
     <div>
       <ThemeProvider theme={theme}>
+<<<<<<< HEAD
         <div class="box">
           <img class="img" src={bg} alt="Girl in a jacket" />
         </div>
@@ -237,6 +230,24 @@ const Flight = () => {
                       onChange={(e) => setDepartureAirport(e.target.value)}
                     />
                   </div>
+=======
+        <Typography variant="h2">Flight Search</Typography>
+        <Card>
+          <CardContent style={{ backgroundColor: "#EFEAE4" }}>
+            <form onSubmit={searchFlight}>
+              <div className="row">
+                <div className="col">
+                  <TextField
+                    required
+                    id="filled-required"
+                    label="Departure Airport"
+                    defaultValue="Departure Airport"
+                    variant="filled"
+                    value={DepartureAirport}
+                    onChange={(e) => setDepartureAirport(e.target.value)}
+                  />
+                </div>
+>>>>>>> 6c264b36bb3686c19071f07a632fc2e9dc7e8f92
 
                   <div className="col-md-10">
                     <TextField
