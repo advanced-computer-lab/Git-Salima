@@ -21,7 +21,10 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { useHistory } from "react-router-dom";
 import { Button } from "@mui/material";
-
+import Header from "./Header.js";
+import HeaderLinks from "./HeaderLinks.js";
+import bg from "./bg4.jpg";
+import "../styles/header.css";
 const Flight = () => {
   const [FlightNo, setFlightNo] = useState("");
   const [DepartureDate, setDepartureDate] = useState("");
@@ -85,11 +88,21 @@ const Flight = () => {
       backgroundColor: "#5F9CC5",
     },
   }));
-
+  const w = window.outerWidth;
   return (
     <div>
       <ThemeProvider theme={theme}>
-        <Typography variant="h2">Search Flight</Typography>
+        <div class="box">
+          <img class="img" src={bg} alt="Girl in a jacket" />
+        </div>
+        <Typography variant="h1" class="wlcmtxt">
+          {" "}
+          Git Salima Airlines
+        </Typography>
+        <Typography class="wlcmtxt2">
+          {" "}
+          We Git you where you want to go
+        </Typography>
         {/* <Box
           component="form"
           sx={{
@@ -196,121 +209,135 @@ const Flight = () => {
             Search
           </ColorButton>
         </Box> */}
-        <Card>
-          <CardContent style={{ backgroundColor: "#EFEAE4" }}>
-            <form onSubmit={searchFlight}>
-              <div className="row">
-                <div className="col">
-                  <TextField
-                    required
-                    id="filled-required"
-                    label="Departure Airport"
-                    defaultValue="Departure Airport"
-                    variant="filled"
-                    value={DepartureAirport}
-                    onChange={(e) => setDepartureAirport(e.target.value)}
-                  />
-                </div>
-
-                <div className="col-md-10">
-                  <TextField
-                    required
-                    id="filled-required"
-                    label="Arrival Airport"
-                    defaultValue="Arrival Airport"
-                    variant="filled"
-                    value={ArrivalAirport}
-                    onChange={(e) => setArrivalAirport(e.target.value)}
-                  />
-                </div>
-              </div>
-              <br />
-              <div className="row">
-                <div className="form-group col-md-2">
-                  <LocalizationProvider required dateAdapter={AdapterDateFns}>
-                    <DatePicker
-                      label="Departure Date"
-                      value={DepartureDate}
+        <Header
+          color="transparent"
+          brand="Git Salima Airlines"
+          rightLinks={<HeaderLinks />}
+          fixed
+          changeColorOnScroll={{
+            height: 100,
+            color: "white",
+          }}
+        />
+        <br />
+        <div class="card">
+          <Typography variant="h2">Search Flight</Typography>
+          <Card>
+            <CardContent style={{ backgroundColor: "#EFEAE4" }}>
+              <form onSubmit={searchFlight}>
+                <div className="row">
+                  <div className="col">
+                    <TextField
                       required
-                      onChange={(newValue) => {
-                        setDepartureDate(newValue);
-                      }}
-                      renderInput={(params) => <TextField {...params} />}
+                      id="filled-required"
+                      label="Departure Airport"
+                      defaultValue="Departure Airport"
+                      variant="filled"
+                      value={DepartureAirport}
+                      onChange={(e) => setDepartureAirport(e.target.value)}
                     />
-                  </LocalizationProvider>
-                </div>
+                  </div>
 
-                <div className="form-group col-md-2">
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DatePicker
-                      label="Return Date"
-                      value={ArrivalDate}
+                  <div className="col-md-10">
+                    <TextField
                       required
-                      onChange={(newValue) => {
-                        setArrivalDate(newValue);
-                      }}
-                      renderInput={(params) => <TextField {...params} />}
+                      id="filled-required"
+                      label="Arrival Airport"
+                      defaultValue="Arrival Airport"
+                      variant="filled"
+                      value={ArrivalAirport}
+                      onChange={(e) => setArrivalAirport(e.target.value)}
                     />
-                  </LocalizationProvider>
+                  </div>
                 </div>
-                <div className="form-group col-md-2">
-                  <TextField
-                    id="filled-number"
-                    label="Number of Adults"
-                    type="number"
-                    defaultValue="1"
-                    InputProps={{ inputProps: { min: 1 } }}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    variant="filled"
-                  />
-                </div>
+                <br />
+                <div className="row">
+                  <div className="form-group col-md-2">
+                    <LocalizationProvider required dateAdapter={AdapterDateFns}>
+                      <DatePicker
+                        label="Departure Date"
+                        value={DepartureDate}
+                        required
+                        onChange={(newValue) => {
+                          setDepartureDate(newValue);
+                        }}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                    </LocalizationProvider>
+                  </div>
 
-                <div className="col-md-2 ">
-                  <TextField
-                    id="filled-number"
-                    label="Number of Children"
-                    type="number"
-                    defaultValue="0"
-                    InputProps={{ inputProps: { min: 0 } }}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    variant="filled"
-                  />
-                </div>
-                <div className="col-md-2">
-                  <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="demo-simple-select-label">
-                      Flight Class
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={FlightClass}
-                      label="Class"
-                      required
-                      onChange={handleChange}
-                    >
-                      <MenuItem value={"Economy"}>Economy</MenuItem>
-                      <MenuItem value={"Business"}>Business</MenuItem>
-                      <MenuItem value={"First Class"}>First Class</MenuItem>
-                    </Select>
-                  </FormControl>
-                </div>
-              </div>
-              <br />
+                  <div className="form-group col-md-2">
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      <DatePicker
+                        label="Return Date"
+                        value={ArrivalDate}
+                        required
+                        onChange={(newValue) => {
+                          setArrivalDate(newValue);
+                        }}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                    </LocalizationProvider>
+                  </div>
+                  <div className="form-group col-md-2">
+                    <TextField
+                      id="filled-number"
+                      label="Number of Adults"
+                      type="number"
+                      defaultValue="1"
+                      InputProps={{ inputProps: { min: 1 } }}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      variant="filled"
+                    />
+                  </div>
 
-              <br />
-              <div className="form-group">
-                <ColorButton variant="contained" type="submit">
-                  Search
-                </ColorButton>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
+                  <div className="col-md-2 ">
+                    <TextField
+                      id="filled-number"
+                      label="Number of Children"
+                      type="number"
+                      defaultValue="0"
+                      InputProps={{ inputProps: { min: 0 } }}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      variant="filled"
+                    />
+                  </div>
+                  <div className="col-md-2">
+                    <FormControl sx={{ m: 1, minWidth: 120 }}>
+                      <InputLabel id="demo-simple-select-label">
+                        Flight Class
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={FlightClass}
+                        label="Class"
+                        required
+                        onChange={handleChange}
+                      >
+                        <MenuItem value={"Economy"}>Economy</MenuItem>
+                        <MenuItem value={"Business"}>Business</MenuItem>
+                        <MenuItem value={"First Class"}>First Class</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+                </div>
+                <br />
+
+                <br />
+                <div className="form-group">
+                  <ColorButton variant="contained" type="submit">
+                    Search
+                  </ColorButton>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
       </ThemeProvider>
     </div>
   );
