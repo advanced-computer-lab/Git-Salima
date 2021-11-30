@@ -49,7 +49,6 @@ export const updateSeatsAPI = async (flight) => {
 };
 export const getAirportsAPI = async () => {
 
-
   return await axios.get("http://localhost:8000/getAirports")
     .then((res) => {
       return res.data;

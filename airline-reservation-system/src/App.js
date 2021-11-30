@@ -13,6 +13,7 @@ import UserDepFlights from "./components/user-dep-flights";
 import UserRetFlights from "./components/user-ret-flights";
 import UserFlightsSummary from "./components/user-flights-summary";
 import ChooseSeats from "./components/chooseSeats/index2";
+import UserFlightsItinerary from "./components/user-flights-itinerary";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
       </div>
       <div className="container">
         <Route path="/choose-seats" component={ChooseSeats} />
+        <Route path="/user-flights-itinerary" component={UserFlightsItinerary} />
       </div>
     </Router>
   );

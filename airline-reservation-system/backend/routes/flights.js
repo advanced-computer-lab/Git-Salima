@@ -20,6 +20,9 @@ router.post("/create", async (req, res) => {
   const EconomyLuggage = req.body.EconomyLuggage;
   const BusinessClassLuggage = req.body.BusinessClassLuggage;
   const FirstClassLuggage = req.body.FirstClassLuggage;
+  const EconomyPrice = req.body.EconomyPrice;
+  const BusinessClassPrice = req.body.BusinessClassPrice;
+  const FirstClassPrice = req.body.FirstClassPrice;
   const DepartureAirport = req.body.DepartureAirport;
   const ArrivalAirport = req.body.ArrivalAirport;
   const TakenSeats=[];
@@ -36,6 +39,9 @@ router.post("/create", async (req, res) => {
     EconomyLuggage,
     BusinessClassLuggage,
     FirstClassLuggage,
+    EconomyPrice,
+    BusinessClassPrice, 
+    FirstClassPrice,
     DepartureAirport,
     ArrivalAirport,
     TakenSeats,
