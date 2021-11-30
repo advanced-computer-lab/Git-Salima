@@ -17,7 +17,6 @@ import UserFlightsItinerary from "./components/user-flights-itinerary";
 function App() {
   return (
     <Router>
-      <Navbar />
       <br />
       <div className="container">
         <Route exact path="/" Redirect to="/home" component={WelcomeScreen} />
@@ -50,7 +49,10 @@ function App() {
         <Route path="/user-flights-summary" component={UserFlightsSummary} />
       </div>
       <div className="container">
-        <Route path="/user-flights-itinerary" component={UserFlightsItinerary} />
+        <Route
+          path="/user-flights-itinerary"
+          component={UserFlightsItinerary}
+        />
       </div>
     </Router>
   );

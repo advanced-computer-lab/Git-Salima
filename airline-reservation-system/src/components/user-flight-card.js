@@ -10,12 +10,11 @@ import CssBaseline from "@mui/material/CssBaseline";
 import FlightLandIcon from "@mui/icons-material/FlightLand";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import CardMedia from "@mui/material/CardMedia";
-import EH from "./Economy Header.JPG";
+import EH from "./Economy Header.png";
 import track from "./track.png";
 import { View, Text } from "react";
 
 const theme = createTheme({
-    
   palette: {
     primary: {
       // light: will be calculated from palette.primary.main,
@@ -42,7 +41,6 @@ const w = window.innerWidth;
 const h = window.innerHeight;
 var thisFlightClass = localStorage.getItem("UFSFClass");
 export default function FlightCard(props) {
-
   const selectHandler = () => {
     props.onClickSelect(props);
   };
@@ -51,7 +49,7 @@ export default function FlightCard(props) {
     <div>
       <Card sx={{ maxWidth: { w } }}>
         <ThemeProvider theme={theme}>
-          <CardMedia component="img" alt="header" height="60" image={EH} />
+          <CardMedia component="img" alt="header" height="50" image={EH} />
           <CssBaseline />
           <CardContent style={{ backgroundColor: "#EFEAE4" }}>
             <Typography
@@ -62,18 +60,26 @@ export default function FlightCard(props) {
             >
               Flight Number: {props.FlightNo}
             </Typography>
-            <Stack spacing={1} direction="row" marginLeft="75px">
+            <Stack spacing={50} direction="row" marginLeft="75px">
               <Stack spacing={1} direction="row">
                 <Typography variant="h3" color="#082567">
                   {props.DepartureAirport}
                 </Typography>
                 <FlightTakeoffIcon sx={{ fontSize: 50 }} color="primary" />
               </Stack>
-              <div class="station-stop station-stop--multiple">
-                <span class="station-stop-detail">
-                  <em class="ico-airplane-2"></em>
-                </span>{" "}
-              </div>
+              <Stack spacing={1} direction="row">
+                <hr
+                  style={{
+                    position: "absolute",
+                    top: 150,
+                    left: 380,
+                    color: "text.secondary",
+                    backgroundColor: "text.secondary",
+                    height: 3,
+                    width: 600,
+                  }}
+                />
+              </Stack>
               <Stack spacing={1} direction="row">
                 <FlightLandIcon sx={{ fontSize: 50 }} color="primary" />
                 <Typography variant="h3" color="#082567">
@@ -115,6 +121,7 @@ export default function FlightCard(props) {
             <Typography variant="h5" color="text.secondary" marginLeft="70px">
               Terminal: {props.Terminal}
             </Typography>
+
             <Stack spacing={25} direction="row">
               {localStorage.getItem("UFSFClass") === "First Class" && (
                 <Typography variant="body2" color="text.secondary">
@@ -132,6 +139,7 @@ export default function FlightCard(props) {
                 </Typography>
               )}
             </Stack>
+
             <Stack spacing={25} direction="row">
               {localStorage.getItem("UFSFClass") === "First Class" && (
                 <Typography variant="body2" color="text.secondary">
