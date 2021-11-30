@@ -15,7 +15,7 @@ import track from "./track.png";
 import { View, Text } from "react";
 
 const theme = createTheme({
-    
+
   palette: {
     primary: {
       // light: will be calculated from palette.primary.main,
@@ -115,9 +115,6 @@ export default function FlightCard(props) {
             <Typography variant="h5" color="text.secondary" marginLeft="70px">
               Terminal: {props.Terminal}
             </Typography>
-<<<<<<< HEAD
-
-=======
             <Stack spacing={25} direction="row">
               {localStorage.getItem("UFSFClass") === "First Class" && (
                 <Typography variant="body2" color="text.secondary">
@@ -152,7 +149,6 @@ export default function FlightCard(props) {
                 </Typography>
               )}
             </Stack>
->>>>>>> 6c264b36bb3686c19071f07a632fc2e9dc7e8f92
             <CardActions>
               <Stack spacing={105} direction="row" marginLeft="1050px">
                 <ColorButton variant="contained" onClick={selectHandler}>
