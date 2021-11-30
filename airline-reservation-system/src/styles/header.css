@@ -1,0 +1,36 @@
+.box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+.card {
+  z-index: 1;
+  position: absolute;
+  top: 400px;
+}
+.img {
+  max-width: 100%;
+}
+.wlcmtxt {
+  position: absolute;
+  top: 20%;
+  left: 29%;
+  font-size: 80px;
+
+  z-index: 1;
+  font-family: Philosopher;
+  color: #ffffff;
+}
+.wlcmtxt2 {
+  position: absolute;
+  top: 34%;
+  left: 35%;
+  font-size: 30px;
+  font-style: italic;
+  z-index: 1;
+  font-family: Philosopher;
+  color: #ffffff;
+}
