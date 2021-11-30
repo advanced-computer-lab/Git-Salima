@@ -12,9 +12,9 @@ router.get("/", (req, res) => {
 
 
 router.post("/createBooking", async (req, res) => {
-  const UserID = req.body.UserID;
-  const FlightID = req.body.FlightID;
-   const Seats=req.body.Seats;
+  const UserID = req.body.User_ID;
+  const FlightID = req.body.Flight_ID;
+   const Seats=req.body.TakesnSeats;
    const EconomySeats = req.body.EconomySeats;
    const BusinessClassSeats = req.body.BusinessClassSeats;
    const FirstClassSeats = req.body.FirstClassSeats;
