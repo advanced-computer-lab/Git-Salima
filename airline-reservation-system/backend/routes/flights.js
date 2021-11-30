@@ -191,6 +191,20 @@ router.get("/delete", async (req, res) => {
 
 });
 
+router.get("/deletebooking", async (req, res) => {
+  const flight = req.query;
+  const query = {};
+  for (const p in flight) {
+    if (!(flight[p] == "")) {
+      query[`${p}`] = flight[p];
+    }
+  }
+  Booking.remove(query).then((result) => {
+    res.send(result)
+  })
+
+});
+
 router.post("/update", async (req, res) => {
   const flight = req.body;
   const query = {};
@@ -253,5 +267,22 @@ router.post("/updateSeats", async (req, res) => {
     res.send(result)
   })
 }
+
+
+
  );
+
+ router.post("/removeSeats", async (req, res) => {
+  const flight = req.body;
+  for(const p of flight.TakenSeats){
+    
+  const query = {$pull: { TakenSeats: p } };
+  
+ await  Flight.findByIdAndUpdate(flight.Flight_id, query)
+    
+  }
+  Flight.findById(flight._id).then((result) => {
+    res.send(result)
+  })
+});
 module.exports = router;
