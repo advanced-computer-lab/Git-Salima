@@ -125,6 +125,24 @@ export default function FlightCard(props) {
             <Stack spacing={25} direction="row">
               {localStorage.getItem("UFSFClass") === "First Class" && (
                 <Typography variant="body2" color="text.secondary">
+                  First Class Luggage: {props.FirstClassLuggage}
+                </Typography>
+              )}
+              {localStorage.getItem("UFSFClass") === "Business" && (
+                <Typography variant="body2" color="text.secondary">
+                  Business Class Luggage: {props.BusinessClassLuggage}
+                </Typography>
+              )}
+              {localStorage.getItem("UFSFClass") === "Economy" && (
+                <Typography variant="body2" color="text.secondary">
+                  Economy Luggage: {props.EconomyLuggage}
+                </Typography>
+              )}
+            </Stack>
+
+            <Stack spacing={25} direction="row">
+              {localStorage.getItem("UFSFClass") === "First Class" && (
+                <Typography variant="body2" color="text.secondary">
                   First Class Price: {props.FirstClassPrice}
                 </Typography>
               )}

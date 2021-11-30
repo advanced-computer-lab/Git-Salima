@@ -14,6 +14,18 @@ const bookingSchema = new Schema({
         type: Array,
         required: true,
     },
+    EconomySeats: {
+        type: Number,
+        required: true
+    },
+    BusinessClassSeats: {
+        type: Number,
+        required: true
+    },
+    FirstClassSeats: {
+        type: Number,
+        required: true
+    },
     
 }, { timestamps: true });
 
