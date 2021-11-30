@@ -26,6 +26,14 @@ const FlightsSummary = () => {
           });  
       }, []);
 
+      let history = useHistory();
+    const clickHandlerChooseSeats = async (input) => {
+    const temp = JSON.stringify(input);
+    const temp2 = JSON.parse(temp);
+    localStorage.setItem("SelectedFlightChooseSeats", temp2._id);
+    history.push("/choose-seats");
+  };
+  
     return (
         <div>
         <h1>Reserved Flights</h1>
@@ -47,7 +55,7 @@ const FlightsSummary = () => {
             FirstClassLuggage={flight.FirstClassLuggage}
             DepartureAirport={flight.DepartureAirport}
             ArrivalAirport={flight.ArrivalAirport}
-            //onClickChooseSeats={clickHandlerChooseSeats}
+            onClickChooseSeats={clickHandlerChooseSeats}
           />
         </div>
       ))}
@@ -69,7 +77,7 @@ const FlightsSummary = () => {
             FirstClassLuggage={flight.FirstClassLuggage}
             DepartureAirport={flight.DepartureAirport}
             ArrivalAirport={flight.ArrivalAirport}
-            //onClickChooseSeats={clickHandlerChooseSeats}
+            onClickChooseSeats={clickHandlerChooseSeats}
           />
         </div>
       ))}
