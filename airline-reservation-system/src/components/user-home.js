@@ -84,7 +84,6 @@ const Flight = () => {
   return (
     <div>
       <ThemeProvider theme={theme}>
-<<<<<<< HEAD
         <div class="box">
           <img class="img" src={bg} alt="Girl in a jacket" />
         </div>
@@ -214,7 +213,7 @@ const Flight = () => {
         />
         <br />
         <div class="card">
-          <Typography variant="h2">Search Flight</Typography>
+          <Typography variant="h2">Flight Search</Typography>
           <Card>
             <CardContent style={{ backgroundColor: "#EFEAE4" }}>
               <form onSubmit={searchFlight}>
@@ -230,24 +229,6 @@ const Flight = () => {
                       onChange={(e) => setDepartureAirport(e.target.value)}
                     />
                   </div>
-=======
-        <Typography variant="h2">Flight Search</Typography>
-        <Card>
-          <CardContent style={{ backgroundColor: "#EFEAE4" }}>
-            <form onSubmit={searchFlight}>
-              <div className="row">
-                <div className="col">
-                  <TextField
-                    required
-                    id="filled-required"
-                    label="Departure Airport"
-                    defaultValue="Departure Airport"
-                    variant="filled"
-                    value={DepartureAirport}
-                    onChange={(e) => setDepartureAirport(e.target.value)}
-                  />
-                </div>
->>>>>>> 6c264b36bb3686c19071f07a632fc2e9dc7e8f92
 
                   <div className="col-md-10">
                     <TextField
