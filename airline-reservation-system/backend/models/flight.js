@@ -40,6 +40,18 @@ const flightSchema = new Schema({
         type: Number,
         required: true
     },
+    FreeEconomySeats: {
+        type: Number,
+        required: true
+    },
+    FreeBusinessClassSeats: {
+        type: Number,
+        required: true
+    },
+    FreeFirstClassSeats: {
+        type: Number,
+        required: true
+    },
     EconomyLuggage : {
         type: Number,
         required: true

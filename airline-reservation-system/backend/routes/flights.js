@@ -15,12 +15,17 @@ router.post("/createBooking", async (req, res) => {
   const UserID = req.body.UserID;
   const FlightID = req.body.FlightID;
    const Seats=req.body.Seats;
- 
+   const EconomySeats = req.body.EconomySeats;
+   const BusinessClassSeats = req.body.BusinessClassSeats;
+   const FirstClassSeats = req.body.FirstClassSeats;
    const newBooking = new Booking({
     FlightID,
     UserID,
   
     Seats,
+    EconomySeats,
+    BusinessClassSeats,
+    FirstClassSeats,
   });
 
   await newBooking.save();
@@ -59,6 +64,9 @@ router.post("/create", async (req, res) => {
   const EconomySeats = req.body.EconomySeats;
   const BusinessClassSeats = req.body.BusinessClassSeats;
   const FirstClassSeats = req.body.FirstClassSeats;
+  const FreeEconomySeats = req.body.EconomySeats;
+  const FreeBusinessClassSeats = req.body.BusinessClassSeats;
+  const FreeFirstClassSeats = req.body.FirstClassSeats;
   const EconomyLuggage = req.body.EconomyLuggage;
   const BusinessClassLuggage = req.body.BusinessClassLuggage;
   const FirstClassLuggage = req.body.FirstClassLuggage;
@@ -81,6 +89,9 @@ router.post("/create", async (req, res) => {
     EconomyLuggage,
     BusinessClassLuggage,
     FirstClassLuggage,
+    FreeEconomySeats,
+    FreeBusinessClassSeats,
+    FreeFirstClassSeats,
     EconomyPrice,
     BusinessClassPrice, 
     FirstClassPrice,
@@ -163,9 +174,20 @@ router.get("/user/search",  (req, res) => {
     if (!(flight[p] == "")) {
       if(p=="EconomySeats"||p=="BusinessClassSeats"||p=="FirstClassSeats")
       {
-        query[`${p}`] =  {$gte:flight[p]}
-       
+
+        if(p=="EconomySeats"){
+        query[`${"FreeEconomySeats"}`] =  {$gte:flight[p]}}
+      
+        if(p=="BusinessClassSeats"){
+        query[`${"FreeBusinessClassSeats"}`] =  {$gte:flight[p]}}
+
+        if(p=="FirstClassSeats"){
+        query[`${"FreeFirstClassSeats"}`] =  {$gte:flight[p]}}
+      
+      
       }
+       
+      
       else{
       query[`${p}`] = flight[p];
       }
@@ -263,6 +285,12 @@ router.post("/updateSeats", async (req, res) => {
  await  Flight.findByIdAndUpdate(flight.Flight_id, query)
     
   }
+
+  await  Flight.findByIdAndUpdate(flight.Flight_id, {$inc: {"FreeEconomySeats": (flight.EconomySeats*-1)}});
+  await  Flight.findByIdAndUpdate(flight.Flight_id, {$inc: {"FreeBusinessClassSeats": (flight.BusinessClassSeats-1)}});
+  await  Flight.findByIdAndUpdate(flight.Flight_id, {$inc: {"FreeFirstClassSeats": (flight.FirstClassSeats*-1)}});
+  
+
   Flight.findById(flight._id).then((result) => {
     res.send(result)
   })
@@ -281,6 +309,9 @@ router.post("/updateSeats", async (req, res) => {
  await  Flight.findByIdAndUpdate(flight.Flight_id, query)
     
   }
+  await  Flight.findByIdAndUpdate(flight.Flight_id, {$inc: {"FreeEconomySeats": (flight.EconomySeats)}});
+  await  Flight.findByIdAndUpdate(flight.Flight_id, {$inc: {"FreeBusinessClassSeats": (flight.BusinessClassSeats)}});
+  await  Flight.findByIdAndUpdate(flight.Flight_id, {$inc: {"FreeFirstClassSeats": (flight.FirstClassSeats)}});
   Flight.findById(flight._id).then((result) => {
     res.send(result)
   })
