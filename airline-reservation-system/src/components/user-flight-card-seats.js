@@ -36,7 +36,7 @@ var thisFlightClass = localStorage.getItem("UFSFClass");
 export default function FlightCard(props) {
 
   const seatsHandler = () => {
-    // props.onClickChooseSeats(props);
+    props.onClickChooseSeats(props);
   };
 
   return (
