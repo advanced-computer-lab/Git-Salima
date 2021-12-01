@@ -8,8 +8,11 @@
 }
 .card {
   z-index: 1;
+  margin: 0 auto;
   position: absolute;
   top: 400px;
+  left: 10%;
+  right: 10%;
 }
 .img {
   max-width: 100%;
