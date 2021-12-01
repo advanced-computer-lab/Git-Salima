@@ -32,8 +32,8 @@ const Flight = () => {
   const [FirstClassSeats, setFirstClassSeats] = useState("");
   const [DepartureAirport, setDepartureAirport] = useState("");
   const [ArrivalAirport, setArrivalAirport] = useState("");
-  const [EconomyLuggage, setEconomyLuggage] = useState("");
-  const [BusinessClassLuggage, setBusinessClassLuggage] = useState("");
+  const [numofChildren, setnumofChildren] = useState(0);
+  const [numofAdults, setnumofAdults] = useState(1);
   const [FirstClassLuggage, setFirstClassLuggage] = useState("");
 
   const [showResult, setShowResult] = useState("search");
@@ -65,9 +65,13 @@ const Flight = () => {
 
     localStorage.setItem("UFSDAirport", DepartureAirport);
     localStorage.setItem("UFSAAirport", ArrivalAirport);
-    localStorage.setItem("UFSDDate", DepartureDate);
-    localStorage.setItem("UFSADate", ArrivalDate);
+    localStorage.setItem("UFSDDate", tweakDate(DepartureDate));
+    localStorage.setItem("UFSADate", tweakDate(ArrivalDate));
     localStorage.setItem("UFSFClass", FlightClass);
+    localStorage.setItem(
+      "numOfSeats",
+      Number(numofAdults) + Number(numofChildren)
+    );
     history.push("/user-dep-flights");
   };
   const handleChange = (event) => {
@@ -76,16 +80,24 @@ const Flight = () => {
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText("#082567"),
     backgroundColor: "#082567",
+    fontFamily: "Philosopher",
     "&:hover": {
       backgroundColor: "#5F9CC5",
+      fontFamily: "Philosopher",
     },
   }));
   const w = window.outerWidth;
+  const tweakDate = (s) => {
+    const temp = JSON.stringify(s);
+    const temp2 = JSON.parse(temp);
+    const ret = temp2.substring(0, 10) + "T00:00:00.000+00:00";
+    return ret;
+  };
   return (
     <div>
       <ThemeProvider theme={theme}>
         <div class="box">
-          <img class="img" src={bg} alt="Girl in a jacket" />
+          <img class="img" src={bg} alt="Background" />
         </div>
         <Typography variant="h1" class="wlcmtxt">
           {" "}
@@ -119,83 +131,6 @@ const Flight = () => {
                 />
               )}
             />
-
-            <TextField
-              required
-              id="filled-required"
-              label="Departure Airport"
-              defaultValue="Departure Airport"
-              variant="filled"
-              value={DepartureAirport}
-              onChange={(e) => setDepartureAirport(e.target.value)}
-            />
-            <TextField
-              required
-              id="filled-required"
-              label="Arrival Airport"
-              defaultValue="Arrival Airport"
-              variant="filled"
-              value={ArrivalAirport}
-              onChange={(e) => setArrivalAirport(e.target.value)}
-            />
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
-                label="Departure Date"
-                value={DepartureDate}
-                onChange={(newValue) => {
-                  setDepartureDate(newValue);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
-                label="Return Date"
-                value={ArrivalDate}
-                onChange={(newValue) => {
-                  setArrivalDate(newValue);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
-            <TextField
-              id="filled-number"
-              label="Number of Adults"
-              type="number"
-              defaultValue="1"
-              InputProps={{ inputProps: { min: 1 } }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              variant="filled"
-            />
-            <TextField
-              id="filled-number"
-              label="Number of Children"
-              type="number"
-              defaultValue="0"
-              InputProps={{ inputProps: { min: 0 } }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              variant="filled"
-            />
-            <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-simple-select-label">
-                Flight Class
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={FlightClass}
-                label="Class"
-                onChange={handleChange}
-              >
-                <MenuItem value={"Economy"}>Economy</MenuItem>
-                <MenuItem value={"Business"}>Business</MenuItem>
-                <MenuItem value={"First Class"}>First Class</MenuItem>
-              </Select>
-            </FormControl>
           </div>
           <ColorButton variant="contained" onClick={searchFlight}>
             Search
@@ -282,6 +217,7 @@ const Flight = () => {
                         shrink: true,
                       }}
                       variant="filled"
+                      onChange={(e) => setnumofAdults(e.target.value)}
                     />
                   </div>
 
@@ -296,6 +232,7 @@ const Flight = () => {
                         shrink: true,
                       }}
                       variant="filled"
+                      onChange={(e) => setnumofChildren(e.target.value)}
                     />
                   </div>
                   <div className="col-md-2">
@@ -312,7 +249,9 @@ const Flight = () => {
                         onChange={handleChange}
                       >
                         <MenuItem value={"Economy"}>Economy</MenuItem>
+                        <br />
                         <MenuItem value={"Business"}>Business</MenuItem>
+                        <br />
                         <MenuItem value={"First Class"}>First Class</MenuItem>
                       </Select>
                     </FormControl>
@@ -322,7 +261,11 @@ const Flight = () => {
 
                 <br />
                 <div className="form-group">
-                  <ColorButton variant="contained" type="submit">
+                  <ColorButton
+                    variant="contained"
+                    type="submit"
+                    style={{ fontFamily: "Philosopher" }}
+                  >
                     Search
                   </ColorButton>
                 </div>

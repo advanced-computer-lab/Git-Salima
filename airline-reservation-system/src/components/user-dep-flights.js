@@ -3,7 +3,6 @@ import axios from "axios";
 import UserFlightCard from "./user-flight-card";
 import { useHistory } from "react-router-dom";
 
-
 const DepartureFlights = () => {
   const [FlightNo, setFlightNo] = useState("");
   const [ArrivalDate, setArrivalDate] = useState("");
@@ -39,10 +38,9 @@ const DepartureFlights = () => {
   useEffect(() => {
     const temp1 = JSON.stringify(flight);
     const temp2 = JSON.parse(temp1);
-    axios.get("http://localhost:8000/search", { params: temp2 })
-      .then((res) => {
-        setAllFlights(res.data);
-      });
+    axios.get("http://localhost:8000/search", { params: temp2 }).then((res) => {
+      setAllFlights(res.data);
+    });
   }, []);
 
   let history = useHistory();
@@ -52,9 +50,19 @@ const DepartureFlights = () => {
 
     localStorage.setItem("DepartureAirportAro", temp2.DepartureAirport);
     localStorage.setItem("ArrivalAirportAro", temp2.ArrivalAirport);
-    localStorage.setItem("DepartureDateAro", temp2.DepartureDate.substring(0, 10));
+    localStorage.setItem(
+      "DepartureDateAro",
+      temp2.DepartureDate.substring(0, 10)
+    );
     localStorage.setItem("ArrivalDateAro", temp2.ArrivalDate.substring(0, 10));
     localStorage.setItem("FlightIDAro", temp2._id);
+    if (localStorage.getItem("UFSFClass") === "First Class") {
+      localStorage.setItem("departureFlightPrice", temp2.FirstClassPrice);
+    } else if (localStorage.getItem("UFSFClass") === "Economy") {
+      localStorage.setItem("departureFlightPrice", temp2.EconomyPrice);
+    } else if (localStorage.getItem("UFSFClass") === "Business") {
+      localStorage.setItem("departureFlightPrice", temp2.BusinessClassPrice);
+    }
     localStorage.setItem("FirstClassSeatsAro", temp2.FirstClassSeats);
     localStorage.setItem("BusinessClassSeatsAro", temp2.BusinessClassSeats);
     localStorage.setItem("EconomySeatsAro", temp2.EconomySeats);
