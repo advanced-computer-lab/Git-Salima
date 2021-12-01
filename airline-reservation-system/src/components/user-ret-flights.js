@@ -29,6 +29,11 @@ const ReturnFlights = () => {
     const temp = JSON.stringify(input);
     const temp2 = JSON.parse(temp);
     localStorage.setItem("FlightIDKizo", temp2._id);
+    localStorage.setItem("FirstClassSeatsKizo", temp2.FirstClassSeats);
+    localStorage.setItem("BusinessClassSeatsKizo", temp2.BusinessClassSeats);
+    localStorage.setItem("EconomySeatsKizo", temp2.EconomySeats);
+    //localStorage.setItem("BookedSeats", temp2.TakenSeats)
+    localStorage.setItem("FlightNoKizo", temp2.FlightNo);
     history.push("/user-flights-summary");
   };
 

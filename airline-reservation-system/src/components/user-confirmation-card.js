@@ -11,6 +11,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { styled } from "@mui/material/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import { updateSeatsAPI } from '../apis';
 
 export default function MultiActionAreaCard() {
 
@@ -36,8 +37,6 @@ export default function MultiActionAreaCard() {
     const [open, setOpen] = React.useState(false);
     const [openNext, setOpenNext] = React.useState(false);
 
-    const bookingNumber = 250;
-
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -52,24 +51,28 @@ export default function MultiActionAreaCard() {
     };
 
     const confirmHandler = () => {
-        // const bookedDepartureFlight = {
-        //     _id: localStorage.getItem("FlightIDAro"),
-        //     TakenSeats: localStorage.getItem("departureSeats")
-        // }
+        const bookedDepartureFlight = {
+            _id: localStorage.getItem("FlightIDAro"),
+            TakenSeats: JSON.parse(localStorage.getItem("departureSeats")),
+            Cabin: localStorage.getItem("UFSFClass"),
+            BookingNumber: localStorage.getItem("departureBookingNumber"),
+            User_id: 1
+        }
+        console.dir(JSON.parse(localStorage.getItem("departureSeats")))
 
-        // const bookedReturnFlight = {
-        //     _id: localStorage.getItem("FlightIDKizo"),
-        //     TakenSeats: localStorage.getItem("returnSeats")
-        // }
+        const bookedReturnFlight = {
+            _id: localStorage.getItem("FlightIDKizo"),
+            TakenSeats: JSON.parse(localStorage.getItem("returnSeats")),
+            Cabin: localStorage.getItem("UFSFClass"),
+            BookingNumber: localStorage.getItem("returnBookingNumber"),
+            User_id: 1
+        }
 
-        // updateSeatsAPI(bookedDepartureFlight);
-        // updateSeatsAPI(bookedReturnFlight);
+        updateSeatsAPI(bookedDepartureFlight);
+        updateSeatsAPI(bookedReturnFlight);
 
         handleClickOpenNext();
-        console.log(bookingNumber);
     };
-
-
 
     return (
         <Card sx={{ maxWidth: w }}>
@@ -114,7 +117,10 @@ export default function MultiActionAreaCard() {
                                 <DialogContent>
                                     <DialogContentText id="alert-dialog-description">
                                         Flight booked successfully!
-                                        Your Booking Number is {bookingNumber}
+                                        <br />
+                                        Outbound Booking Number is {localStorage.getItem("departureBookingNumber")}
+                                        <br />
+                                        Inbound Booking Number is {localStorage.getItem("returnBookingNumber")}
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions>

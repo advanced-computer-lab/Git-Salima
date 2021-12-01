@@ -5,21 +5,19 @@ import axios from "axios";
 
 const FlightsItinerary = () => {
 
-    const [depFlight, setDepFlight] = useState([]);
+    const [departureFlight, setDepartureFlight] = useState([]);
     const [returnFlight, setReturnFlight] = useState([]);
 
-    const departureSeats = ["A1", "A2", "B1"]; //localStorage.getItem("departureSeats")
-    const returnSeats = ["C1", "C2"]; //localStorage.getItem("returnSeats")
+    // const temp = JSON.parse(localStorage.getItem("departureSeats"))
+
+    const departureSeats = JSON.parse(localStorage.getItem("departureSeats"))
+    const returnSeats = JSON.parse(localStorage.getItem("returnSeats"))
 
     let departureFlightSeats = "";
     let returnFlightSeats = "";
 
-    for (let seat of departureSeats) {
-        departureFlightSeats = departureFlightSeats + " " + seat;
-    }
-    for (let seat of returnSeats) {
-        returnFlightSeats = returnFlightSeats + " " + seat;
-    }
+    let departureBookingNumber = "";
+    let returnBookingNumber = "";
 
     useEffect(() => {
 
@@ -31,7 +29,7 @@ const FlightsItinerary = () => {
         }
         axios.get("http://localhost:8000/search", { params: departureFlight })
             .then((res) => {
-                setDepFlight(res.data);
+                setDepartureFlight(res.data);
             });
         axios.get("http://localhost:8000/search", { params: returnFlight })
             .then((res) => {
@@ -40,15 +38,33 @@ const FlightsItinerary = () => {
 
     }, []);
 
+    departureBookingNumber = departureBookingNumber + localStorage.getItem("FlightNoAro") + "-";
+    returnBookingNumber = returnBookingNumber + localStorage.getItem("FlightNoKizo") + "-";
+
+    for (let seat of departureSeats) {
+        departureFlightSeats = departureFlightSeats + " " + seat.row + seat.number;
+        departureBookingNumber += seat.row + seat.number;
+    }
+    for (let seat of returnSeats) {
+        returnFlightSeats = returnFlightSeats + " " + seat.row + seat.number;
+        returnBookingNumber += seat.row + seat.number;
+    }
+
     const totalPrice = (localStorage.getItem("departureFlightPrice") * departureSeats.length) +
         (localStorage.getItem("returnFlightPrice") * returnSeats.length);
 
-    localStorage.setItem("totalPrice", totalPrice)
+    localStorage.setItem("totalPrice", totalPrice);
+    localStorage.setItem("departureBookingNumber", departureBookingNumber);
+    localStorage.setItem("returnBookingNumber", returnBookingNumber);
+
+    // {localStorage.getItem("Username")}
 
     return (
         <div>
-            <h1>Departure Flight</h1>
-            {depFlight.map((flight) => (
+            <h1 style={{ textAlign: 'center' }} > Please Mario confirm your flight </h1>
+            <br />
+            <h3>Departure Flight</h3>
+            {departureFlight.map((flight) => (
                 <div>
                     <UserFlightCardItinerary
                         _id={flight._id}
@@ -70,7 +86,7 @@ const FlightsItinerary = () => {
                 </div>
             ))}
             <br />
-            <h1>Return Flight</h1>
+            <h3>Return Flight</h3>
             {returnFlight.map((flight) => (
                 <div>
                     <UserFlightCardItinerary

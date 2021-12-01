@@ -55,6 +55,10 @@ const DepartureFlights = () => {
     localStorage.setItem("DepartureDateAro", temp2.DepartureDate.substring(0, 10));
     localStorage.setItem("ArrivalDateAro", temp2.ArrivalDate.substring(0, 10));
     localStorage.setItem("FlightIDAro", temp2._id);
+    localStorage.setItem("FirstClassSeatsAro", temp2.FirstClassSeats);
+    localStorage.setItem("BusinessClassSeatsAro", temp2.BusinessClassSeats);
+    localStorage.setItem("EconomySeatsAro", temp2.EconomySeats);
+    localStorage.setItem("FlightNoAro", temp2.FlightNo);
     history.push("/user-ret-flights");
   };
 

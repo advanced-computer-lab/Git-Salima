@@ -70,10 +70,10 @@ export const editUsersAPI = async (flight) => {
 
 export const updateSeatsAPI = async (flight) => {
 
-  await axios.post("http://localhost:8000/createBooking", flight)
-    .then((res) => {
-      console.log(res.data);
-    });
+  // await axios.post("http://localhost:8000/createBooking", flight)
+  //   .then((res) => {
+  //     console.log(res.data);
+  //   });
    await axios.post("http://localhost:8000/updateSeats", flight)
     .then((res) => {
       return res.data;
