@@ -9,14 +9,19 @@ import { Button, CardActions } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import FlightLandIcon from "@mui/icons-material/FlightLand";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
+import CardMedia from "@mui/material/CardMedia";
+import EH from "./Economy Header.png";
+import FH from "./First Header.png";
+import BH from "./Business Header.png";
+import LuggageIcon from "@mui/icons-material/Luggage";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import EventIcon from "@mui/icons-material/Event";
+
 
 const theme = createTheme({
   palette: {
     primary: {
-      // light: will be calculated from palette.primary.main,
       main: "#082567",
-      // dark: will be calculated from palette.primary.main,
-      // contrastText: will be calculated to contrast with palette.primary.main
     },
   },
   typography: {
@@ -31,8 +36,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
   },
 }));
 const w = window.innerWidth;
-const h = window.innerHeight;
-var thisFlightClass = localStorage.getItem("UFSFClass");
+
 export default function FlightCard(props) {
 
   const seatsHandler = () => {
@@ -43,31 +47,56 @@ export default function FlightCard(props) {
     <div>
       <Card sx={{ maxWidth: { w } }}>
         <ThemeProvider theme={theme}>
+          {localStorage.getItem("UFSFClass") === "First Class" && (
+            <CardMedia component="img" alt="header" height="50" image={FH} />
+          )}
+          {localStorage.getItem("UFSFClass") === "Business" && (
+            <CardMedia component="img" alt="header" height="50" image={BH} />
+          )}
+          {localStorage.getItem("UFSFClass") === "Economy" && (
+            <CardMedia component="img" alt="header" height="50" image={EH} />
+          )}
+
           <CssBaseline />
           <CardContent style={{ backgroundColor: "#EFEAE4" }}>
-            <Card
-              sx={{
-                maxWidth: { w },
-                maxHeight: "50px",
-                backgroundColor: "#082567",
-              }}
+            <Stack
+              direction="row"
+              justifyContent="space-around"
+              alignItems="center"
             >
               <Typography
-                marginLeft={w / 25}
                 variant="h4"
                 component="div"
-                color={theme.palette.getContrastText("#082567")}
+                color="primary"
+                alignItems="center"
               >
                 Flight Number: {props.FlightNo}
               </Typography>
-            </Card>
-            <br />
-            <Stack spacing={100} direction="row" marginLeft="75px">
+            </Stack>
+            <Stack
+              direction="row"
+              justifyContent="space-around"
+              alignItems="center"
+              spacing={30}
+            >
               <Stack spacing={1} direction="row">
                 <Typography variant="h3" color="#082567">
                   {props.DepartureAirport}
                 </Typography>
                 <FlightTakeoffIcon sx={{ fontSize: 50 }} color="primary" />
+              </Stack>
+              <Stack spacing={1} direction="row">
+                <hr
+                  style={{
+                    position: "absolute",
+                    top: 150,
+                    left: 380,
+                    color: "text.secondary",
+                    backgroundColor: "text.secondary",
+                    height: 3,
+                    width: 640,
+                  }}
+                />
               </Stack>
               <Stack spacing={1} direction="row">
                 <FlightLandIcon sx={{ fontSize: 50 }} color="primary" />
@@ -76,47 +105,126 @@ export default function FlightCard(props) {
                 </Typography>
               </Stack>
             </Stack>
-            <Stack spacing={115} direction="row" marginLeft="95px">
-              <Typography variant="h5" color="text.secondary">
-                {props.DepartureTime}
-              </Typography>
-              <Typography variant="h5" color="text.secondary">
-                {props.ArrivalTime}
-              </Typography>
-            </Stack>
-            <Stack spacing={105} direction="row" marginLeft="70px">
-              <Typography variant="h5" color="text.secondary">
-                {props.DepartureDate.substring(0, 10)}
-              </Typography>
-              <Typography variant="h5" color="text.secondary">
-                {props.ArrivalDate.substring(0, 10)}
-              </Typography>
-            </Stack>
-            <Typography variant="body2" color="text.secondary">
-              Terminal: {props.Terminal}
-            </Typography>
-            <Stack spacing={25} direction="row">
-              {localStorage.getItem("UFSFClass") === "First Class" && (
-                <Typography variant="body2" color="text.secondary">
-                  First Class Luggage: {props.FirstClassLuggage}
+            <Stack
+              spacing={85}
+              direction="row"
+              justifyContent="space-around"
+              alignItems="center"
+              marginRight="15px"
+            >
+              <Stack direction="row" spacing={0.3}>
+                <AccessTimeIcon sx={{ fontSize: 32 }} color="primary" />
+                <Typography variant="h5" color="text.secondary">
+                  {props.DepartureTime}
                 </Typography>
+              </Stack>
+              <Stack direction="row" spacing={0.3}>
+                <AccessTimeIcon sx={{ fontSize: 32 }} color="primary" />
+                <Typography variant="h5" color="text.secondary">
+                  {props.ArrivalTime}
+                </Typography>
+              </Stack>
+            </Stack>
+            <Stack
+              spacing={92}
+              direction="row"
+              justifyContent="space-around"
+              alignItems="center"
+              marginRight="40px"
+              marginLeft="30px"
+            >
+              <Stack direction="row" spacing={0.3}>
+                <EventIcon sx={{ fontSize: 32 }} color="primary" />
+                <Typography variant="h5" color="text.secondary">
+                  {props.DepartureDate.substring(0, 10)}
+                </Typography>
+              </Stack>
+              <Stack direction="row" spacing={0.3}>
+                <EventIcon sx={{ fontSize: 32 }} color="primary" />
+                <Typography variant="h5" color="text.secondary">
+                  {props.ArrivalDate.substring(0, 10)}
+                </Typography>
+              </Stack>
+            </Stack>
+            <hr
+              style={{
+                marginTop: 10,
+                color: "text.secondary",
+                backgroundColor: "text.secondary",
+                height: 1,
+                width: { w },
+              }}
+            />
+
+            <Stack
+              spacing={30}
+              direction="row"
+              maxHeight="10"
+              justifyContent="space-around"
+              alignItems="center"
+              marginRight="30px"
+            >
+              {localStorage.getItem("UFSFClass") === "First Class" && (
+                <Stack direction="row">
+                  <LuggageIcon color="primary" sx={{ fontSize: 30 }} />
+                  <Typography variant="h5" color="text.secondary">
+                    Luggage: {props.FirstClassLuggage}
+                  </Typography>
+                </Stack>
               )}
               {localStorage.getItem("UFSFClass") === "Business" && (
-                <Typography variant="body2" color="text.secondary">
-                  Business Class Luggage: {props.BusinessClassLuggage}
-                </Typography>
+                <Stack direction="row">
+                  <LuggageIcon color="primary" sx={{ fontSize: 30 }} />
+                  <Typography variant="h5" color="text.secondary">
+                    Luggage: {props.BusinessClassLuggage}
+                  </Typography>
+                </Stack>
               )}
               {localStorage.getItem("UFSFClass") === "Economy" && (
-                <Typography variant="body2" color="text.secondary">
-                  Economy Luggage: {props.EconomyLuggage}
-                </Typography>
+                <Stack direction="row">
+                  <LuggageIcon color="primary" sx={{ fontSize: 30 }} />
+                  <Typography variant="h5" color="text.secondary">
+                    Luggage: {props.EconomyLuggage}
+                  </Typography>
+                </Stack>
               )}
+              {localStorage.getItem("UFSFClass") === "First Class" && (
+                <Stack>
+                  <Typography variant="h6" color="text.secondary">
+                    Price Per Seat:
+                  </Typography>
+                  <Typography variant="h5" color="primary.main">
+                    {props.FirstClassPrice} EGP
+                  </Typography>
+                </Stack>
+              )}
+              {localStorage.getItem("UFSFClass") === "Business" && (
+                <Stack marginRight="250px">
+                  <Typography variant="h6" color="text.secondary">
+                    Price Per Seat:
+                  </Typography>
+                  <Typography variant="h5" color="primary.main">
+                    {props.BusinessClassPrice} EGP
+                  </Typography>
+                </Stack>
+              )}
+              {localStorage.getItem("UFSFClass") === "Economy" && (
+                <Stack marginRight="250px">
+                  <Typography variant="h6" color="text.secondary">
+                    Price Per Seat:
+                  </Typography>
+                  <Typography variant="h5" color="primary.main">
+                    {props.EconomyPrice} EGP
+                  </Typography>
+                </Stack>
+              )}
+
+              <CardActions>
+                <ColorButton variant="contained" onClick={seatsHandler}>
+                  Choose Seats
+                </ColorButton>
+              </CardActions>
             </Stack>
-            <CardActions>
-              <ColorButton variant="contained" onClick={seatsHandler}>
-                Choose Seats
-              </ColorButton>
-            </CardActions>
           </CardContent>
         </ThemeProvider>
       </Card>

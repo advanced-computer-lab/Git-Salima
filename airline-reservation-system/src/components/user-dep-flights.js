@@ -50,12 +50,11 @@ const DepartureFlights = () => {
 
     localStorage.setItem("DepartureAirportAro", temp2.DepartureAirport);
     localStorage.setItem("ArrivalAirportAro", temp2.ArrivalAirport);
-    localStorage.setItem(
-      "DepartureDateAro",
-      temp2.DepartureDate.substring(0, 10)
-    );
+    localStorage.setItem("DepartureDateAro", temp2.DepartureDate.substring(0, 10));
+
     localStorage.setItem("ArrivalDateAro", temp2.ArrivalDate.substring(0, 10));
     localStorage.setItem("FlightIDAro", temp2._id);
+
     if (localStorage.getItem("UFSFClass") === "First Class") {
       localStorage.setItem("departureFlightPrice", temp2.FirstClassPrice);
     } else if (localStorage.getItem("UFSFClass") === "Economy") {

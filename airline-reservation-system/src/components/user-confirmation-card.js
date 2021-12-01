@@ -83,7 +83,7 @@ export default function MultiActionAreaCard() {
                         Booking Confirmation
                     </Typography>
                     <Typography variant="body1" color="text.secondary">
-                        Total Price: ${localStorage.getItem("totalPrice")}
+                        Total Price: {localStorage.getItem("totalPrice")} EGP
                     </Typography>
                 </CardContent>
                 <CardActions>
@@ -118,9 +118,9 @@ export default function MultiActionAreaCard() {
                                     <DialogContentText id="alert-dialog-description">
                                         Flight booked successfully!
                                         <br />
-                                        Outbound Booking Number is {localStorage.getItem("departureBookingNumber")}
+                                        Your Outbound Booking Number is {localStorage.getItem("departureBookingNumber")}
                                         <br />
-                                        Inbound Booking Number is {localStorage.getItem("returnBookingNumber")}
+                                        Your Inbound Booking Number is {localStorage.getItem("returnBookingNumber")}
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions>

@@ -20,27 +20,18 @@ import Header from "./Header.js";
 import HeaderLinks from "./HeaderLinks.js";
 import bg from "./bg4.jpg";
 import "../styles/header.css";
+
 const Flight = () => {
-  const [FlightNo, setFlightNo] = useState("");
+
   const [DepartureDate, setDepartureDate] = useState("");
   const [ArrivalDate, setArrivalDate] = useState("");
-  const [DepartureTime, setDepartureTime] = useState("");
-  const [ArrivalTime, setArrivalTime] = useState("");
-  const [Terminal, setTerminal] = useState("");
-  const [EconomySeats, setEconomySeats] = useState("");
-  const [BusinessClassSeats, setBusinessClassSeats] = useState("");
-  const [FirstClassSeats, setFirstClassSeats] = useState("");
   const [DepartureAirport, setDepartureAirport] = useState("");
   const [ArrivalAirport, setArrivalAirport] = useState("");
   const [numofChildren, setnumofChildren] = useState(0);
   const [numofAdults, setnumofAdults] = useState(1);
-  const [FirstClassLuggage, setFirstClassLuggage] = useState("");
 
-  const [showResult, setShowResult] = useState("search");
-  const [results, setResults] = useState([]);
   const [FlightClass, setFlightClass] = React.useState("");
   const [allFlights, setAllFlights] = useState([]);
-  //this is for the autocomplete , just need airports without duplicates for it to work
 
   useEffect(() => {
     axios.get("http://localhost:8000/list").then((res) => {
@@ -107,35 +98,6 @@ const Flight = () => {
           {" "}
           We Git you where you want to go
         </Typography>
-        {/* <Box
-          component="form"
-          sx={{
-            "& .MuiTextField-root": { m: 1, width: "25ch" },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <div>
-            <Autocomplete
-              id="auto-complete"
-              autoComplete
-              includeInputInList
-              options={allFlights}
-              getOptionLabel={(option) => option.DepartureAirport.toString()}
-              sx={{ width: 300 }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Departure Airport"
-                  variant="standard"
-                />
-              )}
-            />
-          </div>
-          <ColorButton variant="contained" onClick={searchFlight}>
-            Search
-          </ColorButton>
-        </Box> */}
         <Header
           color="transparent"
           brand="Git Salima Airlines"

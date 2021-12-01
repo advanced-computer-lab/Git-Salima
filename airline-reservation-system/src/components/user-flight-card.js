@@ -20,10 +20,7 @@ import EventIcon from "@mui/icons-material/Event";
 const theme = createTheme({
   palette: {
     primary: {
-      // light: will be calculated from palette.primary.main,
       main: "#082567",
-      // dark: will be calculated from palette.primary.main,
-      // contrastText: will be calculated to contrast with palette.primary.main
     },
     secondary: {
       main: "#FBB404",
@@ -41,8 +38,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
   },
 }));
 const w = window.innerWidth;
-const h = window.innerHeight;
-var thisFlightClass = localStorage.getItem("UFSFClass");
+
 export default function FlightCard(props) {
   const selectHandler = () => {
     props.onClickSelect(props);
@@ -151,9 +147,6 @@ export default function FlightCard(props) {
                 </Typography>
               </Stack>
             </Stack>
-            {/* <Typography variant="h5" color="text.secondary" marginLeft="70px">
-              Terminal: {props.Terminal}
-            </Typography> */}
             <hr
               style={{
                 marginTop: 10,
