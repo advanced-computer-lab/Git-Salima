@@ -12,22 +12,25 @@ router.get("/", (req, res) => {
 
 
 router.post("/createBooking", async (req, res) => {
-  const UserID = req.body.User_id;
-  const FlightID = req.body._id;
-   const Seats=req.body.TakenSeats;
+  const User_ID = req.body.User_id;
+  const Flight_ID = req.body._id;
+   const TakenSeats=req.body.TakenSeats;
    const BookingNumber = req.body.BookingNumber;
    const Cabin=req.body.Cabin;
  
-   const newBooking = new Booking({
-    FlightID,
-    UserID,
+
   
-    Seats,
+ 
+   const newBooking = new Booking({
+    Flight_ID,
+    User_ID,
+  
+    TakenSeats,
     BookingNumber,
     Cabin
   });
 
-  await newBooking.save();
+  return await newBooking.save();
 });
 
 router.post("/createUser", async (req, res) => {
@@ -114,20 +117,31 @@ router.get("/listUsers", async (req, res) => {
   const Users = await User.find({});
   res.send(Users);
 });
-router.get("/searchBookings",  (req, res) => {
+router.get("/searchBookings", async (req, res) => {
+  
   const booking = req.query;
-
+ 
   const query = {};
   for (const p in booking) {
     if (!(booking[p] == "")) {
       query[`${p}`] = booking[p];
     }
   }
-  Booking.find(query).then((result) => {
-    res.send(result)
-  })
-
-
+  
+  const r=await Booking.find(query).lean()
+  
+  //console.dir(r);
+for(const a of r){
+  let fl={};
+  fl= await Flight.findById(a.Flight_ID).lean();
+  // console.dir(fl)
+  for (const p in fl) {
+    if (!(p== "TakenSeats")) {
+      a[`${p}`] = fl[p];
+    }
+  }
+}
+res.send(r);
 });
 
 router.get("/searchUsers",  (req, res) => {

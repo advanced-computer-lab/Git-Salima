@@ -39,6 +39,15 @@ export const userSearchFlightsAPI = async (flight) => {
     });
 }
 
+export const userFlightsAPI = async (flight) => {
+  const temp1 = JSON.stringify(flight);
+  const temp2 = JSON.parse(temp1);
+
+  return await axios.get("http://localhost:8000/searchBookings", { params: temp2 })
+    .then((res) => {
+      return res.data;
+    });
+}
 
 
 export const deleteFlightsAPI = async (flight) => {
