@@ -12,20 +12,19 @@ router.get("/", (req, res) => {
 
 
 router.post("/createBooking", async (req, res) => {
-  const UserID = req.body.User_ID;
-  const FlightID = req.body.Flight_ID;
-   const Seats=req.body.TakesnSeats;
-   const EconomySeats = req.body.EconomySeats;
-   const BusinessClassSeats = req.body.BusinessClassSeats;
-   const FirstClassSeats = req.body.FirstClassSeats;
+  const UserID = req.body.User_id;
+  const FlightID = req.body._id;
+   const Seats=req.body.TakenSeats;
+   const BookingNumber = req.body.BookingNumber;
+   const Cabin=req.body.Cabin;
+ 
    const newBooking = new Booking({
     FlightID,
     UserID,
   
     Seats,
-    EconomySeats,
-    BusinessClassSeats,
-    FirstClassSeats,
+    BookingNumber,
+    Cabin
   });
 
   await newBooking.save();
@@ -282,13 +281,15 @@ router.post("/updateSeats", async (req, res) => {
     
   const query = {$push: { TakenSeats: p } };
   
- await  Flight.findByIdAndUpdate(flight.Flight_id, query)
+ await  Flight.findByIdAndUpdate(flight._id, query)
     
   }
-
-  await  Flight.findByIdAndUpdate(flight.Flight_id, {$inc: {"FreeEconomySeats": (flight.EconomySeats*-1)}});
-  await  Flight.findByIdAndUpdate(flight.Flight_id, {$inc: {"FreeBusinessClassSeats": (flight.BusinessClassSeats-1)}});
-  await  Flight.findByIdAndUpdate(flight.Flight_id, {$inc: {"FreeFirstClassSeats": (flight.FirstClassSeats*-1)}});
+if(flight.Cabin=="Economy")
+  await  Flight.findByIdAndUpdate(flight._id, {$inc: {"FreeEconomySeats": (flight.TakenSeats.length*-1)}});
+  if(flight.Cabin=="Business")
+  await  Flight.findByIdAndUpdate(flight._id, {$inc: {"FreeBusinessClassSeats": (flight.TakenSeats.length*-1)}});
+  if(flight.Cabin=="First Class")
+  await  Flight.findByIdAndUpdate(flight._id, {$inc: {"FreeFirstClassSeats": (flight.TakenSeats.length**-1)}});
   
 
   Flight.findById(flight._id).then((result) => {
@@ -309,9 +310,13 @@ router.post("/updateSeats", async (req, res) => {
  await  Flight.findByIdAndUpdate(flight.Flight_id, query)
     
   }
-  await  Flight.findByIdAndUpdate(flight.Flight_id, {$inc: {"FreeEconomySeats": (flight.EconomySeats)}});
-  await  Flight.findByIdAndUpdate(flight.Flight_id, {$inc: {"FreeBusinessClassSeats": (flight.BusinessClassSeats)}});
-  await  Flight.findByIdAndUpdate(flight.Flight_id, {$inc: {"FreeFirstClassSeats": (flight.FirstClassSeats)}});
+  if(flight.Cabin=="Economy")
+  await  Flight.findByIdAndUpdate(flight._id, {$inc: {"FreeEconomySeats": (flight.TakenSeats.length*1)}});
+  if(flight.Cabin=="Business")
+  await  Flight.findByIdAndUpdate(flight._id, {$inc: {"FreeBusinessClassSeats": (flight.TakenSeats.length*1)}});
+  if(flight.Cabin=="First Class")
+  await  Flight.findByIdAndUpdate(flight._id, {$inc: {"FreeFirstClassSeats": (flight.TakenSeats.length*1)}});
+  
   Flight.findById(flight._id).then((result) => {
     res.send(result)
   })
