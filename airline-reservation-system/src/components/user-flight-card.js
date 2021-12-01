@@ -38,8 +38,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
   },
 }));
 const w = window.innerWidth;
-const h = window.innerHeight;
-var thisFlightClass = localStorage.getItem("UFSFClass");
+
 export default function FlightCard(props) {
   const selectHandler = () => {
     props.onClickSelect(props);
@@ -148,13 +147,6 @@ export default function FlightCard(props) {
                 </Typography>
               </Stack>
             </Stack>
-            {/* <Typography variant="h5" color="text.secondary" marginLeft="70px">
-              Terminal: {props.Terminal}
-<<<<<<< HEAD
-            </Typography>
-            <Stack spacing={25} direction="row">
-=======
-            </Typography> */}
             <hr
               style={{
                 marginTop: 10,
@@ -173,7 +165,6 @@ export default function FlightCard(props) {
               alignItems="center"
               marginRight="30px"
             >
->>>>>>> fae2f219d9b9957394f7847a8864a364318710b8
               {localStorage.getItem("UFSFClass") === "First Class" && (
                 <Stack direction="row">
                   <LuggageIcon color="primary" sx={{ fontSize: 30 }} />

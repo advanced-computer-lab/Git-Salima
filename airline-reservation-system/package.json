@@ -9,10 +9,7 @@
     "@emotion/styled": "^11.3.0",
     "@fontsource/philosopher": "^4.5.0",
     "@fontsource/roboto": "^4.5.1",
-<<<<<<< HEAD
-=======
     "@material-ui/core": "^4.12.3",
->>>>>>> fae2f219d9b9957394f7847a8864a364318710b8
     "@material-ui/icons": "^4.11.2",
     "@material-ui/styles": "^4.11.4",
     "@mui/icons-material": "^5.0.5",

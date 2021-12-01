@@ -8,8 +8,6 @@ const FlightsItinerary = () => {
     const [departureFlight, setDepartureFlight] = useState([]);
     const [returnFlight, setReturnFlight] = useState([]);
 
-    // const temp = JSON.parse(localStorage.getItem("departureSeats"))
-
     const departureSeats = JSON.parse(localStorage.getItem("departureSeats"))
     const returnSeats = JSON.parse(localStorage.getItem("returnSeats"))
 
