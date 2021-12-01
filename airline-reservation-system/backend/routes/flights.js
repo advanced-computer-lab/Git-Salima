@@ -1,12 +1,59 @@
 const express = require("express");
 const router = express.Router();
 const Flight = require("../models/flight");
+const Booking = require("../models/booking");
+const User = require("../models/user");
 const axios = require('axios').default;
 
 router.get("/", (req, res) => {
   res.status(200).send("You have everything installed !");
 });
 
+
+
+router.post("/createBooking", async (req, res) => {
+  const UserID = req.body.User_ID;
+  const FlightID = req.body.Flight_ID;
+   const Seats=req.body.TakesnSeats;
+   const EconomySeats = req.body.EconomySeats;
+   const BusinessClassSeats = req.body.BusinessClassSeats;
+   const FirstClassSeats = req.body.FirstClassSeats;
+   const newBooking = new Booking({
+    FlightID,
+    UserID,
+  
+    Seats,
+    EconomySeats,
+    BusinessClassSeats,
+    FirstClassSeats,
+  });
+
+  await newBooking.save();
+});
+
+router.post("/createUser", async (req, res) => {
+  console.dir(req.body);
+  const Email = req.body.Email;
+  const Password = req.body.Password;
+  const FirstName = req.body.FirstName;
+  const LastName = req.body.LastName;
+  const PassportNumber=req.body.PassportNumber;
+  
+  const newUser = new User({
+    Email,
+    Password,
+  
+    FirstName,
+    LastName,
+    PassportNumber,
+  });
+
+  await newUser.save().then((result) => {
+    res.send(result)
+  })
+
+
+});
 router.post("/create", async (req, res) => {
   const FlightNo = req.body.FlightNo;
   const DepartureDate = req.body.DepartureDate;
@@ -17,6 +64,9 @@ router.post("/create", async (req, res) => {
   const EconomySeats = req.body.EconomySeats;
   const BusinessClassSeats = req.body.BusinessClassSeats;
   const FirstClassSeats = req.body.FirstClassSeats;
+  const FreeEconomySeats = req.body.EconomySeats;
+  const FreeBusinessClassSeats = req.body.BusinessClassSeats;
+  const FreeFirstClassSeats = req.body.FirstClassSeats;
   const EconomyLuggage = req.body.EconomyLuggage;
   const BusinessClassLuggage = req.body.BusinessClassLuggage;
   const FirstClassLuggage = req.body.FirstClassLuggage;
@@ -39,6 +89,9 @@ router.post("/create", async (req, res) => {
     EconomyLuggage,
     BusinessClassLuggage,
     FirstClassLuggage,
+    FreeEconomySeats,
+    FreeBusinessClassSeats,
+    FreeFirstClassSeats,
     EconomyPrice,
     BusinessClassPrice, 
     FirstClassPrice,
@@ -54,6 +107,48 @@ router.get("/list", async (req, res) => {
   const flights = await Flight.find({});
   res.send(flights);
 });
+router.get("/listBookings", async (req, res) => {
+  const Bookings = await Booking.find({});
+  res.send(Bookings);
+});
+router.get("/listUsers", async (req, res) => {
+  const Users = await User.find({});
+  res.send(Users);
+});
+router.get("/searchBookings",  (req, res) => {
+  const booking = req.query;
+
+  const query = {};
+  for (const p in booking) {
+    if (!(booking[p] == "")) {
+      query[`${p}`] = booking[p];
+    }
+  }
+  Booking.find(query).then((result) => {
+    res.send(result)
+  })
+
+
+});
+
+router.get("/searchUsers",  (req, res) => {
+  const Users = req.query;
+
+  const query = {};
+  for (const p in Users) {
+    if (!(Users[p] == "")) {
+      query[`${p}`] = Users[p];
+    }
+  }
+  User.find(query).then((result) => {
+    res.send(result)
+  })
+
+
+});
+
+
+
 
  router.get("/search",  (req, res) => {
   const flight = req.query;
@@ -79,9 +174,20 @@ router.get("/user/search",  (req, res) => {
     if (!(flight[p] == "")) {
       if(p=="EconomySeats"||p=="BusinessClassSeats"||p=="FirstClassSeats")
       {
-        query[`${p}`] =  {$gte:flight[p]}
-       
+
+        if(p=="EconomySeats"){
+        query[`${"FreeEconomySeats"}`] =  {$gte:flight[p]}}
+      
+        if(p=="BusinessClassSeats"){
+        query[`${"FreeBusinessClassSeats"}`] =  {$gte:flight[p]}}
+
+        if(p=="FirstClassSeats"){
+        query[`${"FreeFirstClassSeats"}`] =  {$gte:flight[p]}}
+      
+      
       }
+       
+      
       else{
       query[`${p}`] = flight[p];
       }
@@ -107,6 +213,20 @@ router.get("/delete", async (req, res) => {
 
 });
 
+router.get("/deletebooking", async (req, res) => {
+  const flight = req.query;
+  const query = {};
+  for (const p in flight) {
+    if (!(flight[p] == "")) {
+      query[`${p}`] = flight[p];
+    }
+  }
+  Booking.remove(query).then((result) => {
+    res.send(result)
+  })
+
+});
+
 router.post("/update", async (req, res) => {
   const flight = req.body;
   const query = {};
@@ -121,9 +241,24 @@ router.post("/update", async (req, res) => {
     })
 
 });
+router.post("/updateUser", async (req, res) => {
+  const user = req.body;
+  const query = {};
+  for (const p in user) {
+    if (!(user[p] == user._id)) {
+      query[`${p}`] = user[p];
+    }
+  }
+  User.findByIdAndUpdate(user._id, query)
+    .then((result) => {
+      res.send(result)
+    })
+
+});
+
 router.get("/getAirports", async (req, res) => {
   const flights = await Flight.find({});
-  const res1=["alo"];
+  const res1=[];
   for (const p of flights) {
     const a=p.ArrivalAirport;
     const b=p.DepartureAirport;
@@ -147,12 +282,38 @@ router.post("/updateSeats", async (req, res) => {
     
   const query = {$push: { TakenSeats: p } };
   
- await  Flight.findByIdAndUpdate(flight._id, query)
+ await  Flight.findByIdAndUpdate(flight.Flight_id, query)
     
   }
+
+  await  Flight.findByIdAndUpdate(flight.Flight_id, {$inc: {"FreeEconomySeats": (flight.EconomySeats*-1)}});
+  await  Flight.findByIdAndUpdate(flight.Flight_id, {$inc: {"FreeBusinessClassSeats": (flight.BusinessClassSeats-1)}});
+  await  Flight.findByIdAndUpdate(flight.Flight_id, {$inc: {"FreeFirstClassSeats": (flight.FirstClassSeats*-1)}});
+  
+
   Flight.findById(flight._id).then((result) => {
     res.send(result)
   })
 }
+
+
+
  );
+
+ router.post("/removeSeats", async (req, res) => {
+  const flight = req.body;
+  for(const p of flight.TakenSeats){
+    
+  const query = {$pull: { TakenSeats: p } };
+  
+ await  Flight.findByIdAndUpdate(flight.Flight_id, query)
+    
+  }
+  await  Flight.findByIdAndUpdate(flight.Flight_id, {$inc: {"FreeEconomySeats": (flight.EconomySeats)}});
+  await  Flight.findByIdAndUpdate(flight.Flight_id, {$inc: {"FreeBusinessClassSeats": (flight.BusinessClassSeats)}});
+  await  Flight.findByIdAndUpdate(flight.Flight_id, {$inc: {"FreeFirstClassSeats": (flight.FirstClassSeats)}});
+  Flight.findById(flight._id).then((result) => {
+    res.send(result)
+  })
+});
 module.exports = router;

@@ -63,6 +63,10 @@ const DepartureFlights = () => {
     } else if (localStorage.getItem("UFSFClass") === "Business") {
       localStorage.setItem("departureFlightPrice", temp2.BusinessClassPrice);
     }
+    localStorage.setItem("FirstClassSeatsAro", temp2.FirstClassSeats);
+    localStorage.setItem("BusinessClassSeatsAro", temp2.BusinessClassSeats);
+    localStorage.setItem("EconomySeatsAro", temp2.EconomySeats);
+    localStorage.setItem("FlightNoAro", temp2.FlightNo);
     history.push("/user-ret-flights");
   };
 

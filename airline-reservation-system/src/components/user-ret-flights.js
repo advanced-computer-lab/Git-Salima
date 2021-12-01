@@ -33,6 +33,11 @@ const ReturnFlights = () => {
     } else if (localStorage.getItem("UFSFClass") === "Business") {
       localStorage.setItem("returnFlightPrice", temp2.BusinessClassPrice);
     }
+    localStorage.setItem("FirstClassSeatsKizo", temp2.FirstClassSeats);
+    localStorage.setItem("BusinessClassSeatsKizo", temp2.BusinessClassSeats);
+    localStorage.setItem("EconomySeatsKizo", temp2.EconomySeats);
+    //localStorage.setItem("BookedSeats", temp2.TakenSeats)
+    localStorage.setItem("FlightNoKizo", temp2.FlightNo);
     history.push("/user-flights-summary");
   };
 
