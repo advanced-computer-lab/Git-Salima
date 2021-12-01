@@ -14,20 +14,8 @@ import EH from "./Economy Header.png";
 import FH from "./First Header.png";
 import BH from "./Business Header.png";
 import LuggageIcon from "@mui/icons-material/Luggage";
-import Divider from "@mui/material/Divider";
-import track from "./track.png";
-import { View, Text } from "react";
-var image;
-// if (localStorage.getItem("UFSFClass") === "First Class") {
-//   console.log("first");
-//   image = FH;
-// } else if (localStorage.getItem("UFSFClass") === "Economy") {
-//   image = EH;
-//   console.log("eco");
-// } else if (localStorage.getItem("UFSFClass") === "Business") {
-//   image = BH;
-//   console.log("busi");
-// }
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import EventIcon from "@mui/icons-material/Event";
 
 const theme = createTheme({
   palette: {
@@ -123,26 +111,45 @@ export default function FlightCard(props) {
               </Stack>
             </Stack>
             <Stack
-              spacing={18}
+              spacing={85}
               direction="row"
               justifyContent="space-around"
               alignItems="center"
+              marginRight="15px"
             >
-              <Typography variant="h5" color="text.secondary">
-                {props.DepartureTime}
-              </Typography>
-
-              <Typography variant="h5" color="text.secondary">
-                {props.ArrivalTime}
-              </Typography>
+              <Stack direction="row" spacing={0.3}>
+                <AccessTimeIcon sx={{ fontSize: 32 }} color="primary" />
+                <Typography variant="h5" color="text.secondary">
+                  {props.DepartureTime}
+                </Typography>
+              </Stack>
+              <Stack direction="row" spacing={0.3}>
+                <AccessTimeIcon sx={{ fontSize: 32 }} color="primary" />
+                <Typography variant="h5" color="text.secondary">
+                  {props.ArrivalTime}
+                </Typography>
+              </Stack>
             </Stack>
-            <Stack spacing={105} direction="row" marginLeft="70px">
-              <Typography variant="h5" color="text.secondary">
-                {props.DepartureDate.substring(0, 10)}
-              </Typography>
-              <Typography variant="h5" color="text.secondary">
-                {props.ArrivalDate.substring(0, 10)}
-              </Typography>
+            <Stack
+              spacing={92}
+              direction="row"
+              justifyContent="space-around"
+              alignItems="center"
+              marginRight="40px"
+              marginLeft="30px"
+            >
+              <Stack direction="row" spacing={0.3}>
+                <EventIcon sx={{ fontSize: 32 }} color="primary" />
+                <Typography variant="h5" color="text.secondary">
+                  {props.DepartureDate.substring(0, 10)}
+                </Typography>
+              </Stack>
+              <Stack direction="row" spacing={0.3}>
+                <EventIcon sx={{ fontSize: 32 }} color="primary" />
+                <Typography variant="h5" color="text.secondary">
+                  {props.ArrivalDate.substring(0, 10)}
+                </Typography>
+              </Stack>
             </Stack>
             {/* <Typography variant="h5" color="text.secondary" marginLeft="70px">
               Terminal: {props.Terminal}
@@ -194,7 +201,7 @@ export default function FlightCard(props) {
                   <Typography variant="h6" color="text.secondary">
                     Price Per Seat:
                   </Typography>
-                  <Typography variant="h5" color="text.primary">
+                  <Typography variant="h5" color="primary.main">
                     {props.FirstClassPrice} EGP
                   </Typography>
                 </Stack>
