@@ -15,24 +15,36 @@ router.post("/createBooking", async (req, res) => {
   const User_ID = req.body.User_id;
   const Flight_ID = req.body._id;
    const seats=req.body.TakenSeats;
+   const ReturnFlight_ID = req.body.Return_id;
+   const Returnseats=req.body.ReturnTakenSeats;
    const BookingNumber = req.body.BookingNumber;
    const Cabin=req.body.Cabin;
+   const TotalPrice=req.body.TotalPrice;
+
    let TakenSeats=[];
+   let ReturnTakenSeats=[];
  for (const p of seats)
  {
    const a=(p.row).concat(p.number)
    TakenSeats.push(a)
  }
 
-  
+ for (const p of Returnseats)
+ {
+   const a=(p.row).concat(p.number)
+   ReturnTakenSeats.push(a)
+ }
  
    const newBooking = new Booking({
     Flight_ID,
+    ReturnFlight_ID,
     User_ID,
   
     TakenSeats,
+    ReturnTakenSeats,
     BookingNumber,
-    Cabin
+    Cabin,
+    TotalPrice
   });
 
   return await newBooking.save();
@@ -125,7 +137,9 @@ router.get("/listUsers", async (req, res) => {
 router.get("/searchBookings", async (req, res) => {
   
   const booking = req.query;
- 
+  
+
+ console.dir(booking)
   const query = {};
   for (const p in booking) {
     if (!(booking[p] == "")) {
@@ -143,6 +157,17 @@ for(const a of r){
   for (const p in fl) {
     if (!(p== "TakenSeats")) {
       a[`${p}`] = fl[p];
+    }
+  }
+}
+
+for(const a of r){
+  let fl={};
+  fl= await Flight.findById(a.ReturnFlight_ID).lean();
+  // console.dir(fl)
+  for (const p in fl) {
+    if (!(p== "TakenSeats")) {
+      a[`${"Return"+p}`] = fl[p];
     }
   }
 }
@@ -299,7 +324,7 @@ router.get("/getAirports", async (req, res) => {
 router.post("/updateSeats", async (req, res) => {
   const flight = req.body;
 
-  const seats=req.body.TakenSeats;0
+  const seats=req.body.TakenSeats;
 
   let Taken=[];
 for (const p of seats)
@@ -321,6 +346,39 @@ if(flight.Cabin=="Economy")
   if(flight.Cabin=="First Class")
   await  Flight.findByIdAndUpdate(flight._id, {$inc: {"FreeFirstClassSeats": (flight.TakenSeats.length**-1)}});
   
+
+
+
+  const Returnseats=req.body.ReturnTakenSeats;
+
+  let ReturnTaken=[];
+for (const p of Returnseats)
+{
+  const a=(p.row).concat(p.number)
+  ReturnTaken.push(a)
+}
+//console.dir(ReturnTaken)
+  for(const p of ReturnTaken){
+    
+  const query = {$push: { TakenSeats: p } };
+  
+ await  Flight.findByIdAndUpdate(flight.Return_id, query)
+    
+  }
+if(flight.Cabin=="Economy")
+  await  Flight.findByIdAndUpdate(flight.Return_id, {$inc: {"FreeEconomySeats": (flight.TakenSeats.length*-1)}});
+  if(flight.Cabin=="Business")
+  await  Flight.findByIdAndUpdate(flight.Return_id, {$inc: {"FreeBusinessClassSeats": (flight.TakenSeats.length*-1)}});
+  if(flight.Cabin=="First Class")
+  await  Flight.findByIdAndUpdate(flight.Return_id, {$inc: {"FreeFirstClassSeats": (flight.TakenSeats.length**-1)}});
+  
+
+
+
+
+
+
+
 
   Flight.findById(flight._id).then((result) => {
     res.send(result)
@@ -347,6 +405,24 @@ if(flight.Cabin=="Economy")
   if(flight.Cabin=="First Class")
   await  Flight.findByIdAndUpdate(flight.Flight_id, {$inc: {"FreeFirstClassSeats": (flight.TakenSeats.length*1)}});
   
+
+
+  for(const p of flight.ReturnTakenSeats){
+    
+  const query = {$pull: { TakenSeats: p } };
+  
+ await  Flight.findByIdAndUpdate(flight.ReturnFlight_id, query)
+    
+  }
+  if(flight.Cabin=="Economy")
+  await  Flight.findByIdAndUpdate(flight.ReturnFlight_id, {$inc: {"FreeEconomySeats": (flight.TakenSeats.length*1)}});
+  if(flight.Cabin=="Business")
+  await  Flight.findByIdAndUpdate(flight.ReturnFlight_id, {$inc: {"FreeBusinessClassSeats": (flight.TakenSeats.length*1)}});
+  if(flight.Cabin=="First Class")
+  await  Flight.findByIdAndUpdate(flight.ReturnFlight_id, {$inc: {"FreeFirstClassSeats": (flight.TakenSeats.length*1)}});
+  
+
+
   Flight.findById(flight.Flight_id).then((result) => {
     res.send(result)
   })
