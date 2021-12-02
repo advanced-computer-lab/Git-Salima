@@ -6,7 +6,7 @@ const ReservedFlights = () => {
     const [reservedFlights, setReservedFlights] = useState([]);
 
     const flight = {
-        User_id: 123 //localStorage.getItem("UserID");
+        User_ID: "007" //localStorage.getItem("userID");
     };
 
     useEffect(() => {
@@ -16,7 +16,10 @@ const ReservedFlights = () => {
             .then((res) => {
                 setReservedFlights(res.data);
             });
+
     }, []);
+
+
 
     const cancelReservationHandler = async (input) => {
         //kizo kamel hena
@@ -49,8 +52,30 @@ const ReservedFlights = () => {
                         DepartureAirport={flight.DepartureAirport}
                         ArrivalAirport={flight.ArrivalAirport}
                         TakenSeats={flight.TakenSeats}
+
                         BookingNumber={flight.BookingNumber}
+                        TotalPrice={flight.TotalPrice}
                         Cabin={flight.Cabin}
+
+                        Return_id={flight.Return_id}
+                        ReturnFlightNo={flight.ReturnFlightNo}
+                        ReturnDepartureDate={flight.ReturnDepartureDate}
+                        ReturnArrivalDate={flight.ReturnArrivalDate}
+                        ReturnDepartureTime={flight.ReturnDepartureTime}
+                        ReturnArrivalTime={flight.ReturnArrivalTime}
+                        ReturnEconomySeats={flight.ReturnEconomySeats}
+                        ReturnBusinessClassSeats={flight.ReturnBusinessClassSeats}
+                        ReturnFirstClassSeats={flight.ReturnFirstClassSeats}
+                        ReturnEconomyLuggage={flight.ReturnEconomyLuggage}
+                        ReturnBusinessClassLuggage={flight.ReturnBusinessClassLuggage}
+                        ReturnFirstClassLuggage={flight.ReturnFirstClassLuggage}
+                        ReturnEconomyPrice={flight.ReturnEconomyPrice}
+                        ReturnBusinessClassPrice={flight.ReturnBusinessClassPrice}
+                        ReturnFirstClassPrice={flight.ReturnFirstClassPrice}
+                        ReturnDepartureAirport={flight.ReturnDepartureAirport}
+                        ReturnArrivalAirport={flight.ReturnArrivalAirport}
+                        ReturnTakenSeats={flight.ReturnTakenSeats}
+
                         onClickCancel={cancelReservationHandler}
                     />
                 </div>

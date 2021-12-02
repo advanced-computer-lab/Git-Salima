@@ -40,10 +40,15 @@ const w = window.innerWidth;
 
 export default function ReservationFlightCard(props) {
 
-    let takenSeats = "";
+    let departureTakenSeats = "";
+    let returnTakenSeats = "";
 
     for (let seat of props.TakenSeats) {
-        takenSeats = takenSeats + " " + seat;
+        departureTakenSeats = departureTakenSeats + " " + seat;
+    }
+
+    for (let seat of props.ReturnTakenSeats) {
+        returnTakenSeats = returnTakenSeats + " " + seat;
     }
 
     const cancelReservationHandler = () => {
@@ -84,7 +89,7 @@ export default function ReservationFlightCard(props) {
                             direction="row"
                             justifyContent="space-around"
                             alignItems="center"
-                            spacing={30}
+                            spacing={0}
                         >
                             <Stack spacing={1} direction="row">
                                 <Typography variant="h3" color="#082567">
@@ -95,13 +100,11 @@ export default function ReservationFlightCard(props) {
                             <Stack spacing={1} direction="row">
                                 <hr
                                     style={{
-                                        position: "absolute",
-                                        top: 150,
-                                        left: 380,
+                                        marginTop: 20,
                                         color: "text.secondary",
                                         backgroundColor: "text.secondary",
                                         height: 3,
-                                        width: 640,
+                                        width: 690,
                                     }}
                                 />
                             </Stack>
@@ -113,11 +116,12 @@ export default function ReservationFlightCard(props) {
                             </Stack>
                         </Stack>
                         <Stack
-                            spacing={25}
+                            spacing={20}
                             direction="row"
                             justifyContent="space-around"
                             alignItems="center"
                             marginRight="15px"
+                            marginLeft="15px"
                         >
                             <Stack direction="row" spacing={0.3}>
                                 <AccessTimeIcon sx={{ fontSize: 32 }} color="primary" />
@@ -127,7 +131,7 @@ export default function ReservationFlightCard(props) {
                             </Stack>
                             <Stack direction="row" >
                                 <Typography variant="h5" color="text.secondary">
-                                    Seats: {takenSeats}
+                                    Seats: {departureTakenSeats}
                                 </Typography>
                             </Stack>
                             <Stack direction="row" spacing={0.3}>
@@ -138,22 +142,15 @@ export default function ReservationFlightCard(props) {
                             </Stack>
                         </Stack>
                         <Stack
-                            spacing={25}
+                            spacing={98}
                             direction="row"
                             justifyContent="space-around"
                             alignItems="center"
-                            marginRight="40px"
-                            marginLeft="30px"
                         >
                             <Stack direction="row" spacing={0.3}>
                                 <EventIcon sx={{ fontSize: 32 }} color="primary" />
                                 <Typography variant="h5" color="text.secondary">
                                     {props.DepartureDate.substring(0, 10)}
-                                </Typography>
-                            </Stack>
-                            <Stack direction="row" >
-                                <Typography variant="h5" color="text.secondary">
-                                    Booking Number: {props.BookingNumber}
                                 </Typography>
                             </Stack>
                             <Stack direction="row" spacing={0.3}>
@@ -163,24 +160,14 @@ export default function ReservationFlightCard(props) {
                                 </Typography>
                             </Stack>
                         </Stack>
-                        <hr
-                            style={{
-                                marginTop: 10,
-                                color: "text.secondary",
-                                backgroundColor: "text.secondary",
-                                height: 1,
-                                width: { w },
-                            }}
-                        />
 
                         <Stack
-                            spacing={38}
+                            spacing={10}
                             direction="row"
                             maxHeight="10"
                             justifyContent="space-around"
                             alignItems="center"
-                            marginLeft="40px"
-                            marginRight="55px"
+                            marginRight="75px"
                         >
                             {props.Cabin === "First Class" && (
                                 <Stack direction="row">
@@ -236,6 +223,212 @@ export default function ReservationFlightCard(props) {
                                     </Typography>
                                 </Stack>
                             )}
+                        </Stack>
+                        <hr
+                            style={{
+                                marginTop: 35,
+                                color: "text.secondary",
+                                backgroundColor: "text.secondary",
+                                height: 3,
+                                width: { w },
+                            }}
+                        />
+                    </CardContent>
+                </ThemeProvider>
+                <ThemeProvider theme={theme}>
+
+                    <CssBaseline />
+                    <CardContent style={{ backgroundColor: "#EFEAE4" }}>
+                        <Stack
+                            direction="row"
+                            justifyContent="space-around"
+                            alignItems="center"
+                        >
+                            <Typography
+                                variant="h4"
+                                component="div"
+                                color="primary"
+                                alignItems="center"
+                            >
+                                Flight Number: {props.ReturnFlightNo}
+                            </Typography>
+                        </Stack>
+                        <Stack
+                            direction="row"
+                            justifyContent="space-around"
+                            alignItems="center"
+                            spacing={0}
+                        >
+                            <Stack spacing={1} direction="row">
+                                <Typography variant="h3" color="#082567">
+                                    {props.ReturnDepartureAirport}
+                                </Typography>
+                                <FlightTakeoffIcon sx={{ fontSize: 50 }} color="primary" />
+                            </Stack>
+                            <Stack spacing={1} direction="row">
+                                <hr
+                                    style={{
+                                        marginTop: 20,
+                                        color: "text.secondary",
+                                        backgroundColor: "text.secondary",
+                                        height: 3,
+                                        width: 690,
+                                    }}
+                                />
+                            </Stack>
+                            <Stack spacing={1} direction="row">
+                                <FlightLandIcon sx={{ fontSize: 50 }} color="primary" />
+                                <Typography variant="h3" color="#082567">
+                                    {props.ReturnArrivalAirport}
+                                </Typography>
+                            </Stack>
+                        </Stack>
+                        <Stack
+                            spacing={20}
+                            direction="row"
+                            justifyContent="space-around"
+                            alignItems="center"
+                            marginRight="15px"
+                            marginLeft="15px"
+                        >
+                            <Stack direction="row" spacing={0.3}>
+                                <AccessTimeIcon sx={{ fontSize: 32 }} color="primary" />
+                                <Typography variant="h5" color="text.secondary">
+                                    {props.ReturnDepartureTime}
+                                </Typography>
+                            </Stack>
+                            <Stack direction="row" >
+                                <Typography variant="h5" color="text.secondary">
+                                    Seats: {returnTakenSeats}
+                                </Typography>
+                            </Stack>
+                            <Stack direction="row" spacing={0.3}>
+                                <AccessTimeIcon sx={{ fontSize: 32 }} color="primary" />
+                                <Typography variant="h5" color="text.secondary">
+                                    {props.ReturnArrivalTime}
+                                </Typography>
+                            </Stack>
+                        </Stack>
+                        <Stack
+                            spacing={98}
+                            direction="row"
+                            justifyContent="space-around"
+                            alignItems="center"
+                        >
+                            <Stack direction="row" spacing={0.3}>
+                                <EventIcon sx={{ fontSize: 32 }} color="primary" />
+                                <Typography variant="h5" color="text.secondary">
+                                    {props.ReturnDepartureDate.substring(0, 10)}
+                                </Typography>
+                            </Stack>
+                            <Stack direction="row" spacing={0.3}>
+                                <EventIcon sx={{ fontSize: 32 }} color="primary" />
+                                <Typography variant="h5" color="text.secondary">
+                                    {props.ReturnArrivalDate.substring(0, 10)}
+                                </Typography>
+                            </Stack>
+                        </Stack>
+
+                        <Stack
+                            spacing={10}
+                            direction="row"
+                            maxHeight="10"
+                            justifyContent="space-around"
+                            alignItems="center"
+                            marginRight="75px"
+                        >
+                            {props.Cabin === "First Class" && (
+                                <Stack direction="row">
+                                    <LuggageIcon color="primary" sx={{ fontSize: 30 }} />
+                                    <Typography variant="h5" color="text.secondary">
+                                        Luggage: {props.ReturnFirstClassLuggage}
+                                    </Typography>
+                                </Stack>
+                            )}
+                            {props.Cabin === "Business" && (
+                                <Stack direction="row">
+                                    <LuggageIcon color="primary" sx={{ fontSize: 30 }} />
+                                    <Typography variant="h5" color="text.secondary">
+                                        Luggage: {props.ReturnBusinessClassLuggage}
+                                    </Typography>
+                                </Stack>
+                            )}
+                            {props.Cabin === "Economy" && (
+                                <Stack direction="row">
+                                    <LuggageIcon color="primary" sx={{ fontSize: 30 }} />
+                                    <Typography variant="h5" color="text.secondary">
+                                        Luggage: {props.ReturnEconomyLuggage}
+                                    </Typography>
+                                </Stack>
+                            )}
+                            {props.Cabin === "First Class" && (
+                                <Stack>
+                                    <Typography variant="h6" color="text.secondary">
+                                        Price Per Seat:
+                                    </Typography>
+                                    <Typography variant="h5" color="primary.main">
+                                        {props.ReturnFirstClassPrice} EGP
+                                    </Typography>
+                                </Stack>
+                            )}
+                            {props.Cabin === "Business" && (
+                                <Stack marginRight="250px">
+                                    <Typography variant="h6" color="text.secondary">
+                                        Price Per Seat:
+                                    </Typography>
+                                    <Typography variant="h5" color="primary.main">
+                                        {props.ReturnBusinessClassPrice} EGP
+                                    </Typography>
+                                </Stack>
+                            )}
+                            {props.Cabin === "Economy" && (
+                                <Stack marginRight="250px">
+                                    <Typography variant="h6" color="text.secondary">
+                                        Price Per Seat:
+                                    </Typography>
+                                    <Typography variant="h5" color="primary.main">
+                                        {props.ReturnEconomyPrice} EGP
+                                    </Typography>
+                                </Stack>
+                            )}
+                        </Stack>
+                        <hr
+                            style={{
+                                marginTop: 35,
+                                color: "text.secondary",
+                                backgroundColor: "text.secondary",
+                                height: 4,
+                                width: { w },
+                            }}
+                        />
+                        <Stack
+                            spacing={20}
+                            direction="row"
+                            justifyContent="space-between"
+                            marginLeft="40px"
+                            alignItems="center"
+
+                        >
+                            <Stack >
+                                <Typography variant="h6" color="text.secondary">
+                                    Total Price:
+                                </Typography>
+                                <Typography variant="h5" color="primary.main">
+                                    {props.TotalPrice} EGP
+                                </Typography>
+                            </Stack>
+                            <Stack>
+                                <Typography variant="h4"
+                                    component="div"
+                                    color="primary"
+                                    alignItems="center"
+                                    marginLeft="60px">
+                                    Booking Number:
+                                </Typography>
+                                <Typography variant="h5" color="primary.main" marginLeft="60px">
+                                    {props.BookingNumber}
+                                </Typography>
+                            </Stack>
                             <CardActions>
                                 <ColorButton variant="contained" onClick={cancelReservationHandler}>
                                     Cancel Reservation
