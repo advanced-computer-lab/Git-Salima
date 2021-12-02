@@ -40,6 +40,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
 const w = window.innerWidth;
 
 export default function FlightCard(props) {
+
   const selectHandler = () => {
     props.onClickSelect(props);
   };
@@ -222,7 +223,7 @@ export default function FlightCard(props) {
 
               <CardActions>
                 <ColorButton variant="contained" onClick={selectHandler}>
-                  Select This Flight
+                  Select Flight
                 </ColorButton>
               </CardActions>
             </Stack>

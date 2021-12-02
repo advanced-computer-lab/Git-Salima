@@ -4,6 +4,7 @@ import UserFlightCard from "./user-flight-card";
 import { useHistory } from "react-router-dom";
 
 const DepartureFlights = () => {
+
   const [FlightNo, setFlightNo] = useState("");
   const [ArrivalDate, setArrivalDate] = useState("");
   const [DepartureTime, setDepartureTime] = useState("");
