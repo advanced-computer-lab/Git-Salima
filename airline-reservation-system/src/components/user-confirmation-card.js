@@ -52,26 +52,18 @@ export default function MultiActionAreaCard() {
 
     const confirmHandler = () => {
 
-        const bookedDepartureFlight = {
+        const bookedFlight = {
             _id: localStorage.getItem("FlightIDAro"),
+            Return_id: localStorage.getItem("FlightIDKizo"),
             TakenSeats: JSON.parse(localStorage.getItem("departureSeats")),
+            ReturnTakenSeats: JSON.parse(localStorage.getItem("returnSeats")),
             Cabin: localStorage.getItem("UFSFClass"),
-            BookingNumber: localStorage.getItem("departureBookingNumber"),
-            User_id: 1
-        }
-        console.dir(JSON.parse(localStorage.getItem("departureSeats")))
-
-        const bookedReturnFlight = {
-            _id: localStorage.getItem("FlightIDKizo"),
-            TakenSeats: JSON.parse(localStorage.getItem("returnSeats")),
-            Cabin: localStorage.getItem("UFSFClass"),
-            BookingNumber: localStorage.getItem("returnBookingNumber"),
-            User_id: 1
+            BookingNumber: localStorage.getItem("bookingNumber"),
+            TotalPrice: localStorage.getItem("totalPrice"),
+            User_id: 1 //localStorage.getItem("userID")
         }
 
-        updateSeatsAPI(bookedDepartureFlight);
-        updateSeatsAPI(bookedReturnFlight);
-
+        updateSeatsAPI(bookedFlight);
         handleClickOpenNext();
     };
 
@@ -119,9 +111,7 @@ export default function MultiActionAreaCard() {
                                     <DialogContentText id="alert-dialog-description">
                                         Flight booked successfully!
                                         <br />
-                                        Your Outbound Booking Number is {localStorage.getItem("departureBookingNumber")}
-                                        <br />
-                                        Your Inbound Booking Number is {localStorage.getItem("returnBookingNumber")}
+                                        Booking Number is {localStorage.getItem("bookingNumber")}
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions>
