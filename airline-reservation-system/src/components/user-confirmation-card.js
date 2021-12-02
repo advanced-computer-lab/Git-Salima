@@ -51,6 +51,7 @@ export default function MultiActionAreaCard() {
     };
 
     const confirmHandler = () => {
+
         const bookedDepartureFlight = {
             _id: localStorage.getItem("FlightIDAro"),
             TakenSeats: JSON.parse(localStorage.getItem("departureSeats")),

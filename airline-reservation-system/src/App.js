@@ -13,6 +13,7 @@ import UserDepFlights from "./components/user-dep-flights";
 import UserRetFlights from "./components/user-ret-flights";
 import UserFlightsSummary from "./components/user-flights-summary";
 import UserFlightsItinerary from "./components/user-flights-itinerary";
+import UserReservedFlights from "./components/user-reserved-flights";
 import ChooseSeats from "./components/chooseSeats/index";
 
 function App() {
@@ -50,13 +51,14 @@ function App() {
         <Route path="/user-flights-summary" component={UserFlightsSummary} />
       </div>
       <div className="container">
-      <div className="container">
-        <Route path="/choose-seats" component={ChooseSeats} />
-      </div>
+        <div className="container">
+          <Route path="/choose-seats" component={ChooseSeats} />
+        </div>
         <Route
-          path="/user-flights-itinerary"
-          component={UserFlightsItinerary}
-        />
+          path="/user-flights-itinerary" component={UserFlightsItinerary} />
+      </div>
+      <div className="container">
+        <Route path="/user-reserved-flights" component={UserReservedFlights} />
       </div>
     </Router>
   );
