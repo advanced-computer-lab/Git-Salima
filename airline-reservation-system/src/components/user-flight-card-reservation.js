@@ -43,7 +43,7 @@ export default function ReservationFlightCard(props) {
     let takenSeats = "";
 
     for (let seat of props.TakenSeats) {
-        takenSeats = takenSeats + " " + seat.row + seat.number;
+        takenSeats = takenSeats + " " + seat;
     }
 
     const cancelReservationHandler = () => {
