@@ -14,8 +14,7 @@ const FlightsItinerary = () => {
     let departureFlightSeats = "";
     let returnFlightSeats = "";
 
-    let departureBookingNumber = "";
-    let returnBookingNumber = "";
+    let bookingNumber = "";
 
     useEffect(() => {
 
@@ -36,24 +35,23 @@ const FlightsItinerary = () => {
 
     }, []);
 
-    departureBookingNumber = departureBookingNumber + localStorage.getItem("FlightNoAro") + "-";
-    returnBookingNumber = returnBookingNumber + localStorage.getItem("FlightNoKizo") + "-";
+    bookingNumber = bookingNumber + localStorage.getItem("FlightNoAro") + localStorage.getItem("FlightNoKizo") + "-";
 
     for (let seat of departureSeats) {
         departureFlightSeats = departureFlightSeats + " " + seat.row + seat.number;
-        departureBookingNumber += seat.row + seat.number;
+        bookingNumber += seat.row + seat.number;
     }
+
     for (let seat of returnSeats) {
         returnFlightSeats = returnFlightSeats + " " + seat.row + seat.number;
-        returnBookingNumber += seat.row + seat.number;
+        bookingNumber += seat.row + seat.number;
     }
 
     const totalPrice = (localStorage.getItem("departureFlightPrice") * departureSeats.length) +
         (localStorage.getItem("returnFlightPrice") * returnSeats.length);
 
     localStorage.setItem("totalPrice", totalPrice);
-    localStorage.setItem("departureBookingNumber", departureBookingNumber);
-    localStorage.setItem("returnBookingNumber", returnBookingNumber);
+    localStorage.setItem("bookingNumber", bookingNumber);
 
     // {localStorage.getItem("Username")}
 

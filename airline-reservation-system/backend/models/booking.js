@@ -6,11 +6,19 @@ const bookingSchema = new Schema({
         type: String,
         required: true,
     },
+    ReturnFlight_ID: {
+        type: String,
+        required: true,
+    },
     User_ID: {
         type: String,
         required: true,
     },
     TakenSeats: {
+        type: Array,
+        required: true,
+    },
+    ReturnTakenSeats: {
         type: Array,
         required: true,
     },
@@ -20,8 +28,12 @@ const bookingSchema = new Schema({
     },
     Cabin: {
         type: String,
-        required: true,
-    },
+        required: true},
+       
+    TotalPrice: {
+        type: Number,
+        required: true
+    }
     
 }, { timestamps: true });
 

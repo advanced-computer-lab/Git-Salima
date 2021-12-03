@@ -44,9 +44,7 @@ const Profile = () => {
       Email: userEmail,
       PassportNumber: userPassport,
     };
-    const temp = JSON.stringify(profile);
-    const temp2 = JSON.parse(temp);
-    editUsersAPI(temp2);
+    editUsersAPI(profile);
   };
   return (
     <div>
