@@ -22,7 +22,6 @@ import bg from "./bg4.jpg";
 import "../styles/header.css";
 
 const Flight = () => {
-
   const [DepartureDate, setDepartureDate] = useState("");
   const [ArrivalDate, setArrivalDate] = useState("");
   const [DepartureAirport, setDepartureAirport] = useState("");
@@ -32,7 +31,13 @@ const Flight = () => {
 
   const [FlightClass, setFlightClass] = React.useState("");
   const [allFlights, setAllFlights] = useState([]);
-
+  //should be done upon authentication >>>>>
+  //const user=searchWithUserId();
+  localStorage.setItem("userFName", "el lahw");
+  localStorage.setItem("userLName", "el 5afy");
+  localStorage.setItem("userEmail", "ana@elensan");
+  localStorage.setItem("userPassport", 123);
+  //till here
   useEffect(() => {
     axios.get("http://localhost:8000/list").then((res) => {
       const temp = JSON.stringify(res.data);
@@ -63,6 +68,7 @@ const Flight = () => {
       "numOfSeats",
       Number(numofAdults) + Number(numofChildren)
     );
+
     history.push("/user-dep-flights");
   };
   const handleChange = (event) => {

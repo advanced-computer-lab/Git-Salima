@@ -7,12 +7,20 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import { editUsersAPI } from "../apis";
 const Profile = () => {
   const [userFirstName, setuserFirstName] = useState("");
   const [userLastName, setuserLastName] = useState("");
   const [userEmail, setuserEmail] = useState("");
   const [userPassport, setuserPassport] = useState("");
+  const [editOccured, seteditOccured] = useState("false");
 
+  const profileInfo = {
+    FirstName: localStorage.getItem("userFName"),
+    LastName: localStorage.getItem("userLName"),
+    Email: localStorage.getItem("userEmail"),
+    PassportNumber: localStorage.getItem("userPassport"),
+  };
   const theme = createTheme({
     typography: {
       fontFamily: "Philosopher",
@@ -27,6 +35,19 @@ const Profile = () => {
       fontFamily: "Philosopher",
     },
   }));
+  const editHandler = (e) => {
+    e.preventDefault();
+    console.log("onClick tamam");
+    const profile = {
+      FirstName: userFirstName,
+      LastName: userLastName,
+      Email: userEmail,
+      PassportNumber: userPassport,
+    };
+    const temp = JSON.stringify(profile);
+    const temp2 = JSON.parse(temp);
+    editUsersAPI(temp2);
+  };
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -38,10 +59,12 @@ const Profile = () => {
                 <TextField
                   id="filled-helperText"
                   label="Helper text"
-                  defaultValue={userFirstName}
+                  defaultValue={profileInfo.FirstName}
                   variant="filled"
-                  value={userFirstName}
-                  onChange={(e) => setuserFirstName(e.target.value)}
+                  onChange={(e) => {
+                    setuserFirstName(e.target.value);
+                    seteditOccured("true");
+                  }}
                 />
               </div>
 
@@ -49,10 +72,13 @@ const Profile = () => {
                 <TextField
                   id="filled-helperText"
                   label="Helper text"
-                  defaultValue={userLastName}
+                  defaultValue={profileInfo.LastName}
                   variant="filled"
-                  value={userLastName}
-                  onChange={(e) => setuserLastName(e.target.value)}
+                  value={profileInfo.LastName}
+                  onChange={(e) => {
+                    setuserLastName(e.target.value);
+                    seteditOccured("true");
+                  }}
                 />
               </div>
             </div>
@@ -62,10 +88,13 @@ const Profile = () => {
               <TextField
                 id="filled-helperText"
                 label="Helper text"
-                defaultValue={userEmail}
+                defaultValue={profileInfo.Email}
                 variant="filled"
-                value={userEmail}
-                onChange={(e) => setuserEmail(e.target.value)}
+                value={profileInfo.Email}
+                onChange={(e) => {
+                  setuserEmail(e.target.value);
+                  seteditOccured("true");
+                }}
               />
             </div>
 
@@ -73,25 +102,42 @@ const Profile = () => {
               <TextField
                 id="filled-helperText"
                 label="Helper text"
-                defaultValue={userPassport}
+                defaultValue={profileInfo.PassportNumber}
                 variant="filled"
-                value={userPassport}
-                onChange={(e) => setuserPassport(e.target.value)}
+                value={profileInfo.PassportNumber}
+                onChange={(e) => {
+                  setuserPassport(e.target.value);
+                  seteditOccured("true");
+                }}
               />
             </div>
 
             <br />
 
             <br />
-            <div className="form-group">
-              <ColorButton
-                variant="contained"
-                type="submit"
-                style={{ fontFamily: "Philosopher" }}
-              >
-                Search
-              </ColorButton>
-            </div>
+            {editOccured === "false" && (
+              <div className="form-group">
+                <ColorButton
+                  disabled
+                  variant="contained"
+                  type="submit"
+                  style={{ fontFamily: "Philosopher" }}
+                >
+                  Edit Profile
+                </ColorButton>
+              </div>
+            )}
+            {editOccured === "true" && (
+              <div className="form-group">
+                <ColorButton
+                  variant="contained"
+                  onClick={editHandler}
+                  style={{ fontFamily: "Philosopher" }}
+                >
+                  Edit Profile
+                </ColorButton>
+              </div>
+            )}
           </CardContent>
         </Card>
       </ThemeProvider>
