@@ -55,6 +55,7 @@ export default function FlightCard(props) {
   const editHandler = () => {
     props.onClickEdit(props);
   };
+
   const deleteHandler = () => {
     props.onClickDelete(props);
     setOpen(false);
@@ -137,7 +138,7 @@ export default function FlightCard(props) {
                 First Class Price: {props.FirstClassPrice}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-               Business Class Price: {props.BusinessClassPrice}
+                Business Class Price: {props.BusinessClassPrice}
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 Economy Price: {props.EconomyPrice}

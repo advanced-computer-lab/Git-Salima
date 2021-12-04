@@ -4,7 +4,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "@fontsource/philosopher";
 import { Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import axios from "axios";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
@@ -24,27 +23,14 @@ import "../styles/header.css";
 const Flight = () => {
 
   const [DepartureDate, setDepartureDate] = useState("");
-  const [ArrivalDate, setArrivalDate] = useState("");
+  const [ReturnDate, setReturnDate] = useState("");
   const [DepartureAirport, setDepartureAirport] = useState("");
   const [ArrivalAirport, setArrivalAirport] = useState("");
   const [numofChildren, setnumofChildren] = useState(0);
   const [numofAdults, setnumofAdults] = useState(1);
 
   const [FlightClass, setFlightClass] = React.useState("");
-  const [allFlights, setAllFlights] = useState([]);
 
-  useEffect(() => {
-    axios.get("http://localhost:8000/list").then((res) => {
-      const temp = JSON.stringify(res.data);
-      const temp2 = JSON.parse(temp);
-      setAllFlights(temp2);
-      console.log(temp2);
-    });
-  }, []);
-  const top100Films = [
-    { title: "The Shawshank Redemption", year: 1994 },
-    { title: "The Godfather", year: 1972 },
-  ];
   const theme = createTheme({
     typography: {
       fontFamily: "Philosopher",
@@ -57,7 +43,7 @@ const Flight = () => {
     localStorage.setItem("UFSDAirport", DepartureAirport);
     localStorage.setItem("UFSAAirport", ArrivalAirport);
     localStorage.setItem("UFSDDate", tweakDate(DepartureDate));
-    localStorage.setItem("UFSADate", tweakDate(ArrivalDate));
+    localStorage.setItem("UFSRDate", tweakDate(ReturnDate));
     localStorage.setItem("UFSFClass", FlightClass);
     localStorage.setItem(
       "numOfSeats",
@@ -77,7 +63,6 @@ const Flight = () => {
       fontFamily: "Philosopher",
     },
   }));
-  const w = window.outerWidth;
   const tweakDate = (s) => {
     const temp = JSON.stringify(s);
     const temp2 = JSON.parse(temp);
@@ -159,10 +144,10 @@ const Flight = () => {
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <DatePicker
                         label="Return Date"
-                        value={ArrivalDate}
+                        value={ReturnDate}
                         required
                         onChange={(newValue) => {
-                          setArrivalDate(newValue);
+                          setReturnDate(newValue);
                         }}
                         renderInput={(params) => <TextField {...params} />}
                       />

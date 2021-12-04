@@ -82,10 +82,12 @@ const FlightsSummary = () => {
     },
   }));
 
+  // {localStorage.getItem("Username")}
 
   return (
     <div>
-      <h1>Choose Seats</h1>
+      <h1 style={{ textAlign: 'center' }} > Please Mario choose your seats </h1>
+      <br />
       {depFlight.map((flight) => (
         <div>
           <UserFlightCardSeats
@@ -95,7 +97,6 @@ const FlightsSummary = () => {
             ArrivalDate={flight.ArrivalDate}
             DepartureTime={flight.DepartureTime}
             ArrivalTime={flight.ArrivalTime}
-            Terminal={flight.Terminal}
             EconomySeats={flight.EconomySeats}
             BusinessClassSeats={flight.BusinessClassSeats}
             FirstClassSeats={flight.FirstClassSeats}
@@ -107,7 +108,6 @@ const FlightsSummary = () => {
             FirstClassPrice={flight.FirstClassPrice}
             DepartureAirport={flight.DepartureAirport}
             ArrivalAirport={flight.ArrivalAirport}
-            ReservedSeats={flight.TakenSeats}
             onClickChooseSeats={clickHandlerChooseSeats}
           />
         </div>
@@ -121,13 +121,15 @@ const FlightsSummary = () => {
             ArrivalDate={flight.ArrivalDate}
             DepartureTime={flight.DepartureTime}
             ArrivalTime={flight.ArrivalTime}
-            Terminal={flight.Terminal}
             EconomySeats={flight.EconomySeats}
             BusinessClassSeats={flight.BusinessClassSeats}
             FirstClassSeats={flight.FirstClassSeats}
             EconomyLuggage={flight.EconomyLuggage}
             BusinessClassLuggage={flight.BusinessClassLuggage}
             FirstClassLuggage={flight.FirstClassLuggage}
+            EconomyPrice={flight.EconomyPrice}
+            BusinessClassPrice={flight.BusinessClassPrice}
+            FirstClassPrice={flight.FirstClassPrice}
             DepartureAirport={flight.DepartureAirport}
             ArrivalAirport={flight.ArrivalAirport}
             onClickChooseSeats={clickHandlerChooseSeats}

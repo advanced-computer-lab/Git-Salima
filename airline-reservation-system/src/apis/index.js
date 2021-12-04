@@ -80,8 +80,8 @@ export const editUsersAPI = async (flight) => {
 export const updateSeatsAPI = async (flight) => {
 
   await axios.post("http://localhost:8000/createBooking", flight);
-   
-   await axios.post("http://localhost:8000/updateSeats", flight)
+
+  await axios.post("http://localhost:8000/updateSeats", flight)
     .then((res) => {
       return res.data;
     });
@@ -93,8 +93,8 @@ export const updateSeatsAPI = async (flight) => {
 export const removeSeatsAPI = async (flight) => {
 
   await axios.post("http://localhost:8000/deletebooking", flight);
-   
-   await axios.post("http://localhost:8000/removeSeats", flight)
+
+  await axios.post("http://localhost:8000/removeSeats", flight)
     .then((res) => {
       return res.data;
     });
@@ -102,8 +102,6 @@ export const removeSeatsAPI = async (flight) => {
 
 
 };
-
-
 
 export const getAirportsAPI = async () => {
 

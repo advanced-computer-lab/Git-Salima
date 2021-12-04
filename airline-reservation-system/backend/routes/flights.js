@@ -136,8 +136,6 @@ router.get("/searchBookings", async (req, res) => {
 
   const booking = req.query;
 
-
-  console.dir(booking)
   const query = {};
   for (const p in booking) {
     if (!(booking[p] == "")) {
@@ -147,11 +145,9 @@ router.get("/searchBookings", async (req, res) => {
 
   const r = await Booking.find(query).lean()
 
-  //console.dir(r);
   for (const a of r) {
     let fl = {};
     fl = await Flight.findById(a.Flight_ID).lean();
-    // console.dir(fl)
     for (const p in fl) {
       if (!(p == "TakenSeats")) {
         a[`${p}`] = fl[p];
@@ -162,7 +158,6 @@ router.get("/searchBookings", async (req, res) => {
   for (const a of r) {
     let fl = {};
     fl = await Flight.findById(a.ReturnFlight_ID).lean();
-    // console.dir(fl)
     for (const p in fl) {
       if (!(p == "TakenSeats")) {
         a[`${"Return" + p}`] = fl[p];
@@ -184,8 +179,6 @@ router.get("/searchUsers", (req, res) => {
   User.find(query).then((result) => {
     res.send(result)
   })
-
-
 });
 
 
@@ -353,7 +346,7 @@ router.post("/updateSeats", async (req, res) => {
     const a = (p.row).concat(p.number)
     ReturnTaken.push(a)
   }
-  //console.dir(ReturnTaken)
+
   for (const p of ReturnTaken) {
 
     const query = { $push: { TakenSeats: p } };
@@ -368,20 +361,11 @@ router.post("/updateSeats", async (req, res) => {
   if (flight.Cabin == "First Class")
     await Flight.findByIdAndUpdate(flight.Return_id, { $inc: { "FreeFirstClassSeats": (flight.TakenSeats.length ** -1) } });
 
-
-
-
-
-
-
-
-
   Flight.findById(flight._id).then((result) => {
     res.send(result)
+
   })
 }
-
-
 
 );
 

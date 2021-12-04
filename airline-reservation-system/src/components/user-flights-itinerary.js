@@ -69,7 +69,6 @@ const FlightsItinerary = () => {
                         ArrivalDate={flight.ArrivalDate}
                         DepartureTime={flight.DepartureTime}
                         ArrivalTime={flight.ArrivalTime}
-                        Terminal={flight.Terminal}
                         EconomySeats={flight.EconomySeats}
                         BusinessClassSeats={flight.BusinessClassSeats}
                         Seats={departureFlightSeats}
@@ -77,6 +76,9 @@ const FlightsItinerary = () => {
                         EconomyLuggage={flight.EconomyLuggage}
                         BusinessClassLuggage={flight.BusinessClassLuggage}
                         FirstClassLuggage={flight.FirstClassLuggage}
+                        EconomyPrice={flight.EconomyPrice}
+                        BusinessClassPrice={flight.BusinessClassPrice}
+                        FirstClassPrice={flight.FirstClassPrice}
                         DepartureAirport={flight.DepartureAirport}
                         ArrivalAirport={flight.ArrivalAirport} />
                 </div>
@@ -92,7 +94,6 @@ const FlightsItinerary = () => {
                         ArrivalDate={flight.ArrivalDate}
                         DepartureTime={flight.DepartureTime}
                         ArrivalTime={flight.ArrivalTime}
-                        Terminal={flight.Terminal}
                         EconomySeats={flight.EconomySeats}
                         BusinessClassSeats={flight.BusinessClassSeats}
                         Seats={returnFlightSeats}
@@ -100,6 +101,9 @@ const FlightsItinerary = () => {
                         EconomyLuggage={flight.EconomyLuggage}
                         BusinessClassLuggage={flight.BusinessClassLuggage}
                         FirstClassLuggage={flight.FirstClassLuggage}
+                        EconomyPrice={flight.EconomyPrice}
+                        BusinessClassPrice={flight.BusinessClassPrice}
+                        FirstClassPrice={flight.FirstClassPrice}
                         DepartureAirport={flight.DepartureAirport}
                         ArrivalAirport={flight.ArrivalAirport} />
                 </div>
