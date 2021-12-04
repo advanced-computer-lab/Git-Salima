@@ -17,7 +17,6 @@ import LuggageIcon from "@mui/icons-material/Luggage";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import EventIcon from "@mui/icons-material/Event";
 
-
 const theme = createTheme({
   palette: {
     primary: {
@@ -38,7 +37,6 @@ const ColorButton = styled(Button)(({ theme }) => ({
 const w = window.innerWidth;
 
 export default function FlightCard(props) {
-
   const seatsHandler = () => {
     props.onClickChooseSeats(props);
   };
@@ -88,13 +86,11 @@ export default function FlightCard(props) {
               <Stack spacing={1} direction="row">
                 <hr
                   style={{
-                    position: "absolute",
-                    top: 150,
-                    left: 380,
+                    marginTop: 20,
                     color: "text.secondary",
                     backgroundColor: "text.secondary",
                     height: 3,
-                    width: 640,
+                    width: 690,
                   }}
                 />
               </Stack>

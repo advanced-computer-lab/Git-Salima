@@ -23,7 +23,7 @@ import "../styles/header.css";
 
 const Flight = () => {
   const [DepartureDate, setDepartureDate] = useState("");
-  const [ArrivalDate, setArrivalDate] = useState("");
+  const [returnDate, setreturnDate] = useState("");
   const [DepartureAirport, setDepartureAirport] = useState("");
   const [ArrivalAirport, setArrivalAirport] = useState("");
   const [numofChildren, setnumofChildren] = useState(0);
@@ -33,6 +33,7 @@ const Flight = () => {
   const [allFlights, setAllFlights] = useState([]);
   //should be done upon authentication >>>>>
   //const user=searchWithUserId();
+  localStorage.setItem("userID", "61a6786f911fac3cee540543");
   localStorage.setItem("userFName", "el lahw");
   localStorage.setItem("userLName", "el 5afy");
   localStorage.setItem("userEmail", "ana@elensan");
@@ -61,8 +62,8 @@ const Flight = () => {
 
     localStorage.setItem("UFSDAirport", DepartureAirport);
     localStorage.setItem("UFSAAirport", ArrivalAirport);
-    localStorage.setItem("UFSDDate", tweakDate(DepartureDate));
-    localStorage.setItem("UFSADate", tweakDate(ArrivalDate));
+    localStorage.setItem("UFSDDate", DepartureDate);
+    localStorage.setItem("UFSRDate", returnDate);
     localStorage.setItem("UFSFClass", FlightClass);
     localStorage.setItem(
       "numOfSeats",
@@ -147,32 +148,26 @@ const Flight = () => {
                 </div>
                 <br />
                 <div className="row">
-                  <div className="form-group col-md-2">
-                    <LocalizationProvider required dateAdapter={AdapterDateFns}>
-                      <DatePicker
-                        label="Departure Date"
-                        value={DepartureDate}
-                        required
-                        onChange={(newValue) => {
-                          setDepartureDate(newValue);
-                        }}
-                        renderInput={(params) => <TextField {...params} />}
-                      />
-                    </LocalizationProvider>
+                  <div className="form-group" className="col-md-6">
+                    <label>Departure Date: </label>
+                    <input
+                      type="date"
+                      required
+                      className="form-control"
+                      value={DepartureDate}
+                      onChange={(e) => setDepartureDate(e.target.value)}
+                    />
                   </div>
 
-                  <div className="form-group col-md-2">
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <DatePicker
-                        label="Return Date"
-                        value={ArrivalDate}
-                        required
-                        onChange={(newValue) => {
-                          setArrivalDate(newValue);
-                        }}
-                        renderInput={(params) => <TextField {...params} />}
-                      />
-                    </LocalizationProvider>
+                  <div className="form-group" className="col-md-6">
+                    <label>Arrival Date: </label>
+                    <input
+                      type="date"
+                      required
+                      className="form-control"
+                      value={returnDate}
+                      onChange={(e) => setreturnDate(e.target.value)}
+                    />
                   </div>
                   <div className="form-group col-md-2">
                     <TextField

@@ -71,7 +71,6 @@ export const editFlightsAPI = async (flight) => {
 };
 
 export const editUsersAPI = async (flight) => {
-  console.log("reached api");
   return await axios
     .post("http://localhost:8000/updateUser", flight)
     .then((res) => {

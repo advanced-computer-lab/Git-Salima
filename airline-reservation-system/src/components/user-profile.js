@@ -8,18 +8,32 @@ import { Button } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { editUsersAPI } from "../apis";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+
+import { useHistory } from "react-router-dom";
 const Profile = () => {
-  const [userFirstName, setuserFirstName] = useState("");
-  const [userLastName, setuserLastName] = useState("");
-  const [userEmail, setuserEmail] = useState("");
-  const [userPassport, setuserPassport] = useState("");
+  const [userFirstName, setuserFirstName] = useState(
+    localStorage.getItem("userFName")
+  );
+  const [userLastName, setuserLastName] = useState(
+    localStorage.getItem("userLName")
+  );
+  const [userEmail, setuserEmail] = useState(localStorage.getItem("userEmail"));
+  const [userPassport, setuserPassport] = useState(
+    localStorage.getItem("userPassport")
+  );
   const [editOccured, seteditOccured] = useState("false");
+  const [popup, setpopup] = React.useState(false);
 
   const profileInfo = {
-    FirstName: localStorage.getItem("userFName"),
-    LastName: localStorage.getItem("userLName"),
-    Email: localStorage.getItem("userEmail"),
-    PassportNumber: localStorage.getItem("userPassport"),
+    FirstName: userFirstName,
+    LastName: userLastName,
+    Email: userEmail,
+    PassportNumber: userPassport,
   };
   const theme = createTheme({
     typography: {
@@ -37,14 +51,20 @@ const Profile = () => {
   }));
   const editHandler = (e) => {
     e.preventDefault();
-    console.log("onClick tamam");
     const profile = {
+      _id: localStorage.getItem("userID"),
       FirstName: userFirstName,
       LastName: userLastName,
       Email: userEmail,
       PassportNumber: userPassport,
     };
     editUsersAPI(profile);
+    setpopup(true);
+  };
+  let history = useHistory();
+  const handleClose = (e) => {
+    e.preventDefault();
+    history.push("/user-home");
   };
   return (
     <div>
@@ -56,7 +76,7 @@ const Profile = () => {
               <div className="col">
                 <TextField
                   id="filled-helperText"
-                  label="Helper text"
+                  label="First Name"
                   defaultValue={profileInfo.FirstName}
                   variant="filled"
                   onChange={(e) => {
@@ -69,10 +89,9 @@ const Profile = () => {
               <div className="col-md-10">
                 <TextField
                   id="filled-helperText"
-                  label="Helper text"
+                  label="Last Name"
                   defaultValue={profileInfo.LastName}
                   variant="filled"
-                  value={profileInfo.LastName}
                   onChange={(e) => {
                     setuserLastName(e.target.value);
                     seteditOccured("true");
@@ -85,10 +104,9 @@ const Profile = () => {
             <div className="form-group col-md-2">
               <TextField
                 id="filled-helperText"
-                label="Helper text"
+                label="Email"
                 defaultValue={profileInfo.Email}
                 variant="filled"
-                value={profileInfo.Email}
                 onChange={(e) => {
                   setuserEmail(e.target.value);
                   seteditOccured("true");
@@ -99,10 +117,9 @@ const Profile = () => {
             <div className="col-md-2 ">
               <TextField
                 id="filled-helperText"
-                label="Helper text"
+                label="Passport Number"
                 defaultValue={profileInfo.PassportNumber}
                 variant="filled"
-                value={profileInfo.PassportNumber}
                 onChange={(e) => {
                   setuserPassport(e.target.value);
                   seteditOccured("true");
@@ -137,6 +154,25 @@ const Profile = () => {
               </div>
             )}
           </CardContent>
+        </Card>
+
+        <Card>
+          <Dialog
+            open={popup}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Info Updated Successfully
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>OK</Button>
+            </DialogActions>
+          </Dialog>
         </Card>
       </ThemeProvider>
     </div>
