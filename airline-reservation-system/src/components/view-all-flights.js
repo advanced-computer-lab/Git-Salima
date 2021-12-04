@@ -29,7 +29,6 @@ const Flights = () => {
   const clickHandlerDelete = async (input) => {
     const temp = JSON.stringify(input);
     const temp2 = JSON.parse(temp);
-    console.log(temp2);
     deleteFlightsAPI(temp2);
     setShowDeleteAlert("allFlights");
   };

@@ -9,8 +9,7 @@ const ReturnFlights = () => {
   const flight = {
     ArrivalAirport: localStorage.getItem("DepartureAirportAro"),
     DepartureAirport: localStorage.getItem("ArrivalAirportAro"),
-
-    //DepartureDate : localStorage.getItem("ArrivalDateAro")
+    DepartureDate: localStorage.getItem("UFSRDate")
   };
 
   useEffect(() => {

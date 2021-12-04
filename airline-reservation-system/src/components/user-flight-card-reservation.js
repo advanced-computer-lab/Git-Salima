@@ -16,6 +16,11 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import EventIcon from "@mui/icons-material/Event";
 import { styled } from "@mui/material/styles";
 import { Button, CardActions } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const theme = createTheme({
     palette: {
@@ -40,6 +45,8 @@ const w = window.innerWidth;
 
 export default function ReservationFlightCard(props) {
 
+    const [open, setOpen] = React.useState(false);
+
     let departureTakenSeats = "";
     let returnTakenSeats = "";
 
@@ -51,8 +58,18 @@ export default function ReservationFlightCard(props) {
         returnTakenSeats = returnTakenSeats + " " + seat;
     }
 
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     const cancelReservationHandler = () => {
         props.onClickCancel(props);
+        setOpen(false);
+        window.location.reload(false);
     };
 
     return (
@@ -430,9 +447,28 @@ export default function ReservationFlightCard(props) {
                                 </Typography>
                             </Stack>
                             <CardActions>
-                                <ColorButton variant="contained" onClick={cancelReservationHandler}>
+                                <ColorButton variant="contained" onClick={handleClickOpen}>
                                     Cancel Reservation
                                 </ColorButton>
+                                <Dialog
+                                    open={open}
+                                    onClose={handleClose}
+                                    aria-labelledby="alert-dialog-title"
+                                    aria-describedby="alert-dialog-description"
+                                >
+                                    <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
+                                    <DialogContent>
+                                        <DialogContentText id="alert-dialog-description">
+                                            Are you sure you want to cancel this booking?
+                                        </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button onClick={handleClose}>Cancel</Button>
+                                        <Button onClick={cancelReservationHandler} autoFocus>
+                                            Confirm
+                                        </Button>
+                                    </DialogActions>
+                                </Dialog>
                             </CardActions>
                         </Stack>
                     </CardContent>
