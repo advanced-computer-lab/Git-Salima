@@ -4,13 +4,36 @@ const Flight = require("../models/flight");
 const Booking = require("../models/booking");
 const User = require("../models/user");
 const axios = require('axios').default;
+var nodemailer = require('nodemailer');
 
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'git.salima.airlines@gmail.com',
+    pass: 'pa$word_123'
+  }
+});
 router.get("/", (req, res) => {
   res.status(200).send("You have everything installed !");
 });
 
 
-
+router.get("/email", (req, res) => {
+var mailOptions = {
+  from: 'git.salima.airlines@gmail.com',
+  to: req.body.to,
+  subject: req.body.subject,
+  text: req.body.text
+};
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+    res.send("Email Sent")
+  }
+});
+});
 router.post("/createBooking", async (req, res) => {
   const User_ID = req.body.User_id;
   const Flight_ID = req.body._id;
