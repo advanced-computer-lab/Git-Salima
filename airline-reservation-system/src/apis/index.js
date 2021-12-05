@@ -5,8 +5,16 @@ export const createFlightAPI = async (flight) => {
 };
 
 export const createUserAPI = async (flight) => {
-  await axios.post("http://localhost:8000/createUser", flight);
+  const temp1 = JSON.stringify(flight);
+  const temp2 = JSON.parse(temp1);
+
+  return await axios
+    .post("http://localhost:8000/createUser", { params: temp2 })
+    .then((res) => {
+      return res.data;
+    });
 };
+
 
 export const searchFlightsAPI = async (flight) => {
   const temp1 = JSON.stringify(flight);
