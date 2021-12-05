@@ -16,6 +16,7 @@ import UserFlightsItinerary from "./components/user-flights-itinerary";
 import UserReservedFlights from "./components/user-reserved-flights";
 import ChooseSeats from "./components/chooseSeats/index";
 import Profile from "./components/user-profile";
+import Login from "./components/user-login";
 
 function App() {
   return (
@@ -128,6 +129,9 @@ function App() {
       </div>
       <div className="container">
         <Route path="/user-profile" component={Profile} />
+      </div>
+      <div className="container">
+        <Route path="/user-login" component={Login} />
       </div>
     </Router>
   );

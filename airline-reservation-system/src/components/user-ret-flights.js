@@ -48,7 +48,6 @@ const ReturnFlights = () => {
     localStorage.setItem("BusinessClassSeatsKizo", temp2.BusinessClassSeats);
     localStorage.setItem("EconomySeatsKizo", temp2.EconomySeats);
     localStorage.setItem("BookedSeatsKizo", JSON.stringify(temp2.TakenSeats));
-    //localStorage.setItem("BookedSeats", temp2.TakenSeats)
     localStorage.setItem("FlightNoKizo", temp2.FlightNo);
     history.push("/user-flights-summary");
   };
@@ -60,10 +59,6 @@ const ReturnFlights = () => {
         fixed
         brand="Git Salima Airlines"
         rightLinks={<HeaderLinks />}
-        // changeColorOnScroll={{
-        //   height: 0,
-        //   color: "#082567",
-        // }}
       />
       <br />
       <br />

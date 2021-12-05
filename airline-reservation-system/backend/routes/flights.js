@@ -73,7 +73,6 @@ router.post("/createBooking", async (req, res) => {
 });
 
 router.post("/createUser", async (req, res) => {
-  console.dir(req.body);
   const Email = req.body.Email;
   const Password = req.body.Password;
   const FirstName = req.body.FirstName;

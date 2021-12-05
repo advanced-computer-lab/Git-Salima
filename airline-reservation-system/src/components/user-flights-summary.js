@@ -32,13 +32,6 @@ const theme = createTheme({
     fontFamily: "Philosopher",
   },
 });
-const ColorButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.getContrastText("#082567"),
-  backgroundColor: "#082567",
-  "&:hover": {
-    backgroundColor: "#5F9CC5",
-  },
-}));
 
 const FlightsSummary = () => {
   const [depFlight, setDepFlight] = useState([]);
@@ -69,17 +62,10 @@ const FlightsSummary = () => {
     const temp2 = JSON.parse(temp);
     localStorage.setItem("SelectedFlightChooseSeats", temp2._id);
     localStorage.setItem("SelectedFlightReservedSeats", temp2.FlightNo);
-    console.log(temp2);
     history.push("/choose-seats");
   };
 
   const handleConfirmSeats = () => {
-    // if(localStorage.getItem("depSelected") == "true" && localStorage.getItem("returnSelected")){
-
-    // }
-    // else{
-
-    // }
     localStorage.setItem("depSeatsFlag", false);
     localStorage.setItem("retSeatsFlag", false);
     history.push("/user-flights-itinerary");
@@ -93,7 +79,13 @@ const FlightsSummary = () => {
     },
   }));
 
-  // {localStorage.getItem("Username")}
+  const ColorButton2 = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText("#808080"),
+    backgroundColor: "#808080",
+    "&:hover": {
+      backgroundColor: "#808080",
+    },
+  }));
 
   return (
     <div>
@@ -120,7 +112,8 @@ const FlightsSummary = () => {
       <br />
       <h1 style={{ textAlign: "center" }}>
         {" "}
-        Please {localStorage.getItem("userFName")} choose your seats{" "}
+        Please {localStorage.getItem("userFName")}{" "}
+        {localStorage.getItem("userLName")} choose your seats{" "}
       </h1>
       <br />
       {depFlight.map((flight) => (
@@ -180,7 +173,7 @@ const FlightsSummary = () => {
         </ThemeProvider>
       ) : (
         <ThemeProvider theme={theme}>
-          <ColorButton variant="contained">Proceed to Checkout</ColorButton>
+          <ColorButton2 variant="contained">Proceed to Checkout</ColorButton2>
         </ThemeProvider>
       )}
     </div>

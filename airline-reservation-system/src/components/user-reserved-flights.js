@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import UserFlightCardReservation from "./user-flight-card-reservation";
 import axios from "axios";
-import { removeSeatsAPI } from "../apis";
+import { removeBookingAPI, removeSeatsAPI } from "../apis";
 
 import Header from "./Header.js";
 import HeaderLinks from "./HeaderLinks.js";
@@ -11,7 +11,7 @@ const ReservedFlights = () => {
   const [reservedFlights, setReservedFlights] = useState([]);
 
   const flight = {
-    User_ID: "44", //localStorage.getItem("userID");
+    User_ID: localStorage.getItem("userID"),
   };
 
   useEffect(() => {
@@ -27,14 +27,19 @@ const ReservedFlights = () => {
   const cancelReservationHandler = async (input) => {
     const temp = JSON.stringify(input);
     const temp2 = JSON.parse(temp);
-    //kizo kamel hena
-    console.log("in handler");
-    console.dir(temp2);
 
-    removeSeatsAPI(temp2);
+    const deletedBooking = {
+      Flight_ID: temp2._id,
+      ReturnFlight_ID: temp2.Return_id,
+      TakenSeats: temp2.TakenSeats,
+      ReturnTakenSeats: temp2.ReturnTakenSeats,
+      Cabin: temp2.Cabin,
+      BookingNumber: temp2.BookingNumber,
+    };
+
+    removeSeatsAPI(deletedBooking);
+    removeBookingAPI(deletedBooking);
   };
-
-  // {localStorage.getItem("Username")}
 
   return (
     <div>
@@ -53,8 +58,8 @@ const ReservedFlights = () => {
       <br />
       <h1 className="colour" style={{ textAlign: "center" }}>
         {" "}
-        Hello {localStorage.getItem("userFName")}, here are your reserved
-        flights{" "}
+        Hello {localStorage.getItem("userFName")}{" "}
+        {localStorage.getItem("userLName")}, here are your reserved flights
       </h1>
       <br />
       {reservedFlights.map((flight) => (

@@ -59,7 +59,7 @@ export default function MultiActionAreaCard() {
       Cabin: localStorage.getItem("UFSFClass"),
       BookingNumber: localStorage.getItem("bookingNumber"),
       TotalPrice: localStorage.getItem("totalPrice"),
-      User_id: "44", //localStorage.getItem("userID")
+      User_id: localStorage.getItem("userID"),
     };
 
     handleClickOpenNext();

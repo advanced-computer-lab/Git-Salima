@@ -70,8 +70,6 @@ const FlightsItinerary = () => {
   localStorage.setItem("totalPrice", totalPrice);
   localStorage.setItem("bookingNumber", bookingNumber);
 
-  // {localStorage.getItem("Username")}
-
   return (
     <div>
       <Header
