@@ -24,14 +24,8 @@ const Flight = () => {
   const [ArrivalAirport, setArrivalAirport] = useState("");
   const [numofChildren, setnumofChildren] = useState(0);
   const [numofAdults, setnumofAdults] = useState(1);
-
   const [FlightClass, setFlightClass] = React.useState("");
-  const [allFlights, setAllFlights] = useState([]);
 
-  const top100Films = [
-    { title: "The Shawshank Redemption", year: 1994 },
-    { title: "The Godfather", year: 1972 },
-  ];
   const theme = createTheme({
     typography: {
       fontFamily: "Philosopher",

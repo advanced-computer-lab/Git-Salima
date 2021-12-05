@@ -21,7 +21,6 @@ const Profile = () => {
     const [userEmail, setuserEmail] = useState("");
     const [userPassport, setuserPassport] = useState("");
     const [userPassword, setuserPassword] = useState("");
-    const [userProfile, setuserProfile] = useState({});
     const [popup, setpopup] = React.useState(false);
 
     const theme = createTheme({
@@ -39,7 +38,7 @@ const Profile = () => {
         },
     }));
     let history = useHistory();
-    const loginHandler = (e) => {
+    const loginHandler = async (e) => {
         e.preventDefault();
 
         const profile = {
@@ -49,7 +48,7 @@ const Profile = () => {
             Email: userEmail,
             PassportNumber: userPassport,
         };
-        setuserProfile(createUserAPI(profile));
+        const userProfile = await createUserAPI(profile);
 
         localStorage.setItem("userID", userProfile._id);
         localStorage.setItem("userFName", userFirstName);
@@ -67,6 +66,8 @@ const Profile = () => {
     };
     return (
         <div>
+            <h1 style={{ textAlign: 'center' }} > Please Login</h1>
+            <br />
             <ThemeProvider theme={theme}>
                 <Card>
                     <CardContent style={{ backgroundColor: "#EFEAE4" }}>

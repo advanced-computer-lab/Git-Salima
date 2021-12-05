@@ -7,7 +7,7 @@ const ReservedFlights = () => {
   const [reservedFlights, setReservedFlights] = useState([]);
 
   const flight = {
-    User_ID: "44", //localStorage.getItem("userID");
+    User_ID: localStorage.getItem("userID")
   };
 
   useEffect(() => {
@@ -30,13 +30,11 @@ const ReservedFlights = () => {
     removeSeatsAPI(temp2);
   };
 
-  // {localStorage.getItem("Username")}
-
   return (
     <div>
       <h1 style={{ textAlign: "center" }}>
         {" "}
-        Hello Mario, here are your reserved flights{" "}
+        Hello {localStorage.getItem("userFName")} {localStorage.getItem("userLName")}, here are your reserved flights
       </h1>
       <br />
       {reservedFlights.map((flight) => (
