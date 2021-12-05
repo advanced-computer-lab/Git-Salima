@@ -23,7 +23,7 @@ const bookingSchema = new Schema({
         required: true,
     },
     BookingNumber: {
-        type: Number,
+        type: String,
         required: true,
         index: { unique: true }
     },
