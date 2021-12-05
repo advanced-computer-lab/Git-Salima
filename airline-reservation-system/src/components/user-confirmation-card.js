@@ -11,7 +11,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { styled } from "@mui/material/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { updateSeatsAPI } from '../apis';
+import { updateSeatsAPI , createBookingAPI} from '../apis';
 import Stack from "@mui/material/Stack";
 
 export default function MultiActionAreaCard() {
@@ -51,7 +51,7 @@ export default function MultiActionAreaCard() {
         setOpenNext(false);
     };
 
-    const confirmHandler = () => {
+    const confirmHandler = async () => {
 
         const bookedFlight = {
             _id: localStorage.getItem("FlightIDAro"),
@@ -61,11 +61,13 @@ export default function MultiActionAreaCard() {
             Cabin: localStorage.getItem("UFSFClass"),
             BookingNumber: localStorage.getItem("bookingNumber"),
             TotalPrice: localStorage.getItem("totalPrice"),
-            User_id: 44 //localStorage.getItem("userID")
+            User_id: 1 //localStorage.getItem("userID")
         }
 
-        updateSeatsAPI(bookedFlight);
+        
         handleClickOpenNext();
+        await updateSeatsAPI(bookedFlight);
+        await createBookingAPI(bookedFlight).then(()=>console.log("ay haga 2"));
     };
 
     return (
