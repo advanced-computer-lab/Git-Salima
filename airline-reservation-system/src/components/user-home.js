@@ -4,7 +4,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "@fontsource/philosopher";
 import { Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import axios from "axios";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
@@ -23,7 +22,7 @@ import "../styles/header.css";
 
 const Flight = () => {
   const [DepartureDate, setDepartureDate] = useState("");
-  const [returnDate, setreturnDate] = useState("");
+  const [ReturnDate, setReturnDate] = useState("");
   const [DepartureAirport, setDepartureAirport] = useState("");
   const [ArrivalAirport, setArrivalAirport] = useState("");
   const [numofChildren, setnumofChildren] = useState(0);
@@ -39,14 +38,14 @@ const Flight = () => {
   localStorage.setItem("userEmail", "ana@elensan");
   localStorage.setItem("userPassport", 123);
   //till here
-  useEffect(() => {
-    axios.get("http://localhost:8000/list").then((res) => {
-      const temp = JSON.stringify(res.data);
-      const temp2 = JSON.parse(temp);
-      setAllFlights(temp2);
-      console.log(temp2);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get("http://localhost:8000/list").then((res) => {
+  //     const temp = JSON.stringify(res.data);
+  //     const temp2 = JSON.parse(temp);
+  //     setAllFlights(temp2);
+  //     console.log(temp2);
+  //   });
+  // }, []);
   const top100Films = [
     { title: "The Shawshank Redemption", year: 1994 },
     { title: "The Godfather", year: 1972 },
@@ -62,8 +61,10 @@ const Flight = () => {
 
     localStorage.setItem("UFSDAirport", DepartureAirport);
     localStorage.setItem("UFSAAirport", ArrivalAirport);
-    localStorage.setItem("UFSDDate", DepartureDate);
-    localStorage.setItem("UFSRDate", returnDate);
+    // localStorage.setItem("UFSDDate", DepartureDate);
+    // localStorage.setItem("UFSRDate", returnDate);
+    localStorage.setItem("UFSDDate", tweakDate(DepartureDate));
+    localStorage.setItem("UFSRDate", tweakDate(ReturnDate));
     localStorage.setItem("UFSFClass", FlightClass);
     localStorage.setItem(
       "numOfSeats",
@@ -84,7 +85,6 @@ const Flight = () => {
       fontFamily: "Philosopher",
     },
   }));
-  const w = window.outerWidth;
   const tweakDate = (s) => {
     const temp = JSON.stringify(s);
     const temp2 = JSON.parse(temp);
@@ -148,8 +148,8 @@ const Flight = () => {
                 </div>
                 <br />
                 <div className="row">
-                  <div className="form-group" className="col-md-6">
-                    <label>Departure Date: </label>
+                  <div className="form-group" className="col-md-2">
+                    <Typography>Departure Date: </Typography>
                     <input
                       type="date"
                       required
@@ -159,17 +159,20 @@ const Flight = () => {
                     />
                   </div>
 
-                  <div className="form-group" className="col-md-6">
-                    <label>Arrival Date: </label>
-                    <input
-                      type="date"
-                      required
-                      className="form-control"
-                      value={returnDate}
-                      onChange={(e) => setreturnDate(e.target.value)}
-                    />
+                  <div className="form-group col">
+                    <div className="form-group" className="col-md-8">
+                      <Typography>Return Date: </Typography>
+                      <input
+                        type="date"
+                        required
+                        font-family="Philosopher"
+                        className="form-control"
+                        value={ReturnDate}
+                        onChange={(e) => setReturnDate(e.target.value)}
+                      />
+                    </div>
                   </div>
-                  <div className="form-group col-md-2">
+                  <div className="form-group col">
                     <TextField
                       id="filled-number"
                       label="Number of Adults"

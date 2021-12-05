@@ -12,6 +12,7 @@ import { styled } from "@mui/material/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { updateSeatsAPI } from '../apis';
+import Stack from "@mui/material/Stack";
 
 export default function MultiActionAreaCard() {
 
@@ -32,7 +33,7 @@ export default function MultiActionAreaCard() {
             backgroundColor: "#5F9CC5",
         },
     }));
-    const w = 450;
+    const w = 500;
 
     const [open, setOpen] = React.useState(false);
     const [openNext, setOpenNext] = React.useState(false);
@@ -60,7 +61,7 @@ export default function MultiActionAreaCard() {
             Cabin: localStorage.getItem("UFSFClass"),
             BookingNumber: localStorage.getItem("bookingNumber"),
             TotalPrice: localStorage.getItem("totalPrice"),
-            User_id: 1 //localStorage.getItem("userID")
+            User_id: 44 //localStorage.getItem("userID")
         }
 
         updateSeatsAPI(bookedFlight);
@@ -75,7 +76,38 @@ export default function MultiActionAreaCard() {
                     <Typography gutterBottom variant="h4" component="div">
                         Booking Confirmation
                     </Typography>
-                    <Typography variant="body1" color="text.secondary">
+                    <Stack spacing={1} direction="row">
+                        <hr
+                            style={{
+                                marginTop: 7,
+                                color: "text.secondary",
+                                backgroundColor: "text.secondary",
+                                height: 2,
+                                width: w,
+                            }}
+                        />
+                    </Stack>
+                    <Typography gutterBottom variant="h6" component="div">
+                        Full Name: Mario Ayman
+                    </Typography>
+                    <Typography gutterBottom variant="h6" component="div">
+                        Email: mario.beshai@yahoo.com
+                    </Typography>
+                    <Typography gutterBottom variant="h6" component="div">
+                        Passport Number: 12345
+                    </Typography>
+                    <Stack spacing={1} direction="row">
+                        <hr
+                            style={{
+                                marginTop: 7,
+                                color: "text.secondary",
+                                backgroundColor: "text.secondary",
+                                height: 2,
+                                width: w,
+                            }}
+                        />
+                    </Stack>
+                    <Typography variant="h5" color="primary.main">
                         Total Price: {localStorage.getItem("totalPrice")} EGP
                     </Typography>
                 </CardContent>
@@ -111,7 +143,7 @@ export default function MultiActionAreaCard() {
                                     <DialogContentText id="alert-dialog-description">
                                         Flight booked successfully!
                                         <br />
-                                        Booking Number is {localStorage.getItem("bookingNumber")}
+                                        Your Flight Booking Number is {localStorage.getItem("bookingNumber")}
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions>

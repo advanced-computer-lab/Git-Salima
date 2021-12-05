@@ -75,7 +75,7 @@ export default function FlightCard(props) {
               direction="row"
               justifyContent="space-around"
               alignItems="center"
-              spacing={30}
+              spacing={0}
             >
               <Stack spacing={1} direction="row">
                 <Typography variant="h3" color="#082567">
@@ -102,11 +102,10 @@ export default function FlightCard(props) {
               </Stack>
             </Stack>
             <Stack
-              spacing={85}
+              spacing={100}
               direction="row"
               justifyContent="space-around"
               alignItems="center"
-              marginRight="15px"
             >
               <Stack direction="row" spacing={0.3}>
                 <AccessTimeIcon sx={{ fontSize: 32 }} color="primary" />
@@ -122,12 +121,10 @@ export default function FlightCard(props) {
               </Stack>
             </Stack>
             <Stack
-              spacing={92}
+              spacing={98}
               direction="row"
               justifyContent="space-around"
               alignItems="center"
-              marginRight="40px"
-              marginLeft="30px"
             >
               <Stack direction="row" spacing={0.3}>
                 <EventIcon sx={{ fontSize: 32 }} color="primary" />
@@ -153,12 +150,12 @@ export default function FlightCard(props) {
             />
 
             <Stack
-              spacing={30}
+              spacing={38}
               direction="row"
               maxHeight="10"
               justifyContent="space-around"
               alignItems="center"
-              marginRight="30px"
+              marginRight="5px"
             >
               {localStorage.getItem("UFSFClass") === "First Class" && (
                 <Stack direction="row">

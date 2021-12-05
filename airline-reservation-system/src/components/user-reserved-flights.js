@@ -6,7 +6,7 @@ const ReservedFlights = () => {
     const [reservedFlights, setReservedFlights] = useState([]);
 
     const flight = {
-        User_ID: "007" //localStorage.getItem("userID");
+        User_ID: "1" //localStorage.getItem("userID");
     };
 
     useEffect(() => {
@@ -22,6 +22,8 @@ const ReservedFlights = () => {
 
 
     const cancelReservationHandler = async (input) => {
+        const temp = JSON.stringify(input);
+        const temp2 = JSON.parse(temp);
         //kizo kamel hena
     };
 

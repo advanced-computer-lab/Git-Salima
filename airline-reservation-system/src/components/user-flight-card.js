@@ -40,7 +40,6 @@ const ColorButton = styled(Button)(({ theme }) => ({
 const w = window.innerWidth;
 
 export default function FlightCard(props) {
-  const [duration, setduration] = useState("");
   var durString = "";
   const arrMin = Number(props.ArrivalTime.substring(3, 5));
   const arrHrs = Number(props.ArrivalTime.substring(0, 2));
@@ -49,14 +48,14 @@ export default function FlightCard(props) {
   var resHrs;
   var resMins;
   if (
-    Number(props.DepartureDate.substring(9, 11)) <
-    Number(props.ArrivalDate.substring(9, 11))
+    Number(props.DepartureDate.substring(8, 10)) <
+    Number(props.ArrivalDate.substring(8, 10))
   ) {
     resHrs =
-      (Number(props.ArrivalDate.substring(9, 11)) -
-        props.DepartureDate.substring(9, 11)) *
+      (Number(props.ArrivalDate.substring(8, 10)) -
+        props.DepartureDate.substring(8, 10)) *
       24;
-  }
+  } else resHrs = 0;
   //11:40 12:40
   if (arrMin < depMin) {
     resHrs = resHrs + arrHrs - depHrs - 1;
@@ -65,7 +64,7 @@ export default function FlightCard(props) {
     resHrs = resHrs + arrHrs - depHrs;
     resMins = arrMin - depMin;
   }
-  setduration(resHrs + "h " + resMins + "min");
+  durString = resHrs + "h " + resMins + "min";
 
   const selectHandler = () => {
     props.onClickSelect(props);
@@ -105,7 +104,7 @@ export default function FlightCard(props) {
               direction="row"
               justifyContent="space-around"
               alignItems="center"
-              spacing={30}
+              spacing={0}
             >
               <Stack spacing={1} direction="row">
                 <Typography variant="h3" color="#082567">
@@ -132,11 +131,10 @@ export default function FlightCard(props) {
               </Stack>
             </Stack>
             <Stack
-              spacing={35}
+              spacing={30}
               direction="row"
               justifyContent="space-around"
               alignItems="center"
-              marginRight="15px"
             >
               <Stack direction="row" spacing={0.3}>
                 <AccessTimeIcon sx={{ fontSize: 32 }} color="primary" />
@@ -145,9 +143,9 @@ export default function FlightCard(props) {
                 </Typography>
               </Stack>
               <Stack direction="row" spacing={0.3}>
-                {/* <AccessTimeIcon sx={{ fontSize: 32 }} color="primary" /> */}
+                <AccessTimeIcon sx={{ fontSize: 32 }} color="primary" />
                 <Typography variant="h5" color="text.secondary">
-                  {duration}
+                  {durString}
                 </Typography>
               </Stack>
               <Stack direction="row" spacing={0.3}>
@@ -158,12 +156,10 @@ export default function FlightCard(props) {
               </Stack>
             </Stack>
             <Stack
-              spacing={92}
+              spacing={98}
               direction="row"
               justifyContent="space-around"
               alignItems="center"
-              marginRight="40px"
-              marginLeft="30px"
             >
               <Stack direction="row" spacing={0.3}>
                 <EventIcon sx={{ fontSize: 32 }} color="primary" />
@@ -189,12 +185,12 @@ export default function FlightCard(props) {
             />
 
             <Stack
-              spacing={30}
+              spacing={38}
               direction="row"
               maxHeight="10"
               justifyContent="space-around"
               alignItems="center"
-              marginRight="30px"
+              marginRight="5px"
             >
               {localStorage.getItem("UFSFClass") === "First Class" && (
                 <Stack direction="row">

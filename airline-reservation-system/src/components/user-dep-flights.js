@@ -8,7 +8,6 @@ const DepartureFlights = () => {
   const [ArrivalDate, setArrivalDate] = useState("");
   const [DepartureTime, setDepartureTime] = useState("");
   const [ArrivalTime, setArrivalTime] = useState("");
-  const [Terminal, setTerminal] = useState("");
   const [EconomySeats, setEconomySeats] = useState("");
   const [BusinessClassSeats, setBusinessClassSeats] = useState("");
   const [FirstClassSeats, setFirstClassSeats] = useState("");
@@ -24,7 +23,6 @@ const DepartureFlights = () => {
     ArrivalDate: ArrivalDate,
     DepartureTime: DepartureTime,
     ArrivalTime: ArrivalTime,
-    Terminal: Terminal,
     EconomySeats: EconomySeats,
     BusinessClassSeats: BusinessClassSeats,
     FirstClassSeats: FirstClassSeats,
@@ -60,8 +58,6 @@ const DepartureFlights = () => {
       "DepartureDateAro",
       temp2.DepartureDate.substring(0, 10)
     );
-
-    localStorage.setItem("ArrivalDateAro", temp2.ArrivalDate.substring(0, 10));
     localStorage.setItem("FlightIDAro", temp2._id);
 
     if (localStorage.getItem("UFSFClass") === "First Class") {
