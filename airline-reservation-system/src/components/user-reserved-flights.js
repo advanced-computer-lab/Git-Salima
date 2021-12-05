@@ -20,15 +20,6 @@ const ReservedFlights = () => {
       });
   }, []);
 
-  const cancelReservationHandler = async (input) => {
-    const temp = JSON.stringify(input);
-    const temp2 = JSON.parse(temp);
-    //kizo kamel hena
-    console.log("in handler");
-    console.dir(temp2);
-
-    removeSeatsAPI(temp2);
-  };
 
   // {localStorage.getItem("Username")}
 
