@@ -63,12 +63,7 @@ const FlightsSummary = () => {
 
   const handleConfirmSeats = () => {
 
-    // if(localStorage.getItem("depSelected") == "true" && localStorage.getItem("returnSelected")){
-
-    // }
-    // else{
-
-    // }
+    
     localStorage.setItem("depSeatsFlag", false)
     localStorage.setItem("retSeatsFlag", false)
     history.push("/user-flights-itinerary")
@@ -79,6 +74,14 @@ const FlightsSummary = () => {
     backgroundColor: "#082567",
     "&:hover": {
       backgroundColor: "#5F9CC5",
+    },
+  }));
+
+  const ColorButton2 = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText("#808080"),
+    backgroundColor: "#808080",
+    "&:hover": {
+      backgroundColor: "#808080",
     },
   }));
 
@@ -145,9 +148,9 @@ const FlightsSummary = () => {
 
         :
         <ThemeProvider theme={theme}>
-          <ColorButton variant="contained" >
+          <ColorButton2 variant="contained" >
             Proceed to Checkout
-          </ColorButton>
+          </ColorButton2>
         </ThemeProvider>
 
       }

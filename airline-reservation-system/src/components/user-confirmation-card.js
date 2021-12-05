@@ -61,6 +61,7 @@ export default function MultiActionAreaCard() {
             Cabin: localStorage.getItem("UFSFClass"),
             BookingNumber: localStorage.getItem("bookingNumber"),
             TotalPrice: localStorage.getItem("totalPrice"),
+            //TotalPrice: "1203", 
             User_id: 1 //localStorage.getItem("userID")
         }
 
