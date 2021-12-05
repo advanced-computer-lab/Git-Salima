@@ -47,12 +47,14 @@ router.post("/createBooking", async (req, res) => {
   let ReturnTakenSeats = [];
   for (const p of seats) {
     const a = p.row.concat(p.number);
-    TakenSeats.push(a);
+    const b = a.concat(p.id);
+    TakenSeats.push(b);
   }
 
   for (const p of Returnseats) {
     const a = p.row.concat(p.number);
-    ReturnTakenSeats.push(a);
+    const b = a.concat(p.id);
+    ReturnTakenSeats.push(b);
   }
 
   const newBooking = new Booking({
@@ -252,22 +254,28 @@ router.get("/delete", async (req, res) => {
       query[`${p}`] = flight[p];
     }
   }
-  Flight.remove(query).then((result) => {
-    res.send(result);
-  });
+  if (!(Object.keys(query).length === 0)) {
+    Flight.remove(query).then((result) => {
+      res.send(result);
+    });
+  }
 });
 
-router.get("/deleteBooking", async (req, res) => {
-  const flight = req.query;
+router.post("/deleteBooking", async (req, res) => {
+  const flight = req.body;
+
+  console.dir(flight);
   const query = {};
   for (const p in flight) {
     if (!(flight[p] == "")) {
       query[`${p}`] = flight[p];
     }
   }
-  Booking.remove(query).then((result) => {
-    res.send(result);
-  });
+  if (!(Object.keys(query).length === 0)) {
+    Booking.remove(query).then((result) => {
+      res.send(result);
+    });
+  }
 });
 
 router.post("/update", async (req, res) => {
@@ -319,7 +327,8 @@ router.post("/updateSeats", async (req, res) => {
   let Taken = [];
   for (const p of seats) {
     const a = p.row.concat(p.number);
-    Taken.push(a);
+    const b = a.concat(p.id);
+    Taken.push(b);
   }
   for (const p of Taken) {
     const query = { $push: { TakenSeats: p } };
@@ -344,7 +353,8 @@ router.post("/updateSeats", async (req, res) => {
   let ReturnTaken = [];
   for (const p of Returnseats) {
     const a = p.row.concat(p.number);
-    ReturnTaken.push(a);
+    const b = a.concat(p.id);
+    ReturnTaken.push(b);
   }
 
   for (const p of ReturnTaken) {
@@ -372,43 +382,44 @@ router.post("/updateSeats", async (req, res) => {
 
 router.post("/removeSeats", async (req, res) => {
   const flight = req.body;
+  console.log(flight);
   for (const p of flight.TakenSeats) {
     const query = { $pull: { TakenSeats: p } };
 
-    await Flight.findByIdAndUpdate(flight.Flight_id, query);
+    await Flight.findByIdAndUpdate(flight.Flight_ID, query);
   }
   if (flight.Cabin == "Economy")
-    await Flight.findByIdAndUpdate(flight.Flight_id, {
+    await Flight.findByIdAndUpdate(flight.Flight_ID, {
       $inc: { FreeEconomySeats: flight.TakenSeats.length * 1 },
     });
   if (flight.Cabin == "Business")
-    await Flight.findByIdAndUpdate(flight.Flight_id, {
+    await Flight.findByIdAndUpdate(flight.Flight_ID, {
       $inc: { FreeBusinessClassSeats: flight.TakenSeats.length * 1 },
     });
   if (flight.Cabin == "First Class")
-    await Flight.findByIdAndUpdate(flight.Flight_id, {
+    await Flight.findByIdAndUpdate(flight.Flight_ID, {
       $inc: { FreeFirstClassSeats: flight.TakenSeats.length * 1 },
     });
 
   for (const p of flight.ReturnTakenSeats) {
     const query = { $pull: { TakenSeats: p } };
 
-    await Flight.findByIdAndUpdate(flight.ReturnFlight_id, query);
+    await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, query);
   }
   if (flight.Cabin == "Economy")
-    await Flight.findByIdAndUpdate(flight.ReturnFlight_id, {
+    await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, {
       $inc: { FreeEconomySeats: flight.TakenSeats.length * 1 },
     });
   if (flight.Cabin == "Business")
-    await Flight.findByIdAndUpdate(flight.ReturnFlight_id, {
+    await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, {
       $inc: { FreeBusinessClassSeats: flight.TakenSeats.length * 1 },
     });
   if (flight.Cabin == "First Class")
-    await Flight.findByIdAndUpdate(flight.ReturnFlight_id, {
+    await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, {
       $inc: { FreeFirstClassSeats: flight.TakenSeats.length * 1 },
     });
 
-  Flight.findById(flight.Flight_id).then((result) => {
+  Flight.findById(flight.Flight_ID).then((result) => {
     res.send(result);
   });
 });

@@ -94,7 +94,11 @@ export const createBookingAPI = async (flight) => {
 };
 
 export const removeSeatsAPI = async (flight) => {
-  // await axios.post("http://localhost:8000/deleteBooking", flight);
+  await axios.post("http://localhost:8000/deleteBooking", flight);
+
+  await axios.post("http://localhost:8000/removeSeats", flight).then((res) => {
+    return res.data;
+  });
 
   await axios.post("http://localhost:8000/removeSeats", flight).then((res) => {
     return res.data;
