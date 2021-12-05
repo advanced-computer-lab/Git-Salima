@@ -3,6 +3,10 @@ import UserFlightCardReservation from "./user-flight-card-reservation";
 import axios from "axios";
 import { removeSeatsAPI } from "../apis";
 
+import Header from "./Header.js";
+import HeaderLinks from "./HeaderLinks.js";
+import "../styles/header.css";
+
 const ReservedFlights = () => {
   const [reservedFlights, setReservedFlights] = useState([]);
 
@@ -34,9 +38,23 @@ const ReservedFlights = () => {
 
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>
+      <Header
+        color="primary"
+        fixed
+        brand="Git Salima Airlines"
+        rightLinks={<HeaderLinks />}
+        // changeColorOnScroll={{
+        //   height: 0,
+        //   color: "#082567",
+        // }}
+      />
+      <br />
+      <br />
+      <br />
+      <h1 className="colour" style={{ textAlign: "center" }}>
         {" "}
-        Hello Mario, here are your reserved flights{" "}
+        Hello {localStorage.getItem("userFName")}, here are your reserved
+        flights{" "}
       </h1>
       <br />
       {reservedFlights.map((flight) => (

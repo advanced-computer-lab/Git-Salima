@@ -3,6 +3,19 @@ import axios from "axios";
 import UserFlightCard from "./user-flight-card";
 import { useHistory } from "react-router-dom";
 
+import Header from "./Header.js";
+import HeaderLinks from "./HeaderLinks.js";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+
+const steps = [
+  "Choose Outbound Flight",
+  "Choose Return Flight",
+  "Choose your Seats",
+  "Confirm your Flights",
+];
+
 const DepartureFlights = () => {
   const [FlightNo, setFlightNo] = useState("");
   const [ArrivalDate, setArrivalDate] = useState("");
@@ -77,6 +90,27 @@ const DepartureFlights = () => {
 
   return (
     <div>
+      <Header
+        color="primary"
+        fixed
+        brand="Git Salima Airlines"
+        rightLinks={<HeaderLinks />}
+        // changeColorOnScroll={{
+        //   height: 0,
+        //   color: "#082567",
+        // }}
+      />
+      <br />
+      <br />
+      <br />
+      <Stepper activeStep={0} alternativeLabel>
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+      <br />
       {allFlights.map((flight) => (
         <div>
           <UserFlightCard

@@ -87,13 +87,14 @@ export default function MultiActionAreaCard() {
             />
           </Stack>
           <Typography gutterBottom variant="h6" component="div">
-            Full Name: Mario Ayman
+            Full Name: {localStorage.getItem("userFName")}{" "}
+            {localStorage.getItem("userLName")}
           </Typography>
           <Typography gutterBottom variant="h6" component="div">
-            Email: mario.beshai@yahoo.com
+            Email: {localStorage.getItem("userEmail")}
           </Typography>
           <Typography gutterBottom variant="h6" component="div">
-            Passport Number: 12345
+            Passport Number: {localStorage.getItem("userPassport")}
           </Typography>
           <Stack spacing={1} direction="row">
             <hr

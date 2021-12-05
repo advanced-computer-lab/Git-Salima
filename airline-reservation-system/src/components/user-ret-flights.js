@@ -2,6 +2,18 @@ import React, { useState, useEffect } from "react";
 import UserFlightCard from "./user-flight-card";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import Header from "./Header.js";
+import HeaderLinks from "./HeaderLinks.js";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+
+const steps = [
+  "Choose Outbound Flight",
+  "Choose Return Flight",
+  "Choose your Seats",
+  "Confirm your Flights",
+];
 
 const ReturnFlights = () => {
   const [allFlights, setAllFlights] = useState([]);
@@ -9,7 +21,7 @@ const ReturnFlights = () => {
   const flight = {
     ArrivalAirport: localStorage.getItem("DepartureAirportAro"),
     DepartureAirport: localStorage.getItem("ArrivalAirportAro"),
-    DepartureDate: localStorage.getItem("UFSRDate")
+    DepartureDate: localStorage.getItem("UFSRDate"),
   };
 
   useEffect(() => {
@@ -35,7 +47,7 @@ const ReturnFlights = () => {
     localStorage.setItem("FirstClassSeatsKizo", temp2.FirstClassSeats);
     localStorage.setItem("BusinessClassSeatsKizo", temp2.BusinessClassSeats);
     localStorage.setItem("EconomySeatsKizo", temp2.EconomySeats);
-    localStorage.setItem("BookedSeatsKizo", JSON.stringify(temp2.TakenSeats))
+    localStorage.setItem("BookedSeatsKizo", JSON.stringify(temp2.TakenSeats));
     //localStorage.setItem("BookedSeats", temp2.TakenSeats)
     localStorage.setItem("FlightNoKizo", temp2.FlightNo);
     history.push("/user-flights-summary");
@@ -43,6 +55,27 @@ const ReturnFlights = () => {
 
   return (
     <div>
+      <Header
+        color="primary"
+        fixed
+        brand="Git Salima Airlines"
+        rightLinks={<HeaderLinks />}
+        // changeColorOnScroll={{
+        //   height: 0,
+        //   color: "#082567",
+        // }}
+      />
+      <br />
+      <br />
+      <br />
+      <Stepper activeStep={1} alternativeLabel>
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+      <br />
       {allFlights.map((flight) => (
         <div>
           <UserFlightCard
@@ -64,7 +97,7 @@ const ReturnFlights = () => {
             FirstClassPrice={flight.FirstClassPrice}
             DepartureAirport={flight.DepartureAirport}
             ArrivalAirport={flight.ArrivalAirport}
-            TakenSeats = {flight.TakenSeats}
+            TakenSeats={flight.TakenSeats}
             onClickSelect={clickHandlerSelect}
           />
         </div>

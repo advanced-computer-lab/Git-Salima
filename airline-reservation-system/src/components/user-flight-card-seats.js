@@ -40,6 +40,28 @@ export default function FlightCard(props) {
   const seatsHandler = () => {
     props.onClickChooseSeats(props);
   };
+  var durString = "";
+  const arrDay = Number(props.ArrivalDate.substring(8, 10));
+  const depDay = Number(props.DepartureDate.substring(8, 10));
+  const arrMin = Number(props.ArrivalTime.substring(3, 5));
+  const arrHrs = Number(props.ArrivalTime.substring(0, 2));
+  const depMin = Number(props.DepartureTime.substring(3, 5));
+  const depHrs = Number(props.DepartureTime.substring(0, 2));
+  var resHrs;
+  var resMins;
+  if (depDay < arrDay) {
+    resHrs = 24 - depHrs + arrHrs;
+    if (depDay + 1 < arrDay) resHrs = (arrDay - depDay - 1) * 24;
+  } else resHrs = 0;
+  //11:40 12:40
+  if (arrMin < depMin) {
+    resHrs = resHrs + arrHrs - depHrs - 1;
+    resMins = 60 - depMin + arrMin;
+  } else {
+    resHrs = resHrs + arrHrs - depHrs;
+    resMins = arrMin - depMin;
+  }
+  durString = resHrs + "h " + resMins + "min";
 
   return (
     <div>
@@ -102,7 +124,7 @@ export default function FlightCard(props) {
               </Stack>
             </Stack>
             <Stack
-              spacing={100}
+              spacing={30}
               direction="row"
               justifyContent="space-around"
               alignItems="center"
@@ -111,6 +133,12 @@ export default function FlightCard(props) {
                 <AccessTimeIcon sx={{ fontSize: 32 }} color="primary" />
                 <Typography variant="h5" color="text.secondary">
                   {props.DepartureTime}
+                </Typography>
+              </Stack>
+              <Stack direction="row" spacing={0.3}>
+                <AccessTimeIcon sx={{ fontSize: 32 }} color="primary" />
+                <Typography variant="h5" color="text.secondary">
+                  {durString}
                 </Typography>
               </Stack>
               <Stack direction="row" spacing={0.3}>

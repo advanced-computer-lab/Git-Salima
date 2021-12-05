@@ -22,22 +22,85 @@ function App() {
     <Router>
       <br />
       <div className="container">
-        <Route exact path="/" Redirect to="/home" component={WelcomeScreen} />
+        <Route
+          exact
+          path="/"
+          Redirect
+          to="/home"
+          render={() => (
+            <div>
+              <Navbar />
+              <br />
+              <br />
+              <WelcomeScreen />
+            </div>
+          )}
+        />
       </div>
       <div className="container">
-        <Route path="/create" component={Flight} />
+        <Route
+          path="/create"
+          render={() => (
+            <div>
+              <Navbar />
+              <br />
+              <br />
+              <Flight />
+            </div>
+          )}
+        />
       </div>
       <div className="container">
-        <Route path="/edit" component={UpdatedFlight} />
+        <Route
+          path="/edit"
+          render={() => (
+            <div>
+              <Navbar />
+              <br />
+              <br />
+              <UpdatedFlight />
+            </div>
+          )}
+        />
       </div>
       <div className="container">
-        <Route path="/tickets" component={AllFlights} />
+        <Route
+          path="/tickets"
+          render={() => (
+            <div>
+              <Navbar />
+              <br />
+              <br />
+              <AllFlights />
+            </div>
+          )}
+        />
       </div>
       <div className="container">
-        <Route path="/search" component={SearchForm} />
+        <Route
+          path="/search"
+          render={() => (
+            <div>
+              <Navbar />
+              <br />
+              <br />
+              <SearchForm />
+            </div>
+          )}
+        />
       </div>
       <div className="container">
-        <Route path="/search-results" component={SearchResults} />
+        <Route
+          path="/search-results"
+          render={() => (
+            <div>
+              <Navbar />
+              <br />
+              <br />
+              <SearchResults />
+            </div>
+          )}
+        />
       </div>
       <div className="container">
         <Route path="/user-home" component={UserHome} />

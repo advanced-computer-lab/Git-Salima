@@ -13,7 +13,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-
+import Header from "./Header.js";
+import HeaderLinks from "./HeaderLinks.js";
 import { useHistory } from "react-router-dom";
 const Profile = () => {
   const [userFirstName, setuserFirstName] = useState(
@@ -36,6 +37,14 @@ const Profile = () => {
     PassportNumber: userPassport,
   };
   const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#082567",
+      },
+      secondary: {
+        main: "#FBB404",
+      },
+    },
     typography: {
       fontFamily: "Philosopher",
     },
@@ -69,6 +78,19 @@ const Profile = () => {
   return (
     <div>
       <ThemeProvider theme={theme}>
+        <Header
+          color="primary"
+          fixed
+          brand="Git Salima Airlines"
+          rightLinks={<HeaderLinks />}
+          // changeColorOnScroll={{
+          //   height: 0,
+          //   color: "#082567",
+          // }}
+        />
+        <br /> <br />
+        <br />
+        <br />
         <Card>
           <CardContent style={{ backgroundColor: "#EFEAE4" }}>
             {/* <form onSubmit={searchFlight}> */}
@@ -155,7 +177,6 @@ const Profile = () => {
             )}
           </CardContent>
         </Card>
-
         <Card>
           <Dialog
             open={popup}

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import UserFlightCardSeats from "./user-flight-card-seats";
 import axios from "axios";
@@ -7,6 +6,18 @@ import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+import Header from "./Header.js";
+import HeaderLinks from "./HeaderLinks.js";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+
+const steps = [
+  "Choose Outbound Flight",
+  "Choose Return Flight",
+  "Choose your Seats",
+  "Confirm your Flights",
+];
 
 const theme = createTheme({
   palette: {
@@ -30,22 +41,23 @@ const ColorButton = styled(Button)(({ theme }) => ({
 }));
 
 const FlightsSummary = () => {
-
   const [depFlight, setDepFlight] = useState([]);
   const [returnFlight, setReturnFlight] = useState([]);
 
   useEffect(() => {
     const departureFlight = {
-      _id: localStorage.getItem("FlightIDAro")
-    }
+      _id: localStorage.getItem("FlightIDAro"),
+    };
     const returnFlight = {
-      _id: localStorage.getItem("FlightIDKizo")
-    }
-    axios.get("http://localhost:8000/search", { params: departureFlight })
+      _id: localStorage.getItem("FlightIDKizo"),
+    };
+    axios
+      .get("http://localhost:8000/search", { params: departureFlight })
       .then((res) => {
         setDepFlight(res.data);
       });
-    axios.get("http://localhost:8000/search", { params: returnFlight })
+    axios
+      .get("http://localhost:8000/search", { params: returnFlight })
       .then((res) => {
         setReturnFlight(res.data);
       });
@@ -56,23 +68,22 @@ const FlightsSummary = () => {
     const temp = JSON.stringify(input);
     const temp2 = JSON.parse(temp);
     localStorage.setItem("SelectedFlightChooseSeats", temp2._id);
-    localStorage.setItem("SelectedFlightReservedSeats", temp2.FlightNo)
-    console.log(temp2)
+    localStorage.setItem("SelectedFlightReservedSeats", temp2.FlightNo);
+    console.log(temp2);
     history.push("/choose-seats");
   };
 
   const handleConfirmSeats = () => {
-
     // if(localStorage.getItem("depSelected") == "true" && localStorage.getItem("returnSelected")){
 
     // }
     // else{
 
     // }
-    localStorage.setItem("depSeatsFlag", false)
-    localStorage.setItem("retSeatsFlag", false)
-    history.push("/user-flights-itinerary")
-  }
+    localStorage.setItem("depSeatsFlag", false);
+    localStorage.setItem("retSeatsFlag", false);
+    history.push("/user-flights-itinerary");
+  };
 
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText("#082567"),
@@ -86,7 +97,31 @@ const FlightsSummary = () => {
 
   return (
     <div>
-      <h1 style={{ textAlign: 'center' }} > Please Mario choose your seats </h1>
+      <Header
+        color="primary"
+        fixed
+        brand="Git Salima Airlines"
+        rightLinks={<HeaderLinks />}
+        // changeColorOnScroll={{
+        //   height: 0,
+        //   color: "#082567",
+        // }}
+      />
+      <br />
+      <br />
+      <br />
+      <Stepper activeStep={2} alternativeLabel>
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+      <br />
+      <h1 style={{ textAlign: "center" }}>
+        {" "}
+        Please {localStorage.getItem("userFName")} choose your seats{" "}
+      </h1>
       <br />
       {depFlight.map((flight) => (
         <div>
@@ -136,22 +171,18 @@ const FlightsSummary = () => {
           />
         </div>
       ))}
-      {(JSON.parse(localStorage.getItem("depSeatsFlag")) && JSON.parse(localStorage.getItem("retSeatsFlag"))) ?
+      {JSON.parse(localStorage.getItem("depSeatsFlag")) &&
+      JSON.parse(localStorage.getItem("retSeatsFlag")) ? (
         <ThemeProvider theme={theme}>
           <ColorButton variant="contained" onClick={handleConfirmSeats}>
             Proceed to Checkout
           </ColorButton>
         </ThemeProvider>
-
-        :
+      ) : (
         <ThemeProvider theme={theme}>
-          <ColorButton variant="contained" >
-            Proceed to Checkout
-          </ColorButton>
+          <ColorButton variant="contained">Proceed to Checkout</ColorButton>
         </ThemeProvider>
-
-      }
-
+      )}
     </div>
   );
 };

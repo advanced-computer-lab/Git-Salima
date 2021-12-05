@@ -79,7 +79,14 @@ export default function Home() {
       </Box>
       <Box sx={{ fontFamily: "Roboto" }}>
         <Stack direction="row" spacing={4.5}>
-          <Card sx={{ width: 380, height: 300, backgroundColor: "#3D44C2", marginLeft: "40px" }}>
+          <Card
+            sx={{
+              width: 380,
+              height: 300,
+              backgroundColor: "#3D44C2",
+              marginLeft: "40px",
+            }}
+          >
             <CardActionArea>
               <Link href="/create" underline="none">
                 <CardMedia
