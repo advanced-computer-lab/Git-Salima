@@ -67,6 +67,14 @@ const FlightsSummary = () => {
     },
   }));
 
+  const ColorButton2 = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText("#808080"),
+    backgroundColor: "#808080",
+    "&:hover": {
+      backgroundColor: "#808080",
+    },
+  }));
+
   return (
     <div>
       <h1 style={{ textAlign: 'center' }} > Please {localStorage.getItem("userFName")} {localStorage.getItem("userLName")} choose your seats </h1>
@@ -128,9 +136,9 @@ const FlightsSummary = () => {
 
         :
         <ThemeProvider theme={theme}>
-          <ColorButton variant="contained" >
+          <ColorButton2 variant="contained" >
             Proceed to Checkout
-          </ColorButton>
+          </ColorButton2>
         </ThemeProvider>
 
       }

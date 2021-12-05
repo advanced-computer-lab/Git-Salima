@@ -51,6 +51,7 @@ export default function MultiActionAreaCard() {
   };
 
   const confirmHandler = async () => {
+
     const bookedFlight = {
       _id: localStorage.getItem("FlightIDAro"),
       Return_id: localStorage.getItem("FlightIDKizo"),
@@ -60,12 +61,13 @@ export default function MultiActionAreaCard() {
       BookingNumber: localStorage.getItem("bookingNumber"),
       TotalPrice: localStorage.getItem("totalPrice"),
       User_id: localStorage.getItem("userID")
-    };
+    }
 
     handleClickOpenNext();
     await updateSeatsAPI(bookedFlight);
     await createBookingAPI(bookedFlight).then(() => console.log("ay haga 2"));
   };
+
 
   return (
     <Card sx={{ maxWidth: w }}>
@@ -157,3 +159,4 @@ export default function MultiActionAreaCard() {
     </Card>
   );
 }
+

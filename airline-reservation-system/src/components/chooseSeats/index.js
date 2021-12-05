@@ -4,6 +4,11 @@ import { styled } from "@mui/material/styles";
 import { Button, CardActions } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { contains } from "ramda";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const ReturnFlights = () => {
   const [takenSeats, setTakenSeats] = useState([]);
@@ -424,9 +429,12 @@ const ReturnFlights = () => {
       BusinessClassSeats: BusinessClassSeats,
       EconomySeats: EconomyClassSeats,
     };
+
+    if(numOfSeats==takenSeats.length){
+
+
     if (
-      localStorage.getItem("SelectedFlightChooseSeats") ==
-      localStorage.getItem("FlightIDAro")
+      localStorage.getItem("SelectedFlightChooseSeats") == localStorage.getItem("FlightIDAro") 
     ) {
       localStorage.setItem("departureSeats", JSON.stringify(takenSeats));
       localStorage.setItem("depSeatsFlag", true);
@@ -437,7 +445,25 @@ const ReturnFlights = () => {
       console.dir(localStorage.getItem("returnFlight"));
     }
     history.push("/user-flights-summary");
+  }
+  else{
+    handleClickOpen();
+    console.log("please choose all seats")
+  }
+
+
   };
+
+  const [open, setOpen] = React.useState(false);
+    
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
   return (
     <div>
@@ -458,6 +484,24 @@ const ReturnFlights = () => {
         <ColorButton variant="contained" onClick={handleConfirmSeats}>
           Confirm seats
         </ColorButton>
+        <CardActions>
+                    <Dialog
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                please choose all your seats
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleClose}>Cancel</Button>
+                        </DialogActions>
+                    </Dialog>
+                </CardActions>
       </div>
     </div>
   );
