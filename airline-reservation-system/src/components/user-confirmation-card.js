@@ -50,17 +50,7 @@ export default function MultiActionAreaCard() {
     setOpenNext(false);
   };
 
-  const confirmHandler = async () => {
-    const bookedFlight = {
-      _id: localStorage.getItem("FlightIDAro"),
-      Return_id: localStorage.getItem("FlightIDKizo"),
-      TakenSeats: JSON.parse(localStorage.getItem("departureSeats")),
-      ReturnTakenSeats: JSON.parse(localStorage.getItem("returnSeats")),
-      Cabin: localStorage.getItem("UFSFClass"),
-      BookingNumber: localStorage.getItem("bookingNumber"),
-      TotalPrice: localStorage.getItem("totalPrice"),
-      User_id: "44", //localStorage.getItem("userID")
-    };
+  
 
 
     const confirmHandler = async () => {
@@ -174,3 +164,4 @@ export default function MultiActionAreaCard() {
     </Card>
   );
 }
+
