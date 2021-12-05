@@ -22,6 +22,7 @@ const UpdatedFlight = (props) => {
   const [ArrivalTime, setArrivalTime] = useState(
     props.flightToEdit.ArrivalTime
   );
+  const [Terminal, setTerminal] = useState(props.flightToEdit.Terminal);
   const [EconomySeats, setEconomySeats] = useState(
     props.flightToEdit.EconomySeats
   );
@@ -31,6 +32,26 @@ const UpdatedFlight = (props) => {
   const [FirstClassSeats, setFirstClassSeats] = useState(
     props.flightToEdit.FirstClassSeats
   );
+  const [EconomyLuggage, setEconomyLuggage] = useState(
+    props.flightToEdit.EconomyLuggage
+  );
+  const [BusinessClassLuggage, setBusinessClassLuggage] = useState(
+    props.flightToEdit.BusinessClassLuggage
+  );
+  const [FirstClassLuggage, setFirstClassLuggage] = useState(
+    props.flightToEdit.FirstClassLuggage
+  );
+
+  const [EconomyPrice, setEconomyPrice] = useState(
+    props.flightToEdit.EconomyPrice
+  );
+  const [BusinessClassPrice, setBusinessClassPrice] = useState(
+    props.flightToEdit.BusinessClassPrice
+  );
+  const [FirstClassPrice, setFirstClassPrice] = useState(
+    props.flightToEdit.FirstClassPrice
+  );
+
   const [DepartureAirport, setDepartureAirport] = useState(
     props.flightToEdit.DepartureAirport
   );
@@ -57,9 +78,16 @@ const UpdatedFlight = (props) => {
     props.flightToEdit.ArrivalDate = ArrivalDate;
     props.flightToEdit.DepartureTime = DepartureTime;
     props.flightToEdit.ArrivalTime = ArrivalTime;
+    props.flightToEdit.Terminal = Terminal;
     props.flightToEdit.EconomySeats = EconomySeats;
     props.flightToEdit.BusinessClassSeats = BusinessClassSeats;
     props.flightToEdit.FirstClassSeats = FirstClassSeats;
+    props.flightToEdit.EconomyLuggage = EconomyLuggage;
+    props.flightToEdit.BusinessClassLuggage = BusinessClassLuggage;
+    props.flightToEdit.FirstClassLuggage = FirstClassLuggage;
+    props.flightToEdit.EconomyPrice = EconomyPrice;
+    props.flightToEdit.BusinessClassPrice = BusinessClassPrice;
+    props.flightToEdit.FirstClassPrice = FirstClassPrice;
     props.flightToEdit.DepartureAirport = DepartureAirport;
     props.flightToEdit.ArrivalAirport = ArrivalAirport;
 
@@ -73,9 +101,16 @@ const UpdatedFlight = (props) => {
     props.flightToEdit.ArrivalDate = ArrivalDate;
     props.flightToEdit.DepartureTime = DepartureTime;
     props.flightToEdit.ArrivalTime = ArrivalTime;
+    props.flightToEdit.Terminal = Terminal;
     props.flightToEdit.EconomySeats = EconomySeats;
     props.flightToEdit.BusinessClassSeats = BusinessClassSeats;
     props.flightToEdit.FirstClassSeats = FirstClassSeats;
+    props.flightToEdit.EconomyLuggage = EconomyLuggage;
+    props.flightToEdit.BusinessClassLuggage = BusinessClassLuggage;
+    props.flightToEdit.FirstClassLuggage = FirstClassLuggage;
+    props.flightToEdit.EconomyPrice = EconomyPrice;
+    props.flightToEdit.BusinessClassPrice = BusinessClassPrice;
+    props.flightToEdit.FirstClassPrice = FirstClassPrice;
     props.flightToEdit.DepartureAirport = DepartureAirport;
     props.flightToEdit.ArrivalAirport = ArrivalAirport;
     editFlightsAPI(props.flightToEdit);
@@ -140,7 +175,16 @@ const UpdatedFlight = (props) => {
           onChange={(e) => setArrivalTime(e.target.value)}
         />
       </div>
-
+      <div className="form-group">
+        <label>Terminal: </label>
+        <input
+          type="number"
+          required
+          className="form-control"
+          value={Terminal}
+          onChange={(e) => setTerminal(e.target.value)}
+        />
+      </div>
       <div className="form-group">
         <label>Economy Seats: </label>
         <input
@@ -173,7 +217,38 @@ const UpdatedFlight = (props) => {
           onChange={(e) => setFirstClassSeats(e.target.value)}
         />
       </div>
+      <div className="form-group">
+        <label>Economy Luggage: </label>
+        <input
+          type="number"
+          required
+          className="form-control"
+          value={EconomyLuggage}
+          onChange={(e) => setEconomyLuggage(e.target.value)}
+        />
+      </div>
 
+      <div className="form-group">
+        <label>Business Class Luggage: </label>
+        <input
+          type="number"
+          required
+          className="form-control"
+          value={BusinessClassLuggage}
+          onChange={(e) => setBusinessClassLuggage(e.target.value)}
+        />
+      </div>
+
+      <div className="form-group">
+        <label>First Class Luggage: </label>
+        <input
+          type="number"
+          required
+          className="form-control"
+          value={FirstClassLuggage}
+          onChange={(e) => setFirstClassLuggage(e.target.value)}
+        />
+      </div>
       <div className="form-group" className="col-md-6">
         <label>Departure Airport: </label>
         <input

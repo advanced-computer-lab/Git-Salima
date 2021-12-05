@@ -5,6 +5,7 @@ const flightSchema = new Schema({
     FlightNo: {
         type: Number,
         required: true,
+        index: { unique: true }
     },
     DepartureDate: {
         type: Date,
@@ -22,6 +23,12 @@ const flightSchema = new Schema({
         type: String,
         required: true
     },
+    Terminal: {
+        type: String,
+        required: true
+    },
+ 
+
     EconomySeats: {
         type: Number,
         required: true
@@ -34,12 +41,53 @@ const flightSchema = new Schema({
         type: Number,
         required: true
     },
+    FreeEconomySeats: {
+        type: Number,
+        required: true
+    },
+    FreeBusinessClassSeats: {
+        type: Number,
+        required: true
+    },
+    FreeFirstClassSeats: {
+        type: Number,
+        required: true
+    },
+    EconomyLuggage : {
+        type: Number,
+        required: true
+    },
+    BusinessClassLuggage : {
+        type: Number,
+        required: true
+    },
+    FirstClassLuggage  : {
+        type: Number,
+        required: true
+    },
+    EconomyPrice: {
+        type: Number,
+        required: true
+    },
+    BusinessClassPrice: {
+        type: Number,
+        required: true
+    },
+    BusinessClassPrice: {
+        type: Number,
+        required: true
+    },
     DepartureAirport: {
         type: String,
         required: true
     },
+    
     ArrivalAirport: {
         type: String,
+        required: true
+    },
+    TakenSeats: {
+        type: Array,
         required: true
     }
 }, { timestamps: true });

@@ -1,0 +1,32 @@
+Backend:
+
+Kirolos:
+Update module
+List all flights module
+Part of search module
+
+Philo Atef:
+Delete module
+Part of search module
+Added first class
+
+
+Frontend:
+
+Mario:
+View All Flights
+Create Flight
+Part of Edit Flight
+Edit Form
+
+Philo Amgad:
+Search Flights
+Designing and displaying the Flight Ticket
+Welcome Screen
+Edit and Delete buttons functionality
+Confirmation Messages
+
+Youssef Ahmed:
+Part of Edit Flight
+Delete Flight
+Edit and delete button functionality
