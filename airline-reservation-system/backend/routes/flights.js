@@ -274,7 +274,7 @@ router.get("/delete", async (req, res) => {
 
 });
 
-router.get("/deletebooking", async (req, res) => {
+router.get("/deleteBooking", async (req, res) => {
   const flight = req.query;
   const query = {};
   for (const p in flight) {

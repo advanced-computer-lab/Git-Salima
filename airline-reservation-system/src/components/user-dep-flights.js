@@ -50,6 +50,7 @@ const DepartureFlights = () => {
     localStorage.setItem("DepartureAirportAro", temp2.DepartureAirport);
     localStorage.setItem("ArrivalAirportAro", temp2.ArrivalAirport);
     localStorage.setItem("DepartureDateAro", temp2.DepartureDate.substring(0, 10));
+    localStorage.setItem("BookedSeatsAro", JSON.stringify(temp2.TakenSeats))
     localStorage.setItem("FlightIDAro", temp2._id);
 
     if (localStorage.getItem("UFSFClass") === "First Class") {
@@ -89,6 +90,7 @@ const DepartureFlights = () => {
             FirstClassPrice={flight.FirstClassPrice}
             DepartureAirport={flight.DepartureAirport}
             ArrivalAirport={flight.ArrivalAirport}
+            TakenSeats={flight.TakenSeats}
             onClickSelect={clickHandlerSelect}
           />
         </div>

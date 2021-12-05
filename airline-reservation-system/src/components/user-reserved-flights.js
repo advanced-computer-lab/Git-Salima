@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import UserFlightCardReservation from "./user-flight-card-reservation";
 import axios from "axios";
+import { removeSeatsAPI } from "../apis";
 
 const ReservedFlights = () => {
     const [reservedFlights, setReservedFlights] = useState([]);
@@ -25,7 +26,12 @@ const ReservedFlights = () => {
         const temp = JSON.stringify(input);
         const temp2 = JSON.parse(temp);
         //kizo kamel hena
+        console.log("in handler")
+        console.dir(temp2)
+
+        removeSeatsAPI(temp2)
     };
+
 
     // {localStorage.getItem("Username")}
 

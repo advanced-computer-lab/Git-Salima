@@ -11,12 +11,8 @@ const ReturnFlights = () => {
   let FirstClassSeats = 60;
   let BusinessClassSeats = 30;
   let EconomyClassSeats = 20;
-  const numOfSeats = 6; //localStorage.getItem("numOfSeats")
+  const numOfSeats = parseInt(localStorage.getItem("numOfSeats"))
 
-  console.log(
-    localStorage.getItem("SelectedFlightChooseSeats") ==
-      localStorage.getItem("FlightIDAro")
-  );
 
   if (
     localStorage.getItem("SelectedFlightChooseSeats") ==
@@ -31,32 +27,56 @@ const ReturnFlights = () => {
     EconomyClassSeats = localStorage.getItem("EconomySeatsKizo");
   }
 
-  const BookedSeats = [
-    {
-      id: 1,
-      row: "D",
-      number: 4,
-    },
-    {
-      id: 11,
-      row: "E",
-      number: 2,
-    },
-    {
-      id: 21,
-      row: "F",
-      number: 4,
-    },
-  ];
-
+  const BookedSeats = []
+  const BookedSeatsAro = JSON.parse(localStorage.getItem("BookedSeatsAro"))
+  const BookedSeatsKizo = JSON.parse(localStorage.getItem("BookedSeatsKizo"))
+  // const BookedSeatsKizo = localStorage.getItem("BookedSeatsKizo")
   const BookedSeatsIDs = [];
+  let i;
+  if (
+    localStorage.getItem("SelectedFlightChooseSeats") ==
+    localStorage.getItem("FlightIDAro")
+  ){
+    for(i=0;i<BookedSeatsAro.length;i++){
+      if((BookedSeatsAro[i]).substring(2,(BookedSeatsAro[i]).length) != ',')
+       BookedSeatsIDs.push(parseInt((BookedSeatsAro[i]).substring(2,(BookedSeatsAro[i]).length)))
+}
+  }
+  else{
+    for(i=0;i<BookedSeatsKizo.length;i++){
+      if((BookedSeatsKizo[i]).substring(2,(BookedSeatsKizo[i]).length) != ',')
+       BookedSeatsIDs.push(parseInt((BookedSeatsKizo[i]).substring(2,(BookedSeatsKizo[i]).length)))
+    }
+  }
+  console.log("ids "+BookedSeatsIDs)
+  
+
+  // const BookedSeats = [
+  //   {
+  //     id: 1,
+  //     row: "D",
+  //     number: 4,
+  //   },
+  //   {
+  //     id: 11,
+  //     row: "E",
+  //     number: 2,
+  //   },
+  //   {
+  //     id: 21,
+  //     row: "F",
+  //     number: 4,
+  //   },
+  // ];
+
+
   const rows = [];
   let numberOfRowsF = 0;
   let numberOfRowsB = 0;
   let numberOfRowsE = 0;
 
   //let BookedSeats = JSON.parse(localStorage.getItem("BookedSeats"))
-  BookedSeats.map((seat) => BookedSeatsIDs.push(seat.id));
+  //BookedSeats.map((seat) => BookedSeatsIDs.push(seat.id));
   if (localStorage.getItem("UFSFClass") == "First Class") {
     let temp = FirstClassSeats;
     numberOfRowsF = FirstClassSeats / 6;
@@ -64,15 +84,16 @@ const ReturnFlights = () => {
     for (let i = 0; i < numberOfRowsF; i++) {
       const row = [];
       for (let j = 1; j <= 6; j++) {
-        if (contains(i * 10 + j, BookedSeatsIDs) && j % 2 != 0 && temp > 0) {
+        if (contains(Math.floor(i * 10 + j), BookedSeatsIDs) && j % 2 != 0 && temp > 0) {
           row.push({
             id: i * 10 + j,
             number: j,
             isReserved: true,
             orientation: "east",
           });
+          
         } else if (
-          contains(i * 10 + j, BookedSeatsIDs) &&
+          contains(Math.floor(i * 10 + j), BookedSeatsIDs) &&
           j % 2 != 1 &&
           temp > 0
         ) {
@@ -82,6 +103,7 @@ const ReturnFlights = () => {
             isReserved: true,
             orientation: "west",
           });
+          row.push(null);
         } else if (j % 2 != 0 && temp > 0) {
           row.push({
             id: i * 10 + j,
@@ -185,7 +207,7 @@ const ReturnFlights = () => {
       const row = [];
       for (let j = 1; j <= 6; j++) {
         if (
-          contains((numberOfRowsF + i) * 10 + j, BookedSeatsIDs) &&
+          contains(Math.floor((numberOfRowsF + i) * 10 + j), BookedSeatsIDs) &&
           j % 2 != 0 &&
           temp > 0
         ) {
@@ -195,8 +217,9 @@ const ReturnFlights = () => {
             isReserved: true,
             orientation: "east",
           });
+          
         } else if (
-          contains((numberOfRowsF + i) * 10 + j, BookedSeatsIDs) &&
+          contains(Math.floor((numberOfRowsF + i) * 10 + j), BookedSeatsIDs) &&
           j % 2 != 1 &&
           temp > 0
         ) {
@@ -206,6 +229,7 @@ const ReturnFlights = () => {
             isReserved: true,
             orientation: "west",
           });
+          row.push(null);
         } else if (j % 2 != 0 && temp > 0) {
           row.push({
             id: (numberOfRowsF + i) * 10 + j,
@@ -310,7 +334,7 @@ const ReturnFlights = () => {
       for (let j = 1; j <= 6; j++) {
         if (
           contains(
-            (numberOfRowsF + numberOfRowsB + i) * 10 + j,
+            Math.floor((numberOfRowsF + numberOfRowsB + i) * 10 + j),
             BookedSeatsIDs
           ) &&
           j % 2 != 0 &&
@@ -322,9 +346,10 @@ const ReturnFlights = () => {
             isReserved: true,
             orientation: "east",
           });
+          
         } else if (
           contains(
-            (numberOfRowsF + numberOfRowsB + i) * 10 + j,
+            Math.floor((numberOfRowsF + numberOfRowsB + i) * 10 + j),
             BookedSeatsIDs
           ) &&
           j % 2 != 1 &&
@@ -336,6 +361,7 @@ const ReturnFlights = () => {
             isReserved: true,
             orientation: "west",
           });
+          row.push(null);
         } else if (j % 2 != 0 && temp > 0) {
           row.push({
             id: (numberOfRowsF + numberOfRowsB + i) * 10 + j,
@@ -343,6 +369,7 @@ const ReturnFlights = () => {
             isSelected: false,
             orientation: "east",
           });
+          // row.push(null);
         } else if (temp > 0) {
           row.push({
             id: (numberOfRowsF + numberOfRowsB + i) * 10 + j,
