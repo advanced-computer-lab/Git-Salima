@@ -16,8 +16,7 @@ const ReturnFlights = () => {
   let FirstClassSeats = 60;
   let BusinessClassSeats = 30;
   let EconomyClassSeats = 20;
-  const numOfSeats = parseInt(localStorage.getItem("numOfSeats"))
-
+  const numOfSeats = parseInt(localStorage.getItem("numOfSeats"));
 
   if (
     localStorage.getItem("SelectedFlightChooseSeats") ==
@@ -32,71 +31,53 @@ const ReturnFlights = () => {
     EconomyClassSeats = localStorage.getItem("EconomySeatsKizo");
   }
 
-  const BookedSeats = []
-  const BookedSeatsAro = JSON.parse(localStorage.getItem("BookedSeatsAro"))
-  const BookedSeatsKizo = JSON.parse(localStorage.getItem("BookedSeatsKizo"))
+  const BookedSeats = [];
+  const BookedSeatsAro = JSON.parse(localStorage.getItem("BookedSeatsAro"));
+  const BookedSeatsKizo = JSON.parse(localStorage.getItem("BookedSeatsKizo"));
   // const BookedSeatsKizo = localStorage.getItem("BookedSeatsKizo")
   const BookedSeatsIDs = [];
   let i;
   if (
     localStorage.getItem("SelectedFlightChooseSeats") ==
     localStorage.getItem("FlightIDAro")
-  ){
-    for(i=0;i<BookedSeatsAro.length;i++){
-      if((BookedSeatsAro[i]).substring(2,(BookedSeatsAro[i]).length) != ',')
-       BookedSeatsIDs.push(parseInt((BookedSeatsAro[i]).substring(2,(BookedSeatsAro[i]).length)))
-}
-  }
-  else{
-    for(i=0;i<BookedSeatsKizo.length;i++){
-      if((BookedSeatsKizo[i]).substring(2,(BookedSeatsKizo[i]).length) != ',')
-       BookedSeatsIDs.push(parseInt((BookedSeatsKizo[i]).substring(2,(BookedSeatsKizo[i]).length)))
+  ) {
+    for (i = 0; i < BookedSeatsAro.length; i++) {
+      if (BookedSeatsAro[i].substring(2, BookedSeatsAro[i].length) != ",")
+        BookedSeatsIDs.push(
+          parseInt(BookedSeatsAro[i].substring(2, BookedSeatsAro[i].length))
+        );
+    }
+  } else {
+    for (i = 0; i < BookedSeatsKizo.length; i++) {
+      if (BookedSeatsKizo[i].substring(2, BookedSeatsKizo[i].length) != ",")
+        BookedSeatsIDs.push(
+          parseInt(BookedSeatsKizo[i].substring(2, BookedSeatsKizo[i].length))
+        );
     }
   }
-  console.log("ids "+BookedSeatsIDs)
-  
-
-  // const BookedSeats = [
-  //   {
-  //     id: 1,
-  //     row: "D",
-  //     number: 4,
-  //   },
-  //   {
-  //     id: 11,
-  //     row: "E",
-  //     number: 2,
-  //   },
-  //   {
-  //     id: 21,
-  //     row: "F",
-  //     number: 4,
-  //   },
-  // ];
-
 
   const rows = [];
   let numberOfRowsF = 0;
   let numberOfRowsB = 0;
   let numberOfRowsE = 0;
 
-  //let BookedSeats = JSON.parse(localStorage.getItem("BookedSeats"))
-  //BookedSeats.map((seat) => BookedSeatsIDs.push(seat.id));
   if (localStorage.getItem("UFSFClass") == "First Class") {
     let temp = FirstClassSeats;
     numberOfRowsF = FirstClassSeats / 6;
-    console.log("num of rows = " + numberOfRowsF);
     for (let i = 0; i < numberOfRowsF; i++) {
       const row = [];
       for (let j = 1; j <= 6; j++) {
-        if (contains(Math.floor(i * 10 + j), BookedSeatsIDs) && j % 2 != 0 && temp > 0) {
+        if (
+          contains(Math.floor(i * 10 + j), BookedSeatsIDs) &&
+          j % 2 != 0 &&
+          temp > 0
+        ) {
           row.push({
             id: i * 10 + j,
             number: j,
             isReserved: true,
             orientation: "east",
           });
-          
         } else if (
           contains(Math.floor(i * 10 + j), BookedSeatsIDs) &&
           j % 2 != 1 &&
@@ -131,7 +112,6 @@ const ReturnFlights = () => {
     }
 
     numberOfRowsB = BusinessClassSeats / 6;
-    console.log("num of rows = " + numberOfRowsB);
     for (let i = 0; i < numberOfRowsB; i++) {
       const row = [];
       for (let j = 1; j <= 6; j++) {
@@ -156,7 +136,6 @@ const ReturnFlights = () => {
     }
 
     numberOfRowsE = EconomyClassSeats / 6;
-    console.log("num of rows = " + numberOfRowsE);
     for (let i = 0; i < numberOfRowsE; i++) {
       const row = [];
       for (let j = 1; j <= 6; j++) {
@@ -182,7 +161,6 @@ const ReturnFlights = () => {
   } else if (localStorage.getItem("UFSFClass") == "Business") {
     let temp = BusinessClassSeats;
     numberOfRowsF = FirstClassSeats / 6;
-    console.log("num of rows = " + numberOfRowsF);
     for (let i = 0; i < numberOfRowsF; i++) {
       const row = [];
       for (let j = 1; j <= 6; j++) {
@@ -207,7 +185,6 @@ const ReturnFlights = () => {
     }
 
     numberOfRowsB = BusinessClassSeats / 6;
-    console.log("num of rows = " + numberOfRowsB);
     for (let i = 0; i < numberOfRowsB; i++) {
       const row = [];
       for (let j = 1; j <= 6; j++) {
@@ -222,7 +199,6 @@ const ReturnFlights = () => {
             isReserved: true,
             orientation: "east",
           });
-          
         } else if (
           contains(Math.floor((numberOfRowsF + i) * 10 + j), BookedSeatsIDs) &&
           j % 2 != 1 &&
@@ -257,7 +233,6 @@ const ReturnFlights = () => {
     }
 
     numberOfRowsE = EconomyClassSeats / 6;
-    console.log("num of rows = " + numberOfRowsE);
     for (let i = 0; i < numberOfRowsE; i++) {
       const row = [];
       for (let j = 1; j <= 6; j++) {
@@ -283,7 +258,6 @@ const ReturnFlights = () => {
   } else {
     let temp = EconomyClassSeats;
     numberOfRowsF = FirstClassSeats / 6;
-    console.log("num of rows = " + numberOfRowsF);
     for (let i = 0; i < numberOfRowsF; i++) {
       const row = [];
       for (let j = 1; j <= 6; j++) {
@@ -308,7 +282,6 @@ const ReturnFlights = () => {
     }
 
     numberOfRowsB = BusinessClassSeats / 6;
-    console.log("num of rows = " + numberOfRowsB);
     for (let i = 0; i < numberOfRowsB; i++) {
       const row = [];
       for (let j = 1; j <= 6; j++) {
@@ -333,7 +306,6 @@ const ReturnFlights = () => {
     }
 
     numberOfRowsE = EconomyClassSeats / 6;
-    console.log("num of rows = " + numberOfRowsE);
     for (let i = 0; i < numberOfRowsE; i++) {
       const row = [];
       for (let j = 1; j <= 6; j++) {
@@ -351,7 +323,6 @@ const ReturnFlights = () => {
             isReserved: true,
             orientation: "east",
           });
-          
         } else if (
           contains(
             Math.floor((numberOfRowsF + numberOfRowsB + i) * 10 + j),
@@ -403,20 +374,16 @@ const ReturnFlights = () => {
   }));
 
   const addSeatCallback = async ({ row, number, id }, addCb) => {
-    const newTooltip = `tooltip for id-${id} added by callback`;
+    const newTooltip = `You have already booked this seat`;
     addCb(row, number, id, newTooltip);
     const seat = { row, number, id };
     setTakenSeats((oldArray) => [...oldArray, seat]);
-    console.log(takenSeats);
-    console.dir("added: " + "id " + id + " row " + row + " number " + number);
   };
 
   const removeSeatCallback = ({ row, number, id }, removeCb) => {
     const newTooltip = ["A", "B", "C"].includes(row) ? null : "";
     removeCb(row, number, newTooltip);
     setTakenSeats(takenSeats.filter((item) => item.id !== id));
-    console.dir(takenSeats);
-    console.dir("removed: " + "id " + id + " row " + row + " number" + number);
   };
 
   let history = useHistory();
@@ -430,40 +397,32 @@ const ReturnFlights = () => {
       EconomySeats: EconomyClassSeats,
     };
 
-    if(numOfSeats==takenSeats.length){
-
-
-    if (
-      localStorage.getItem("SelectedFlightChooseSeats") == localStorage.getItem("FlightIDAro") 
-    ) {
-      localStorage.setItem("departureSeats", JSON.stringify(takenSeats));
-      localStorage.setItem("depSeatsFlag", true);
-      console.dir(JSON.parse(localStorage.getItem("departureFlight")));
+    if (numOfSeats == takenSeats.length) {
+      if (
+        localStorage.getItem("SelectedFlightChooseSeats") ==
+        localStorage.getItem("FlightIDAro")
+      ) {
+        localStorage.setItem("departureSeats", JSON.stringify(takenSeats));
+        localStorage.setItem("depSeatsFlag", true);
+      } else {
+        localStorage.setItem("returnSeats", JSON.stringify(takenSeats));
+        localStorage.setItem("retSeatsFlag", true);
+      }
+      history.push("/user-flights-summary");
     } else {
-      localStorage.setItem("returnSeats", JSON.stringify(takenSeats));
-      localStorage.setItem("retSeatsFlag", true);
-      console.dir(localStorage.getItem("returnFlight"));
+      handleClickOpen();
     }
-    history.push("/user-flights-summary");
-  }
-  else{
-    handleClickOpen();
-    console.log("please choose all seats")
-  }
-
-
   };
 
   const [open, setOpen] = React.useState(false);
-    
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <div>
@@ -485,23 +444,23 @@ const ReturnFlights = () => {
           Confirm seats
         </ColorButton>
         <CardActions>
-                    <Dialog
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description"
-                    >
-                        <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText id="alert-dialog-description">
-                                please choose all your seats
-                            </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={handleClose}>Cancel</Button>
-                        </DialogActions>
-                    </Dialog>
-                </CardActions>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Please choose a total of `${numOfSeats}` seats
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+            </DialogActions>
+          </Dialog>
+        </CardActions>
       </div>
     </div>
   );

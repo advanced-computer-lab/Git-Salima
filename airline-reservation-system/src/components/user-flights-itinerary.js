@@ -8,6 +8,8 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 
+import LinearProgress from "@mui/material/LinearProgress";
+
 import "../styles/header.css";
 const steps = [
   "Choose Outbound Flight",
@@ -19,7 +21,7 @@ const steps = [
 const FlightsItinerary = () => {
   const [departureFlight, setDepartureFlight] = useState([]);
   const [returnFlight, setReturnFlight] = useState([]);
-
+  const [spinner, setSpinner] = useState(true);
   const departureSeats = JSON.parse(localStorage.getItem("departureSeats"));
   const returnSeats = JSON.parse(localStorage.getItem("returnSeats"));
 
@@ -45,6 +47,7 @@ const FlightsItinerary = () => {
       .then((res) => {
         setReturnFlight(res.data);
       });
+    setTimeout(() => setSpinner(false), 3000);
   }, []);
 
   bookingNumber =
@@ -72,88 +75,96 @@ const FlightsItinerary = () => {
 
   return (
     <div>
-      <Header
-        color="primary"
-        fixed
-        brand="Git Salima Airlines"
-        rightLinks={<HeaderLinks />}
-        // changeColorOnScroll={{
-        //   height: 0,
-        //   color: "#082567",
-        // }}
-      />
-      <br />
-      <br />
-      <br />
-      <Stepper activeStep={3} alternativeLabel>
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-      <h1 className="colour" style={{ textAlign: "center" }}>
-        {" "}
-        Please {localStorage.getItem("userFName")} confirm your flight{" "}
-      </h1>
-      <br />
-      <h3 className="colour">Departure Flight</h3>
-      {departureFlight.map((flight) => (
+      {!spinner ? (
         <div>
-          <UserFlightCardItinerary
-            _id={flight._id}
-            FlightNo={flight.FlightNo}
-            DepartureDate={flight.DepartureDate}
-            ArrivalDate={flight.ArrivalDate}
-            DepartureTime={flight.DepartureTime}
-            ArrivalTime={flight.ArrivalTime}
-            EconomySeats={flight.EconomySeats}
-            BusinessClassSeats={flight.BusinessClassSeats}
-            Seats={departureFlightSeats}
-            FirstClassSeats={flight.FirstClassSeats}
-            EconomyLuggage={flight.EconomyLuggage}
-            BusinessClassLuggage={flight.BusinessClassLuggage}
-            FirstClassLuggage={flight.FirstClassLuggage}
-            EconomyPrice={flight.EconomyPrice}
-            BusinessClassPrice={flight.BusinessClassPrice}
-            FirstClassPrice={flight.FirstClassPrice}
-            DepartureAirport={flight.DepartureAirport}
-            ArrivalAirport={flight.ArrivalAirport}
+          <Header
+            color="primary"
+            fixed
+            brand="Git Salima Airlines"
+            rightLinks={<HeaderLinks />}
+            // changeColorOnScroll={{
+            //   height: 0,
+            //   color: "#082567",
+            // }}
           />
+          <br />
+          <br />
+          <br />
+          <Stepper activeStep={3} alternativeLabel>
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+
+          <br />
+          <h1 className="colour" style={{ textAlign: "center" }}>
+            {" "}
+            Please {localStorage.getItem("userFName")} confirm your flight{" "}
+          </h1>
+          <br />
+          <h3 className="colour">Departure Flight</h3>
+          {departureFlight.map((flight) => (
+            <div>
+              <UserFlightCardItinerary
+                _id={flight._id}
+                FlightNo={flight.FlightNo}
+                DepartureDate={flight.DepartureDate}
+                ArrivalDate={flight.ArrivalDate}
+                DepartureTime={flight.DepartureTime}
+                ArrivalTime={flight.ArrivalTime}
+                EconomySeats={flight.EconomySeats}
+                BusinessClassSeats={flight.BusinessClassSeats}
+                Seats={departureFlightSeats}
+                FirstClassSeats={flight.FirstClassSeats}
+                EconomyLuggage={flight.EconomyLuggage}
+                BusinessClassLuggage={flight.BusinessClassLuggage}
+                FirstClassLuggage={flight.FirstClassLuggage}
+                EconomyPrice={flight.EconomyPrice}
+                BusinessClassPrice={flight.BusinessClassPrice}
+                FirstClassPrice={flight.FirstClassPrice}
+                DepartureAirport={flight.DepartureAirport}
+                ArrivalAirport={flight.ArrivalAirport}
+              />
+            </div>
+          ))}
+          <br />
+          <h3 className="colour">Return Flight</h3>
+          {returnFlight.map((flight) => (
+            <div>
+              <UserFlightCardItinerary
+                _id={flight._id}
+                FlightNo={flight.FlightNo}
+                DepartureDate={flight.DepartureDate}
+                ArrivalDate={flight.ArrivalDate}
+                DepartureTime={flight.DepartureTime}
+                ArrivalTime={flight.ArrivalTime}
+                EconomySeats={flight.EconomySeats}
+                BusinessClassSeats={flight.BusinessClassSeats}
+                Seats={returnFlightSeats}
+                FirstClassSeats={flight.FirstClassSeats}
+                EconomyLuggage={flight.EconomyLuggage}
+                BusinessClassLuggage={flight.BusinessClassLuggage}
+                FirstClassLuggage={flight.FirstClassLuggage}
+                EconomyPrice={flight.EconomyPrice}
+                BusinessClassPrice={flight.BusinessClassPrice}
+                FirstClassPrice={flight.FirstClassPrice}
+                DepartureAirport={flight.DepartureAirport}
+                ArrivalAirport={flight.ArrivalAirport}
+              />
+            </div>
+          ))}
+          <br />
+          {
+            <div>
+              <UserConfirmationCard />
+            </div>
+          }
         </div>
-      ))}
-      <br />
-      <h3 className="colour">Return Flight</h3>
-      {returnFlight.map((flight) => (
-        <div>
-          <UserFlightCardItinerary
-            _id={flight._id}
-            FlightNo={flight.FlightNo}
-            DepartureDate={flight.DepartureDate}
-            ArrivalDate={flight.ArrivalDate}
-            DepartureTime={flight.DepartureTime}
-            ArrivalTime={flight.ArrivalTime}
-            EconomySeats={flight.EconomySeats}
-            BusinessClassSeats={flight.BusinessClassSeats}
-            Seats={returnFlightSeats}
-            FirstClassSeats={flight.FirstClassSeats}
-            EconomyLuggage={flight.EconomyLuggage}
-            BusinessClassLuggage={flight.BusinessClassLuggage}
-            FirstClassLuggage={flight.FirstClassLuggage}
-            EconomyPrice={flight.EconomyPrice}
-            BusinessClassPrice={flight.BusinessClassPrice}
-            FirstClassPrice={flight.FirstClassPrice}
-            DepartureAirport={flight.DepartureAirport}
-            ArrivalAirport={flight.ArrivalAirport}
-          />
-        </div>
-      ))}
-      <br />
-      {
-        <div>
-          <UserConfirmationCard />
-        </div>
-      }
+      ) : (
+        <LinearProgress />
+      )}
     </div>
   );
 };

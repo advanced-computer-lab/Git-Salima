@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
   res.status(200).send("You have everything installed !");
 });
 
-router.get("/email", (req, res) => {
+router.post("/email", (req, res) => {
   var mailOptions = {
     from: "git.salima.airlines@gmail.com",
     to: req.body.to,

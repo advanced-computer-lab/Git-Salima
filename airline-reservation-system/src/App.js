@@ -24,10 +24,7 @@ function App() {
       <br />
       <div className="container">
         <Route
-          exact
-          path="/"
-          Redirect
-          to="/home"
+          path="/home"
           render={() => (
             <div>
               <Navbar />
@@ -131,7 +128,7 @@ function App() {
         <Route path="/user-profile" component={Profile} />
       </div>
       <div className="container">
-        <Route path="/user-login" component={Login} />
+        <Route exact path="/" Redirect to="/user-login" component={Login} />
       </div>
     </Router>
   );

@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { updateSeatsAPI, createBookingAPI } from "../apis";
 import Stack from "@mui/material/Stack";
-
+import { useHistory } from "react-router-dom";
 export default function MultiActionAreaCard() {
   const theme = createTheme({
     palette: {
@@ -49,7 +49,7 @@ export default function MultiActionAreaCard() {
     setOpen(false);
     setOpenNext(false);
   };
-
+  let history = useHistory();
   const confirmHandler = async () => {
     const bookedFlight = {
       _id: localStorage.getItem("FlightIDAro"),
@@ -65,6 +65,9 @@ export default function MultiActionAreaCard() {
     handleClickOpenNext();
     await updateSeatsAPI(bookedFlight);
     await createBookingAPI(bookedFlight).then(() => console.log("ay haga 2"));
+  };
+  const handleOK = () => {
+    history.push("/user-reserved-flights");
   };
 
   return (
@@ -148,7 +151,7 @@ export default function MultiActionAreaCard() {
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={handleClose}>Ok</Button>
+                  <Button onClick={handleOK}>Ok</Button>
                 </DialogActions>
               </Dialog>
             </DialogActions>

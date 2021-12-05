@@ -78,6 +78,7 @@ const Flight = () => {
             type="date"
             required
             className="form-control"
+            min={DepartureDate}
             value={ArrivalDate}
             onChange={(e) => setArrivalDate(e.target.value)}
           />

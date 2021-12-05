@@ -68,7 +68,7 @@ export default function ReservationFlightCard(props) {
   const cancelHandler = () => {
     props.onClickCancel(props);
     setOpen(false);
-    //window.location.reload(false);
+    window.location.reload(false);
   };
   var durString = "";
   const arrDay = Number(props.ArrivalDate.substring(8, 10));
@@ -420,7 +420,7 @@ export default function ReservationFlightCard(props) {
               )}
               <Stack direction="row">
                 <Typography variant="h5" color="text.secondary">
-                  Seats: {departureTakenSeats}
+                  Seats: {returnTakenSeats}
                 </Typography>
               </Stack>
               {props.Cabin === "First Class" && (

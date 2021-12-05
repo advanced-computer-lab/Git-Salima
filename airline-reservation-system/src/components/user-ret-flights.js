@@ -7,6 +7,8 @@ import HeaderLinks from "./HeaderLinks.js";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
+import Stack from "@mui/material/Stack";
+import Link from "@mui/material/Link";
 
 const steps = [
   "Choose Outbound Flight",
@@ -17,6 +19,8 @@ const steps = [
 
 const ReturnFlights = () => {
   const [allFlights, setAllFlights] = useState([]);
+
+  var resultsAvailable = false;
 
   const flight = {
     ArrivalAirport: localStorage.getItem("DepartureAirportAro"),
@@ -31,7 +35,7 @@ const ReturnFlights = () => {
       setAllFlights(res.data);
     });
   }, []);
-
+  if (allFlights.length > 0) resultsAvailable = true;
   let history = useHistory();
   const clickHandlerSelect = async (input) => {
     const temp = JSON.stringify(input);
@@ -97,6 +101,21 @@ const ReturnFlights = () => {
           />
         </div>
       ))}
+      {resultsAvailable === false && (
+        <Stack direction="row" spacing={1.2} style={{ marginLeft: "7%" }}>
+          <h2 style={{ textAlign: "center" }} className="colour">
+            We apologize, there are no flights available. Check out our other
+            flights
+          </h2>
+          <Link
+            href="/user-home"
+            underline="always"
+            sx={{ fontSize: "30px", fontFamily: "Philosopher" }}
+          >
+            {"here."}
+          </Link>
+        </Stack>
+      )}
     </div>
   );
 };
