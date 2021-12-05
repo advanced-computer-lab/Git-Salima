@@ -67,6 +67,8 @@ const Profile = () => {
   };
   return (
     <div>
+      <h1 style={{ textAlign: 'center' }} >Edit Your Profile</h1>
+      <br />
       <ThemeProvider theme={theme}>
         <Card>
           <CardContent style={{ backgroundColor: "#EFEAE4" }}>

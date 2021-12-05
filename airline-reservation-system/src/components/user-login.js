@@ -66,7 +66,7 @@ const Profile = () => {
     };
     return (
         <div>
-            <h1 style={{ textAlign: 'center' }} > Please Login</h1>
+            <h1 style={{ textAlign: 'center' }} >Please Login</h1>
             <br />
             <ThemeProvider theme={theme}>
                 <Card>
