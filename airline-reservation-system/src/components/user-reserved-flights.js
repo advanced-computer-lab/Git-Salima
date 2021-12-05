@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import UserFlightCardReservation from "./user-flight-card-reservation";
 import axios from "axios";
-import { removeSeatsAPI } from "../apis";
+import { removeBookingAPI, removeSeatsAPI } from "../apis";
 
 const ReservedFlights = () => {
   const [reservedFlights, setReservedFlights] = useState([]);
@@ -32,6 +32,31 @@ const ReservedFlights = () => {
 
   // {localStorage.getItem("Username")}
 
+
+    const cancelReservationHandler = async (input) => {
+        const temp = JSON.stringify(input);
+        const temp2 = JSON.parse(temp);
+        //kizo kamel hena
+        console.log("in handler")
+        //console.dir(temp2)
+
+        const deletedBooking = {
+            Flight_ID: temp2._id,
+            ReturnFlight_ID: temp2.Return_id,
+            TakenSeats: temp2.TakenSeats,
+            ReturnTakenSeats: temp2.ReturnTakenSeats,
+            Cabin: temp2.Cabin,
+            BookingNumber: temp2.BookingNumber,
+        }
+        console.dir(deletedBooking)
+
+        removeSeatsAPI(deletedBooking)
+        removeBookingAPI(deletedBooking)
+    };
+
+
+    // {localStorage.getItem("Username")}
+
   return (
     <div>
       <h1 style={{ textAlign: "center" }}>
@@ -40,6 +65,7 @@ const ReservedFlights = () => {
       </h1>
       <br />
       {reservedFlights.map((flight) => (
+
         <div>
           <UserFlightCardReservation
             _id={flight._id}

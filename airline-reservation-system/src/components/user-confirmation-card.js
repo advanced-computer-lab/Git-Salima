@@ -62,10 +62,27 @@ export default function MultiActionAreaCard() {
       User_id: "44", //localStorage.getItem("userID")
     };
 
-    handleClickOpenNext();
-    await updateSeatsAPI(bookedFlight);
-    await createBookingAPI(bookedFlight).then(() => console.log("ay haga 2"));
-  };
+
+    const confirmHandler = async () => {
+
+        const bookedFlight = {
+            _id: localStorage.getItem("FlightIDAro"),
+            Return_id: localStorage.getItem("FlightIDKizo"),
+            TakenSeats: JSON.parse(localStorage.getItem("departureSeats")),
+            ReturnTakenSeats: JSON.parse(localStorage.getItem("returnSeats")),
+            Cabin: localStorage.getItem("UFSFClass"),
+            BookingNumber: localStorage.getItem("bookingNumber"),
+            TotalPrice: localStorage.getItem("totalPrice"),
+            //TotalPrice: "1203", 
+            User_id: 1 //localStorage.getItem("userID")
+        }
+
+        
+        handleClickOpenNext();
+        await updateSeatsAPI(bookedFlight);
+        await createBookingAPI(bookedFlight).then(()=>console.log("ay haga 2"));
+    };
+
 
   return (
     <Card sx={{ maxWidth: w }}>
