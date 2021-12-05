@@ -17,7 +17,6 @@ import LuggageIcon from "@mui/icons-material/Luggage";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import EventIcon from "@mui/icons-material/Event";
 
-
 const theme = createTheme({
   palette: {
     primary: {
@@ -38,7 +37,6 @@ const ColorButton = styled(Button)(({ theme }) => ({
 const w = window.innerWidth;
 
 export default function FlightCard(props) {
-
   const seatsHandler = () => {
     props.onClickChooseSeats(props);
   };

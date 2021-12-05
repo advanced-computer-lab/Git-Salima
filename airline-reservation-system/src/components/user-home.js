@@ -21,7 +21,6 @@ import bg from "./bg4.jpg";
 import "../styles/header.css";
 
 const Flight = () => {
-
   const [DepartureDate, setDepartureDate] = useState("");
   const [ReturnDate, setReturnDate] = useState("");
   const [DepartureAirport, setDepartureAirport] = useState("");
@@ -30,7 +29,27 @@ const Flight = () => {
   const [numofAdults, setnumofAdults] = useState(1);
 
   const [FlightClass, setFlightClass] = React.useState("");
-
+  const [allFlights, setAllFlights] = useState([]);
+  //should be done upon authentication >>>>>
+  //const user=searchWithUserId();
+  localStorage.setItem("userID", "61a6786f911fac3cee540543");
+  localStorage.setItem("userFName", "el lahw");
+  localStorage.setItem("userLName", "el 5afy");
+  localStorage.setItem("userEmail", "ana@elensan");
+  localStorage.setItem("userPassport", 123);
+  //till here
+  // useEffect(() => {
+  //   axios.get("http://localhost:8000/list").then((res) => {
+  //     const temp = JSON.stringify(res.data);
+  //     const temp2 = JSON.parse(temp);
+  //     setAllFlights(temp2);
+  //     console.log(temp2);
+  //   });
+  // }, []);
+  const top100Films = [
+    { title: "The Shawshank Redemption", year: 1994 },
+    { title: "The Godfather", year: 1972 },
+  ];
   const theme = createTheme({
     typography: {
       fontFamily: "Philosopher",
@@ -42,6 +61,8 @@ const Flight = () => {
 
     localStorage.setItem("UFSDAirport", DepartureAirport);
     localStorage.setItem("UFSAAirport", ArrivalAirport);
+    // localStorage.setItem("UFSDDate", DepartureDate);
+    // localStorage.setItem("UFSRDate", returnDate);
     localStorage.setItem("UFSDDate", tweakDate(DepartureDate));
     localStorage.setItem("UFSRDate", tweakDate(ReturnDate));
     localStorage.setItem("UFSFClass", FlightClass);
@@ -49,6 +70,7 @@ const Flight = () => {
       "numOfSeats",
       Number(numofAdults) + Number(numofChildren)
     );
+
     history.push("/user-dep-flights");
   };
   const handleChange = (event) => {
@@ -126,34 +148,31 @@ const Flight = () => {
                 </div>
                 <br />
                 <div className="row">
-                  <div className="form-group col-md-2">
-                    <LocalizationProvider required dateAdapter={AdapterDateFns}>
-                      <DatePicker
-                        label="Departure Date"
-                        value={DepartureDate}
-                        required
-                        onChange={(newValue) => {
-                          setDepartureDate(newValue);
-                        }}
-                        renderInput={(params) => <TextField {...params} />}
-                      />
-                    </LocalizationProvider>
+                  <div className="form-group" className="col-md-2">
+                    <Typography>Departure Date: </Typography>
+                    <input
+                      type="date"
+                      required
+                      className="form-control"
+                      value={DepartureDate}
+                      onChange={(e) => setDepartureDate(e.target.value)}
+                    />
                   </div>
 
-                  <div className="form-group col-md-2">
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <DatePicker
-                        label="Return Date"
-                        value={ReturnDate}
+                  <div className="form-group col">
+                    <div className="form-group" className="col-md-8">
+                      <Typography>Return Date: </Typography>
+                      <input
+                        type="date"
                         required
-                        onChange={(newValue) => {
-                          setReturnDate(newValue);
-                        }}
-                        renderInput={(params) => <TextField {...params} />}
+                        font-family="Philosopher"
+                        className="form-control"
+                        value={ReturnDate}
+                        onChange={(e) => setReturnDate(e.target.value)}
                       />
-                    </LocalizationProvider>
+                    </div>
                   </div>
-                  <div className="form-group col-md-2">
+                  <div className="form-group col">
                     <TextField
                       id="filled-number"
                       label="Number of Adults"

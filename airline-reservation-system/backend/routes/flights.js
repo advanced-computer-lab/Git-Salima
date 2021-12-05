@@ -3,36 +3,35 @@ const router = express.Router();
 const Flight = require("../models/flight");
 const Booking = require("../models/booking");
 const User = require("../models/user");
-const axios = require('axios').default;
-var nodemailer = require('nodemailer');
+const axios = require("axios").default;
+var nodemailer = require("nodemailer");
 
 var transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: "gmail",
   auth: {
-    user: 'git.salima.airlines@gmail.com',
-    pass: 'pa$word_123'
-  }
+    user: "git.salima.airlines@gmail.com",
+    pass: "pa$word_123",
+  },
 });
 router.get("/", (req, res) => {
   res.status(200).send("You have everything installed !");
 });
 
-
 router.get("/email", (req, res) => {
-var mailOptions = {
-  from: 'git.salima.airlines@gmail.com',
-  to: req.body.to,
-  subject: req.body.subject,
-  text: req.body.text
-};
-transporter.sendMail(mailOptions, function(error, info){
-  if (error) {
-    console.log(error);
-  } else {
-    console.log('Email sent: ' + info.response);
-    res.send("Email Sent")
-  }
-});
+  var mailOptions = {
+    from: "git.salima.airlines@gmail.com",
+    to: req.body.to,
+    subject: req.body.subject,
+    text: req.body.text,
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+      res.send("Email Sent");
+    }
+  });
 });
 router.post("/createBooking", async (req, res) => {
   const User_ID = req.body.User_id;
@@ -47,15 +46,15 @@ router.post("/createBooking", async (req, res) => {
   let TakenSeats = [];
   let ReturnTakenSeats = [];
   for (const p of seats) {
-    const a = (p.row).concat(p.number)
-    const b=(a).concat(p.id)
-    TakenSeats.push(b)
+    const a = p.row.concat(p.number);
+    const b = a.concat(p.id);
+    TakenSeats.push(b);
   }
 
   for (const p of Returnseats) {
-    const a = (p.row).concat(p.number)
-    const b=(a).concat(p.id)
-    ReturnTakenSeats.push(b)
+    const a = p.row.concat(p.number);
+    const b = a.concat(p.id);
+    ReturnTakenSeats.push(b);
   }
 
   const newBooking = new Booking({
@@ -67,7 +66,7 @@ router.post("/createBooking", async (req, res) => {
     ReturnTakenSeats,
     BookingNumber,
     Cabin,
-    TotalPrice
+    TotalPrice,
   });
 
   return await newBooking.save();
@@ -91,10 +90,8 @@ router.post("/createUser", async (req, res) => {
   });
 
   await newUser.save().then((result) => {
-    res.send(result)
-  })
-
-
+    res.send(result);
+  });
 });
 router.post("/create", async (req, res) => {
   const FlightNo = req.body.FlightNo;
@@ -158,7 +155,6 @@ router.get("/listUsers", async (req, res) => {
   res.send(Users);
 });
 router.get("/searchBookings", async (req, res) => {
-
   const booking = req.query;
 
   const query = {};
@@ -168,7 +164,7 @@ router.get("/searchBookings", async (req, res) => {
     }
   }
 
-  const r = await Booking.find(query).lean()
+  const r = await Booking.find(query).lean();
 
   for (const a of r) {
     let fl = {};
@@ -202,14 +198,9 @@ router.get("/searchUsers", (req, res) => {
     }
   }
   User.find(query).then((result) => {
-    res.send(result)
-  })
+    res.send(result);
+  });
 });
-
-
-
-
-
 
 router.get("/search", (req, res) => {
   const flight = req.query;
@@ -221,46 +212,39 @@ router.get("/search", (req, res) => {
     }
   }
   Flight.find(query).then((result) => {
-    res.send(result)
-  })
-
-
+    res.send(result);
+  });
 });
 router.get("/user/search", (req, res) => {
   const flight = req.query;
 
   const query = {};
   for (const p in flight) {
-
     if (!(flight[p] == "")) {
-      if (p == "EconomySeats" || p == "BusinessClassSeats" || p == "FirstClassSeats") {
-
+      if (
+        p == "EconomySeats" ||
+        p == "BusinessClassSeats" ||
+        p == "FirstClassSeats"
+      ) {
         if (p == "EconomySeats") {
-          query[`${"FreeEconomySeats"}`] = { $gte: flight[p] }
+          query[`${"FreeEconomySeats"}`] = { $gte: flight[p] };
         }
 
         if (p == "BusinessClassSeats") {
-          query[`${"FreeBusinessClassSeats"}`] = { $gte: flight[p] }
+          query[`${"FreeBusinessClassSeats"}`] = { $gte: flight[p] };
         }
 
         if (p == "FirstClassSeats") {
-          query[`${"FreeFirstClassSeats"}`] = { $gte: flight[p] }
+          query[`${"FreeFirstClassSeats"}`] = { $gte: flight[p] };
         }
-
-
-      }
-
-
-      else {
+      } else {
         query[`${p}`] = flight[p];
       }
     }
   }
   Flight.find(query).then((result) => {
-    res.send(result)
-  })
-
-
+    res.send(result);
+  });
 });
 router.get("/delete", async (req, res) => {
   const flight = req.query;
@@ -270,10 +254,10 @@ router.get("/delete", async (req, res) => {
       query[`${p}`] = flight[p];
     }
   }
-  if(!(Object.keys(query).length === 0)){
-  Flight.remove(query).then((result) => {
-    res.send(result)
-  })
+  if (!(Object.keys(query).length === 0)) {
+    Flight.remove(query).then((result) => {
+      res.send(result);
+    });
   }
 });
 
@@ -287,12 +271,11 @@ router.post("/deleteBooking", async (req, res) => {
       query[`${p}`] = flight[p];
     }
   }
-  if(!(Object.keys(query).length === 0)){
-
-  Booking.remove(query).then((result) => {
-    res.send(result)
-  })
-}
+  if (!(Object.keys(query).length === 0)) {
+    Booking.remove(query).then((result) => {
+      res.send(result);
+    });
+  }
 });
 
 router.post("/update", async (req, res) => {
@@ -303,11 +286,9 @@ router.post("/update", async (req, res) => {
       query[`${p}`] = flight[p];
     }
   }
-  Flight.findByIdAndUpdate(flight._id, query)
-    .then((result) => {
-      res.send(result)
-    })
-
+  Flight.findByIdAndUpdate(flight._id, query).then((result) => {
+    res.send(result);
+  });
 });
 router.post("/updateUser", async (req, res) => {
   const user = req.body;
@@ -317,11 +298,9 @@ router.post("/updateUser", async (req, res) => {
       query[`${p}`] = user[p];
     }
   }
-  User.findByIdAndUpdate(user._id, query)
-    .then((result) => {
-      res.send(result)
-    })
-
+  User.findByIdAndUpdate(user._id, query).then((result) => {
+    res.send(result);
+  });
 });
 
 router.get("/getAirports", async (req, res) => {
@@ -331,13 +310,11 @@ router.get("/getAirports", async (req, res) => {
     const a = p.ArrivalAirport;
     const b = p.DepartureAirport;
     if (!res1.includes(a)) {
-      res1.push(a)
-
+      res1.push(a);
     }
     if (!res1.includes(b)) {
-      res1.push(b)
+      res1.push(b);
     }
-
   }
   console.dir(res1);
   res.send(res1);
@@ -349,96 +326,101 @@ router.post("/updateSeats", async (req, res) => {
 
   let Taken = [];
   for (const p of seats) {
-    const a = (p.row).concat(p.number)
-    const b=(a).concat(p.id)
-    Taken.push(b)
-
+    const a = p.row.concat(p.number);
+    const b = a.concat(p.id);
+    Taken.push(b);
   }
   for (const p of Taken) {
-
     const query = { $push: { TakenSeats: p } };
 
-    await Flight.findByIdAndUpdate(flight._id, query)
-
+    await Flight.findByIdAndUpdate(flight._id, query);
   }
   if (flight.Cabin == "Economy")
-    await Flight.findByIdAndUpdate(flight._id, { $inc: { "FreeEconomySeats": (flight.TakenSeats.length * -1) } });
+    await Flight.findByIdAndUpdate(flight._id, {
+      $inc: { FreeEconomySeats: flight.TakenSeats.length * -1 },
+    });
   if (flight.Cabin == "Business")
-    await Flight.findByIdAndUpdate(flight._id, { $inc: { "FreeBusinessClassSeats": (flight.TakenSeats.length * -1) } });
+    await Flight.findByIdAndUpdate(flight._id, {
+      $inc: { FreeBusinessClassSeats: flight.TakenSeats.length * -1 },
+    });
   if (flight.Cabin == "First Class")
-    await Flight.findByIdAndUpdate(flight._id, { $inc: { "FreeFirstClassSeats": (flight.TakenSeats.length ** -1) } });
-
-
-
+    await Flight.findByIdAndUpdate(flight._id, {
+      $inc: { FreeFirstClassSeats: flight.TakenSeats.length ** -1 },
+    });
 
   const Returnseats = req.body.ReturnTakenSeats;
 
   let ReturnTaken = [];
   for (const p of Returnseats) {
-    const a = (p.row).concat(p.number)
-    const b=(a).concat(p.id)
-    ReturnTaken.push(b)
+    const a = p.row.concat(p.number);
+    const b = a.concat(p.id);
+    ReturnTaken.push(b);
   }
 
   for (const p of ReturnTaken) {
-
     const query = { $push: { TakenSeats: p } };
 
-    await Flight.findByIdAndUpdate(flight.Return_id, query)
-
+    await Flight.findByIdAndUpdate(flight.Return_id, query);
   }
   if (flight.Cabin == "Economy")
-    await Flight.findByIdAndUpdate(flight.Return_id, { $inc: { "FreeEconomySeats": (flight.TakenSeats.length * -1) } });
+    await Flight.findByIdAndUpdate(flight.Return_id, {
+      $inc: { FreeEconomySeats: flight.TakenSeats.length * -1 },
+    });
   if (flight.Cabin == "Business")
-    await Flight.findByIdAndUpdate(flight.Return_id, { $inc: { "FreeBusinessClassSeats": (flight.TakenSeats.length * -1) } });
+    await Flight.findByIdAndUpdate(flight.Return_id, {
+      $inc: { FreeBusinessClassSeats: flight.TakenSeats.length * -1 },
+    });
   if (flight.Cabin == "First Class")
-    await Flight.findByIdAndUpdate(flight.Return_id, { $inc: { "FreeFirstClassSeats": (flight.TakenSeats.length ** -1) } });
+    await Flight.findByIdAndUpdate(flight.Return_id, {
+      $inc: { FreeFirstClassSeats: flight.TakenSeats.length ** -1 },
+    });
 
   Flight.findById(flight._id).then((result) => {
-    res.send(result)
-
-  })
-}
-
-);
+    res.send(result);
+  });
+});
 
 router.post("/removeSeats", async (req, res) => {
   const flight = req.body;
-  console.log(flight)
+  console.log(flight);
   for (const p of flight.TakenSeats) {
-
     const query = { $pull: { TakenSeats: p } };
 
-    await Flight.findByIdAndUpdate(flight.Flight_ID, query)
-
+    await Flight.findByIdAndUpdate(flight.Flight_ID, query);
   }
   if (flight.Cabin == "Economy")
-    await Flight.findByIdAndUpdate(flight.Flight_ID, { $inc: { "FreeEconomySeats": (flight.TakenSeats.length * 1) } });
+    await Flight.findByIdAndUpdate(flight.Flight_ID, {
+      $inc: { FreeEconomySeats: flight.TakenSeats.length * 1 },
+    });
   if (flight.Cabin == "Business")
-    await Flight.findByIdAndUpdate(flight.Flight_ID, { $inc: { "FreeBusinessClassSeats": (flight.TakenSeats.length * 1) } });
+    await Flight.findByIdAndUpdate(flight.Flight_ID, {
+      $inc: { FreeBusinessClassSeats: flight.TakenSeats.length * 1 },
+    });
   if (flight.Cabin == "First Class")
-    await Flight.findByIdAndUpdate(flight.Flight_ID, { $inc: { "FreeFirstClassSeats": (flight.TakenSeats.length * 1) } });
-
-
+    await Flight.findByIdAndUpdate(flight.Flight_ID, {
+      $inc: { FreeFirstClassSeats: flight.TakenSeats.length * 1 },
+    });
 
   for (const p of flight.ReturnTakenSeats) {
-
     const query = { $pull: { TakenSeats: p } };
 
-    await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, query)
-
+    await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, query);
   }
   if (flight.Cabin == "Economy")
-    await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, { $inc: { "FreeEconomySeats": (flight.TakenSeats.length * 1) } });
+    await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, {
+      $inc: { FreeEconomySeats: flight.TakenSeats.length * 1 },
+    });
   if (flight.Cabin == "Business")
-    await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, { $inc: { "FreeBusinessClassSeats": (flight.TakenSeats.length * 1) } });
+    await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, {
+      $inc: { FreeBusinessClassSeats: flight.TakenSeats.length * 1 },
+    });
   if (flight.Cabin == "First Class")
-    await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, { $inc: { "FreeFirstClassSeats": (flight.TakenSeats.length * 1) } });
-
-
+    await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, {
+      $inc: { FreeFirstClassSeats: flight.TakenSeats.length * 1 },
+    });
 
   Flight.findById(flight.Flight_ID).then((result) => {
-    res.send(result)
-  })
+    res.send(result);
+  });
 });
 module.exports = router;

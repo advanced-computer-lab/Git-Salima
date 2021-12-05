@@ -22,9 +22,7 @@ const UpdatedFlight = (props) => {
   const [ArrivalTime, setArrivalTime] = useState(
     props.flightToEdit.ArrivalTime
   );
-  const [Terminal, setTerminal] = useState(
-    props.flightToEdit.Terminal
-  );
+  const [Terminal, setTerminal] = useState(props.flightToEdit.Terminal);
   const [EconomySeats, setEconomySeats] = useState(
     props.flightToEdit.EconomySeats
   );
