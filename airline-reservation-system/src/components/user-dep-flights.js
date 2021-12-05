@@ -4,7 +4,6 @@ import UserFlightCard from "./user-flight-card";
 import { useHistory } from "react-router-dom";
 
 const DepartureFlights = () => {
-
   const [FlightNo, setFlightNo] = useState("");
   const [ArrivalDate, setArrivalDate] = useState("");
   const [DepartureTime, setDepartureTime] = useState("");
@@ -32,6 +31,12 @@ const DepartureFlights = () => {
     FirstClassLuggage: FirstClassLuggage,
     DepartureAirport: localStorage.getItem("UFSDAirport"),
     ArrivalAirport: localStorage.getItem("UFSAAirport"),
+    FreeEconomySeats: "",
+    FreeBusinessClassSeats: "",
+    FreeFirstClassSeats: "",
+    EconomyPrice: "",
+    BusinessClassPrice: "",
+    TakenSeats: "",
   };
 
   useEffect(() => {
@@ -49,8 +54,11 @@ const DepartureFlights = () => {
 
     localStorage.setItem("DepartureAirportAro", temp2.DepartureAirport);
     localStorage.setItem("ArrivalAirportAro", temp2.ArrivalAirport);
-    localStorage.setItem("DepartureDateAro", temp2.DepartureDate.substring(0, 10));
-    localStorage.setItem("BookedSeatsAro", JSON.stringify(temp2.TakenSeats))
+    localStorage.setItem(
+      "DepartureDateAro",
+      temp2.DepartureDate.substring(0, 10)
+    );
+    localStorage.setItem("BookedSeatsAro", JSON.stringify(temp2.TakenSeats));
     localStorage.setItem("FlightIDAro", temp2._id);
 
     if (localStorage.getItem("UFSFClass") === "First Class") {
