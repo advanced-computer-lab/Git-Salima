@@ -4,9 +4,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "@fontsource/philosopher";
 import { Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DatePicker from "@mui/lab/DatePicker";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -30,22 +27,7 @@ const Flight = () => {
 
   const [FlightClass, setFlightClass] = React.useState("");
   const [allFlights, setAllFlights] = useState([]);
-  //should be done upon authentication >>>>>
-  //const user=searchWithUserId();
-  localStorage.setItem("userID", "61a6786f911fac3cee540543");
-  localStorage.setItem("userFName", "el lahw");
-  localStorage.setItem("userLName", "el 5afy");
-  localStorage.setItem("userEmail", "ana@elensan");
-  localStorage.setItem("userPassport", 123);
-  //till here
-  // useEffect(() => {
-  //   axios.get("http://localhost:8000/list").then((res) => {
-  //     const temp = JSON.stringify(res.data);
-  //     const temp2 = JSON.parse(temp);
-  //     setAllFlights(temp2);
-  //     console.log(temp2);
-  //   });
-  // }, []);
+
   const top100Films = [
     { title: "The Shawshank Redemption", year: 1994 },
     { title: "The Godfather", year: 1972 },
@@ -61,8 +43,6 @@ const Flight = () => {
 
     localStorage.setItem("UFSDAirport", DepartureAirport);
     localStorage.setItem("UFSAAirport", ArrivalAirport);
-    // localStorage.setItem("UFSDDate", DepartureDate);
-    // localStorage.setItem("UFSRDate", returnDate);
     localStorage.setItem("UFSDDate", tweakDate(DepartureDate));
     localStorage.setItem("UFSRDate", tweakDate(ReturnDate));
     localStorage.setItem("UFSFClass", FlightClass);

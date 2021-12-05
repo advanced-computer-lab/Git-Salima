@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "@fontsource/philosopher";
-import { Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import Card from "@mui/material/Card";
