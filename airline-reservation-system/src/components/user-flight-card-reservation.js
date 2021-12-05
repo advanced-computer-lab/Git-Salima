@@ -51,11 +51,11 @@ export default function ReservationFlightCard(props) {
     let returnTakenSeats = "";
 
     for (let seat of props.TakenSeats) {
-        departureTakenSeats = departureTakenSeats + " " + seat;
+        departureTakenSeats = departureTakenSeats + " " + seat.substring(0,2);
     }
 
     for (let seat of props.ReturnTakenSeats) {
-        returnTakenSeats = returnTakenSeats + " " + seat;
+        returnTakenSeats = returnTakenSeats + " " + seat.substring(0,2);
     }
 
     const handleClickOpen = () => {
@@ -66,10 +66,10 @@ export default function ReservationFlightCard(props) {
         setOpen(false);
     };
 
-    const cancelReservationHandler = () => {
+    const cancelHandler = () => {
         props.onClickCancel(props);
         setOpen(false);
-        window.location.reload(false);
+        //window.location.reload(false);
     };
 
     return (
@@ -464,7 +464,7 @@ export default function ReservationFlightCard(props) {
                                     </DialogContent>
                                     <DialogActions>
                                         <Button onClick={handleClose}>Cancel</Button>
-                                        <Button onClick={cancelReservationHandler} autoFocus>
+                                        <Button onClick={cancelHandler} autoFocus>
                                             Confirm
                                         </Button>
                                     </DialogActions>

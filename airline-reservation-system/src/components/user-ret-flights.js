@@ -35,6 +35,7 @@ const ReturnFlights = () => {
     localStorage.setItem("FirstClassSeatsKizo", temp2.FirstClassSeats);
     localStorage.setItem("BusinessClassSeatsKizo", temp2.BusinessClassSeats);
     localStorage.setItem("EconomySeatsKizo", temp2.EconomySeats);
+    localStorage.setItem("BookedSeatsKizo", JSON.stringify(temp2.TakenSeats))
     //localStorage.setItem("BookedSeats", temp2.TakenSeats)
     localStorage.setItem("FlightNoKizo", temp2.FlightNo);
     history.push("/user-flights-summary");
@@ -63,6 +64,7 @@ const ReturnFlights = () => {
             FirstClassPrice={flight.FirstClassPrice}
             DepartureAirport={flight.DepartureAirport}
             ArrivalAirport={flight.ArrivalAirport}
+            TakenSeats = {flight.TakenSeats}
             onClickSelect={clickHandlerSelect}
           />
         </div>
