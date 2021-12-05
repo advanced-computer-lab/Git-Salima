@@ -21,13 +21,6 @@ const theme = createTheme({
     fontFamily: "Philosopher",
   },
 });
-const ColorButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.getContrastText("#082567"),
-  backgroundColor: "#082567",
-  "&:hover": {
-    backgroundColor: "#5F9CC5",
-  },
-}));
 
 const FlightsSummary = () => {
 
@@ -57,13 +50,10 @@ const FlightsSummary = () => {
     const temp2 = JSON.parse(temp);
     localStorage.setItem("SelectedFlightChooseSeats", temp2._id);
     localStorage.setItem("SelectedFlightReservedSeats", temp2.FlightNo)
-    console.log(temp2)
     history.push("/choose-seats");
   };
 
   const handleConfirmSeats = () => {
-
-    
     localStorage.setItem("depSeatsFlag", false)
     localStorage.setItem("retSeatsFlag", false)
     history.push("/user-flights-itinerary")
@@ -85,11 +75,9 @@ const FlightsSummary = () => {
     },
   }));
 
-  // {localStorage.getItem("Username")}
-
   return (
     <div>
-      <h1 style={{ textAlign: 'center' }} > Please Mario choose your seats </h1>
+      <h1 style={{ textAlign: 'center' }} > Please {localStorage.getItem("userFName")} {localStorage.getItem("userLName")} choose your seats </h1>
       <br />
       {depFlight.map((flight) => (
         <div>

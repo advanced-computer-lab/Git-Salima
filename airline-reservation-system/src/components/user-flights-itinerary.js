@@ -53,11 +53,9 @@ const FlightsItinerary = () => {
     localStorage.setItem("totalPrice", totalPrice);
     localStorage.setItem("bookingNumber", bookingNumber);
 
-    // {localStorage.getItem("Username")}
-
     return (
         <div>
-            <h1 style={{ textAlign: 'center' }} > Please Mario confirm your flight </h1>
+            <h1 style={{ textAlign: 'center' }} > Please {localStorage.getItem("userFName")} {localStorage.getItem("userLName")} confirm your flight </h1>
             <br />
             <h3>Departure Flight</h3>
             {departureFlight.map((flight) => (

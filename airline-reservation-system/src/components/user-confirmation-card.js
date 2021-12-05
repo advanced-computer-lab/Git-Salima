@@ -50,28 +50,23 @@ export default function MultiActionAreaCard() {
     setOpenNext(false);
   };
 
-  
+  const confirmHandler = async () => {
 
+    const bookedFlight = {
+      _id: localStorage.getItem("FlightIDAro"),
+      Return_id: localStorage.getItem("FlightIDKizo"),
+      TakenSeats: JSON.parse(localStorage.getItem("departureSeats")),
+      ReturnTakenSeats: JSON.parse(localStorage.getItem("returnSeats")),
+      Cabin: localStorage.getItem("UFSFClass"),
+      BookingNumber: localStorage.getItem("bookingNumber"),
+      TotalPrice: localStorage.getItem("totalPrice"),
+      User_id: localStorage.getItem("userID")
+    }
 
-    const confirmHandler = async () => {
-
-        const bookedFlight = {
-            _id: localStorage.getItem("FlightIDAro"),
-            Return_id: localStorage.getItem("FlightIDKizo"),
-            TakenSeats: JSON.parse(localStorage.getItem("departureSeats")),
-            ReturnTakenSeats: JSON.parse(localStorage.getItem("returnSeats")),
-            Cabin: localStorage.getItem("UFSFClass"),
-            BookingNumber: localStorage.getItem("bookingNumber"),
-            TotalPrice: localStorage.getItem("totalPrice"),
-            //TotalPrice: "1203", 
-            User_id: 1 //localStorage.getItem("userID")
-        }
-
-        
-        handleClickOpenNext();
-        await updateSeatsAPI(bookedFlight);
-        await createBookingAPI(bookedFlight).then(()=>console.log("ay haga 2"));
-    };
+    handleClickOpenNext();
+    await updateSeatsAPI(bookedFlight);
+    await createBookingAPI(bookedFlight).then(() => console.log("ay haga 2"));
+  };
 
 
   return (
@@ -94,13 +89,13 @@ export default function MultiActionAreaCard() {
             />
           </Stack>
           <Typography gutterBottom variant="h6" component="div">
-            Full Name: Mario Ayman
+            Full Name: {localStorage.getItem("userFName")} {localStorage.getItem("userLName")}
           </Typography>
           <Typography gutterBottom variant="h6" component="div">
-            Email: mario.beshai@yahoo.com
+            Email: {localStorage.getItem("userEmail")}
           </Typography>
           <Typography gutterBottom variant="h6" component="div">
-            Passport Number: 12345
+            Passport Number: {localStorage.getItem("userPassport")}
           </Typography>
           <Stack spacing={1} direction="row">
             <hr

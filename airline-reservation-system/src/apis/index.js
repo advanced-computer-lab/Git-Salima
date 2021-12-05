@@ -9,7 +9,7 @@ export const createUserAPI = async (flight) => {
   const temp2 = JSON.parse(temp1);
 
   return await axios
-    .post("http://localhost:8000/createUser", { params: temp2 })
+    .post("http://localhost:8000/createUser", temp2)
     .then((res) => {
       return res.data;
     });
