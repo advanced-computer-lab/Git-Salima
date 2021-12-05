@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { updateSeatsAPI, createBookingAPI } from "../apis";
 import Stack from "@mui/material/Stack";
-
+import { useHistory } from "react-router-dom";
 export default function MultiActionAreaCard() {
   const theme = createTheme({
     palette: {
@@ -49,9 +49,8 @@ export default function MultiActionAreaCard() {
     setOpen(false);
     setOpenNext(false);
   };
-
+  let history = useHistory();
   const confirmHandler = async () => {
-
     const bookedFlight = {
       _id: localStorage.getItem("FlightIDAro"),
       Return_id: localStorage.getItem("FlightIDKizo"),
@@ -60,14 +59,16 @@ export default function MultiActionAreaCard() {
       Cabin: localStorage.getItem("UFSFClass"),
       BookingNumber: localStorage.getItem("bookingNumber"),
       TotalPrice: localStorage.getItem("totalPrice"),
-      User_id: localStorage.getItem("userID")
-    }
+      User_id: localStorage.getItem("userID"),
+    };
 
     handleClickOpenNext();
     await updateSeatsAPI(bookedFlight);
     await createBookingAPI(bookedFlight).then(() => console.log("ay haga 2"));
   };
-
+  const handleOK = () => {
+    history.push("/user-reserved-flights");
+  };
 
   return (
     <Card sx={{ maxWidth: w }}>
@@ -89,7 +90,8 @@ export default function MultiActionAreaCard() {
             />
           </Stack>
           <Typography gutterBottom variant="h6" component="div">
-            Full Name: {localStorage.getItem("userFName")} {localStorage.getItem("userLName")}
+            Full Name: {localStorage.getItem("userFName")}{" "}
+            {localStorage.getItem("userLName")}
           </Typography>
           <Typography gutterBottom variant="h6" component="div">
             Email: {localStorage.getItem("userEmail")}
@@ -149,7 +151,7 @@ export default function MultiActionAreaCard() {
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={handleClose}>Ok</Button>
+                  <Button onClick={handleOK}>Ok</Button>
                 </DialogActions>
               </Dialog>
             </DialogActions>
@@ -159,4 +161,3 @@ export default function MultiActionAreaCard() {
     </Card>
   );
 }
-

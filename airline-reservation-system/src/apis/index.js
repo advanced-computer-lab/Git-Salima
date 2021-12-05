@@ -15,7 +15,6 @@ export const createUserAPI = async (flight) => {
     });
 };
 
-
 export const searchFlightsAPI = async (flight) => {
   const temp1 = JSON.stringify(flight);
   const temp2 = JSON.parse(temp1);
@@ -102,22 +101,22 @@ export const createBookingAPI = async (flight) => {
 };
 
 export const removeSeatsAPI = async (flight) => {
-   
-   await axios.post("http://localhost:8000/removeSeats", flight)
-    .then((res) => {
-      return res.data;
-    });
+  await axios.post("http://localhost:8000/removeSeats", flight).then((res) => {
+    return res.data;
+  });
 };
 
 export const removeBookingAPI = async (flight) => {
-
   await axios.post("http://localhost:8000/deleteBooking", flight);
-  
-
 };
 
 export const getAirportsAPI = async () => {
   return await axios.get("http://localhost:8000/getAirports").then((res) => {
+    return res.data;
+  });
+};
+export const sendEmailAPI = async (flight) => {
+  return await axios.post("http://localhost:8000/email", flight).then((res) => {
     return res.data;
   });
 };

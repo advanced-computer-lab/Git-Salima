@@ -41,20 +41,17 @@ const w = window.innerWidth;
 
 export default function FlightCard(props) {
   var durString = "";
+  const arrDay = Number(props.ArrivalDate.substring(8, 10));
+  const depDay = Number(props.DepartureDate.substring(8, 10));
   const arrMin = Number(props.ArrivalTime.substring(3, 5));
   const arrHrs = Number(props.ArrivalTime.substring(0, 2));
   const depMin = Number(props.DepartureTime.substring(3, 5));
   const depHrs = Number(props.DepartureTime.substring(0, 2));
   var resHrs;
   var resMins;
-  if (
-    Number(props.DepartureDate.substring(8, 10)) <
-    Number(props.ArrivalDate.substring(8, 10))
-  ) {
-    resHrs =
-      (Number(props.ArrivalDate.substring(8, 10)) -
-        props.DepartureDate.substring(8, 10)) *
-      24;
+  if (depDay < arrDay) {
+    resHrs = 24 - depHrs + arrHrs;
+    if (depDay + 1 < arrDay) resHrs = (arrDay - depDay - 1) * 24;
   } else resHrs = 0;
   //11:40 12:40
   if (arrMin < depMin) {

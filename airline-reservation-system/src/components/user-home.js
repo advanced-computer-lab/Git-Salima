@@ -139,6 +139,7 @@ const Flight = () => {
                       <input
                         type="date"
                         required
+                        min={DepartureDate}
                         font-family="Philosopher"
                         className="form-control"
                         value={ReturnDate}

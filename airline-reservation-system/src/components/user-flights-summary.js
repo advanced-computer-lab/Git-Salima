@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import UserFlightCardSeats from "./user-flight-card-seats";
 import axios from "axios";
@@ -6,7 +5,26 @@ import { useHistory } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Header from "./Header.js";
+import HeaderLinks from "./HeaderLinks.js";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Card from "@mui/material/Card";
 
+import "../styles/header.css";
+
+const steps = [
+  "Choose Outbound Flight",
+  "Choose Return Flight",
+  "Choose your Seats",
+  "Confirm your Flights",
+];
 
 const theme = createTheme({
   palette: {
@@ -23,22 +41,24 @@ const theme = createTheme({
 });
 
 const FlightsSummary = () => {
-
   const [depFlight, setDepFlight] = useState([]);
   const [returnFlight, setReturnFlight] = useState([]);
+  const [popup, setpopup] = React.useState(false);
 
   useEffect(() => {
     const departureFlight = {
-      _id: localStorage.getItem("FlightIDAro")
-    }
+      _id: localStorage.getItem("FlightIDAro"),
+    };
     const returnFlight = {
-      _id: localStorage.getItem("FlightIDKizo")
-    }
-    axios.get("http://localhost:8000/search", { params: departureFlight })
+      _id: localStorage.getItem("FlightIDKizo"),
+    };
+    axios
+      .get("http://localhost:8000/search", { params: departureFlight })
       .then((res) => {
         setDepFlight(res.data);
       });
-    axios.get("http://localhost:8000/search", { params: returnFlight })
+    axios
+      .get("http://localhost:8000/search", { params: returnFlight })
       .then((res) => {
         setReturnFlight(res.data);
       });
@@ -46,18 +66,26 @@ const FlightsSummary = () => {
 
   let history = useHistory();
   const clickHandlerChooseSeats = async (input) => {
-    const temp = JSON.stringify(input);
-    const temp2 = JSON.parse(temp);
-    localStorage.setItem("SelectedFlightChooseSeats", temp2._id);
-    localStorage.setItem("SelectedFlightReservedSeats", temp2.FlightNo)
-    history.push("/choose-seats");
+    if (localStorage.getItem("type") === "User") {
+      const temp = JSON.stringify(input);
+      const temp2 = JSON.parse(temp);
+      localStorage.setItem("SelectedFlightChooseSeats", temp2._id);
+      localStorage.setItem("SelectedFlightReservedSeats", temp2.FlightNo);
+      history.push("/choose-seats");
+    } else if (localStorage.getItem("type") === "Guest") {
+      setpopup(true);
+    }
   };
 
   const handleConfirmSeats = () => {
-    localStorage.setItem("depSeatsFlag", false)
-    localStorage.setItem("retSeatsFlag", false)
-    history.push("/user-flights-itinerary")
-  }
+    localStorage.setItem("depSeatsFlag", false);
+    localStorage.setItem("retSeatsFlag", false);
+    history.push("/user-flights-itinerary");
+  };
+  const handleClose = (e) => {
+    e.preventDefault();
+    history.push("/");
+  };
 
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText("#082567"),
@@ -67,17 +95,34 @@ const FlightsSummary = () => {
     },
   }));
 
-  const ColorButton2 = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText("#808080"),
-    backgroundColor: "#808080",
-    "&:hover": {
-      backgroundColor: "#808080",
-    },
-  }));
-
   return (
     <div>
-      <h1 style={{ textAlign: 'center' }} > Please {localStorage.getItem("userFName")} {localStorage.getItem("userLName")} choose your seats </h1>
+      <Header
+        color="primary"
+        fixed
+        brand="Git Salima Airlines"
+        rightLinks={<HeaderLinks />}
+        // changeColorOnScroll={{
+        //   height: 0,
+        //   color: "#082567",
+        // }}
+      />
+      <br />
+      <br />
+      <br />
+      <Stepper activeStep={2} alternativeLabel>
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+      <br />
+      <h1 style={{ textAlign: "center" }} className="colour">
+        {" "}
+        Please {localStorage.getItem("userFName")}{" "}
+        {localStorage.getItem("userLName")} choose your seats{" "}
+      </h1>
       <br />
       {depFlight.map((flight) => (
         <div>
@@ -127,22 +172,40 @@ const FlightsSummary = () => {
           />
         </div>
       ))}
-      {(JSON.parse(localStorage.getItem("depSeatsFlag")) && JSON.parse(localStorage.getItem("retSeatsFlag"))) ?
+      {JSON.parse(localStorage.getItem("depSeatsFlag")) &&
+      JSON.parse(localStorage.getItem("retSeatsFlag")) ? (
         <ThemeProvider theme={theme}>
           <ColorButton variant="contained" onClick={handleConfirmSeats}>
             Proceed to Checkout
           </ColorButton>
         </ThemeProvider>
-
-        :
+      ) : (
         <ThemeProvider theme={theme}>
-          <ColorButton2 variant="contained" >
+          <ColorButton variant="contained" disabled>
             Proceed to Checkout
-          </ColorButton2>
+          </ColorButton>
         </ThemeProvider>
-
-      }
-
+      )}
+      <ThemeProvider theme={theme}>
+        <Card>
+          <Dialog
+            open={popup}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                You should be logged in to book seats.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>OK</Button>
+            </DialogActions>
+          </Dialog>
+        </Card>
+      </ThemeProvider>
     </div>
   );
 };
