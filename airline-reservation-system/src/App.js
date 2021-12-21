@@ -14,6 +14,7 @@ import UserRetFlights from "./components/user-ret-flights";
 import UserFlightsSummary from "./components/user-flights-summary";
 import UserFlightsItinerary from "./components/user-flights-itinerary";
 import UserReservedFlights from "./components/user-reserved-flights";
+import UserReservedEditFlights from "./components/user-edit-reserved-flights";
 import ChooseSeats from "./components/chooseSeats/index";
 import Profile from "./components/user-profile";
 import Login from "./components/user-login";
@@ -129,6 +130,9 @@ function App() {
       </div>
       <div className="container">
         <Route exact path="/" Redirect to="/user-login" component={Login} />
+      </div>
+      <div className="container">
+        <Route path="/user-edit-reserved-flights" component={UserReservedEditFlights} />
       </div>
     </Router>
   );

@@ -7,11 +7,9 @@ import HeaderLinks from "./HeaderLinks.js";
 import "../styles/header.css";
 import Stack from "@mui/material/Stack";
 import Link from "@mui/material/Link";
-import ClipLoader from "react-spinners/ClipLoader";
-import { SpinnerCircular } from "spinners-react";
 import LinearProgress from "@mui/material/LinearProgress";
+import { useHistory } from "react-router-dom";
 
-import Box from "@mui/material/Box";
 var resultsAvailable = false;
 const ReservedFlights = () => {
   const [reservedFlights, setReservedFlights] = useState([]);
@@ -72,6 +70,15 @@ const ReservedFlights = () => {
     sendEmailAPI(email);
   };
 
+  let history = useHistory();
+  const editReservationHandler = async (input) => {
+    const temp = JSON.stringify(input);
+    const temp2 = JSON.parse(temp);
+
+    localStorage.setItem("BookingNumberToEdit", temp2.BookingNumber);
+    history.push("/user-edit-reserved-flights");
+  };
+
   return (
     // spinner && <LinearProgress /> && (
     <div>
@@ -82,10 +89,10 @@ const ReservedFlights = () => {
             fixed
             brand="Git Salima Airlines"
             rightLinks={<HeaderLinks />}
-            // changeColorOnScroll={{
-            //   height: 0,
-            //   color: "#082567",
-            // }}
+          // changeColorOnScroll={{
+          //   height: 0,
+          //   color: "#082567",
+          // }}
           />
           <br />
           <br />
@@ -146,6 +153,7 @@ const ReservedFlights = () => {
                       ReturnArrivalAirport={flight.ReturnArrivalAirport}
                       ReturnTakenSeats={flight.ReturnTakenSeats}
                       onClickCancel={cancelReservationHandler}
+                      onClickEdit={editReservationHandler}
                     />
                   </div>
                 ))}
