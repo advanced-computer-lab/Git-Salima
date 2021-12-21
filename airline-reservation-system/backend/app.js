@@ -2,6 +2,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const router = require("./routes/flights");
+//const auth = require("./routes/auth");
 require("dotenv").config();
 const cors = require("cors");
 //App variables

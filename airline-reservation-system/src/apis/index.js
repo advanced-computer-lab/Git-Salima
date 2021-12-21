@@ -52,7 +52,7 @@ export const userFlightsAPI = async (flight) => {
   const temp2 = JSON.parse(temp1);
 
   return await axios
-    .get("http://localhost:8000/searchBookings", { params: temp2 })
+    .post("http://localhost:8000/searchBookings", temp2)
     .then((res) => {
       return res.data;
     });
