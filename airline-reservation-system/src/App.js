@@ -18,6 +18,11 @@ import UserReservedEditFlights from "./components/user-edit-reserved-flights";
 import ChooseSeats from "./components/chooseSeats/index";
 import Profile from "./components/user-profile";
 import Login from "./components/user-login";
+import UserSearchDepEdit from "./components/user-search-dep-edit";
+import UserDepFlightsEdit from "./components/user-dep-flights-edit";
+import UserDepSummaryEdit from "./components/user-dep-summary-edit";
+import UserDepChooseSeatsEdit from "./components/user-dep-choose-seats-edit";
+import UserDepItineraryEdit from "./components/user-dep-itinerary-edit";
 
 function App() {
   return (
@@ -132,7 +137,31 @@ function App() {
         <Route exact path="/" Redirect to="/user-login" component={Login} />
       </div>
       <div className="container">
-        <Route path="/user-edit-reserved-flights" component={UserReservedEditFlights} />
+        <Route
+          path="/user-edit-reserved-flights"
+          component={UserReservedEditFlights}
+        />
+      </div>
+      <div className="container">
+        <Route path="/user-search-dep-edit" component={UserSearchDepEdit} />
+      </div>
+      <div className="container">
+        <Route path="/user-dep-flights-edit" component={UserDepFlightsEdit} />
+      </div>
+      <div className="container">
+        <Route path="/user-dep-summary-edit" component={UserDepSummaryEdit} />
+      </div>
+      <div className="container">
+        <Route
+          path="/choose-dep-seats-edit"
+          component={UserDepChooseSeatsEdit}
+        />
+      </div>
+      <div className="container">
+        <Route
+          path="/user-dep-itinerary-edit"
+          component={UserDepItineraryEdit}
+        />
       </div>
     </Router>
   );
