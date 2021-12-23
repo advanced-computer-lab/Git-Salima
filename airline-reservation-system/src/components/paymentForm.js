@@ -1,4 +1,8 @@
-import * as React from "react";
+import React , {useState} from 'react'
+import { CardElement, useElements, useStripe  } from '@stripe/react-stripe-js'
+import  axios  from 'axios'
+import "../styles/header.css";
+
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -14,8 +18,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { updateSeatsAPI, createBookingAPI } from "../apis";
 import Stack from "@mui/material/Stack";
 import { useHistory } from "react-router-dom";
-export default function MultiActionAreaCard() {
-  const theme = createTheme({
+
+const theme = createTheme({
     palette: {
       primary: {
         main: "#082567",
@@ -25,6 +29,7 @@ export default function MultiActionAreaCard() {
       fontFamily: "Philosopher",
     },
   });
+
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText("#082567"),
     backgroundColor: "#082567",
@@ -32,10 +37,66 @@ export default function MultiActionAreaCard() {
       backgroundColor: "#5F9CC5",
     },
   }));
+
   const w = 500;
 
-  const [open, setOpen] = React.useState(false);
+
+const CARD_OPTIONS = {
+	iconStyle: "solid",
+	style: {
+		base: {
+			iconColor: "#c4f0ff",
+			color: "#fff",
+			fontWeight: 500,
+			fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
+			fontSize: "16px",
+			fontSmoothing: "antialiased",
+			":-webkit-autofill": { color: "#fce883" },
+			"::placeholder": { color: "#87bbfd" }
+		},
+		invalid: {
+			iconColor: "#ffc7ee",
+			color: "#ffc7ee"
+		}
+	}
+}
+
+export default function PaymentForm() {
+    const [success , setSuccess] = useState(false);
+    const stripe = useStripe();
+    const elements = useElements();
+
+    const [open, setOpen] = React.useState(false);
   const [openNext, setOpenNext] = React.useState(false);
+
+  const handleSubmit = async (e) => {
+    // e.preventDefault();
+    const {error, paymentMethod} = await stripe.createPaymentMethod({
+        type: "card",
+        card: elements.getElement(CardElement)
+    })
+
+    if(!error){
+        try {
+            const {id} = paymentMethod
+            const response = await axios.post("http://localhost:8000/payment",{
+                amount: parseInt(localStorage.getItem("totalPrice"))*100,
+                id
+            })
+
+            if(response.data.success){
+                console.log("successful payment");
+                setSuccess(true);
+            }
+            handleClickOpenNext();
+        } catch (error) {
+            console.log("Error",error);
+        }
+    }
+    else{
+        console.log(error.message);
+    }
+}
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -61,6 +122,7 @@ export default function MultiActionAreaCard() {
       TotalPrice: localStorage.getItem("totalPrice"),
       User_id: localStorage.getItem("userID"),
     };
+    handleSubmit();
 
     handleClickOpenNext();
     await updateSeatsAPI(bookedFlight);
@@ -69,55 +131,33 @@ export default function MultiActionAreaCard() {
   const handleOK = () => {
     history.push("/user-reserved-flights");
   };
+  
 
-  return (
-    <Card sx={{ maxWidth: w }}>
+
+   
+    return (
+        <>
+        <Card sx={{ maxWidth: w }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <CardContent style={{ backgroundColor: "#EFEAE4" }}>
-          <Typography gutterBottom variant="h4" component="div">
-            Booking Confirmation
-          </Typography>
-          <Stack spacing={1} direction="row">
-            <hr
-              style={{
-                marginTop: 7,
-                color: "text.secondary",
-                backgroundColor: "text.secondary",
-                height: 2,
-                width: w,
-              }}
-            />
-          </Stack>
-          <Typography gutterBottom variant="h6" component="div">
-            Full Name: {localStorage.getItem("userFName")}{" "}
-            {localStorage.getItem("userLName")}
-          </Typography>
-          <Typography gutterBottom variant="h6" component="div">
-            Email: {localStorage.getItem("userEmail")}
-          </Typography>
-          <Typography gutterBottom variant="h6" component="div">
-            Passport Number: {localStorage.getItem("userPassport")}
-          </Typography>
-          <Stack spacing={1} direction="row">
-            <hr
-              style={{
-                marginTop: 7,
-                color: "text.secondary",
-                backgroundColor: "text.secondary",
-                height: 2,
-                width: w,
-              }}
-            />
-          </Stack>
-          <Typography variant="h5" color="primary.main">
-            Total Price: {localStorage.getItem("totalPrice")} EGP
-          </Typography>
+        {!success ?
+            <div>
+                 <fieldset className="FormGroup">
+                <div className="FormRow">
+                    <CardElement options={CARD_OPTIONS}/>
+                </div>
+            </fieldset>
+                <button onClick={handleClickOpen}>Pay</button>
+            </div>
+            :
+            <div>
+                <h2>successful payment</h2>
+            </div>
+            }  
         </CardContent>
         <CardActions>
-          {/* <ColorButton variant="contained" onClick={handleClickOpen}>
-            Confirm Booking
-          </ColorButton> */}
+          
           <Dialog
             open={open}
             onClose={handleClose}
@@ -157,7 +197,9 @@ export default function MultiActionAreaCard() {
             </DialogActions>
           </Dialog>
         </CardActions>
+        
       </ThemeProvider>
     </Card>
-  );
+        </>
+    )
 }

@@ -5,6 +5,8 @@ const Booking = require("../models/booking");
 const User = require("../models/user");
 const axios = require("axios").default;
 var nodemailer = require("nodemailer");
+const cors = require("cors")
+const Stripe = require('stripe');
 
 var transporter = nodemailer.createTransport({
   service: "gmail",
@@ -422,4 +424,33 @@ router.post("/removeSeats", async (req, res) => {
     res.send(result);
   });
 });
+
+// const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST)
+const stripe = Stripe('sk_test_51K9b9SK25DXcjTVNrfciNXbdJpBEVmXATZbkCrJfA0Lvd5n5vQuCNH2Uytch1GrGxsdofEyphHmCR81fT2yWpCB6005t6juaCY');
+
+router.post("/payment", cors(), async (req, res) => {
+	let { amount, id } = req.body
+  console.log("test payment")
+	try {
+		const payment = await stripe.paymentIntents.create({
+			amount,
+			currency: "USD",
+			description: "Git Salima airlines",
+			payment_method: id,
+			confirm: true
+		})
+		console.log("Payment", payment)
+		res.json({
+			message: "Payment successful",
+			success: true
+		})
+	} catch (error) {
+		console.log("Error", error)
+		res.json({
+			message: "Payment failed",
+			success: false
+		})
+	}
+})
+
 module.exports = router;

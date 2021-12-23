@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { ReactDOM } from "react";
 import UserFlightCardItinerary from "./user-flight-card-itinerary";
 import UserConfirmationCard from "./user-confirmation-card";
 import axios from "axios";
@@ -7,6 +8,8 @@ import HeaderLinks from "./HeaderLinks.js";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
+import StripeContainer from "./stripeContainer";
+import Stack from "@mui/material/Stack";
 
 import LinearProgress from "@mui/material/LinearProgress";
 
@@ -158,7 +161,19 @@ const FlightsItinerary = () => {
           <br />
           {
             <div>
+              <StripeContainer/>
+              <br/>
               <UserConfirmationCard />
+              <br/>
+              {/* <Stack 
+              direction="row" 
+              spacing={9}
+              >
+              <UserConfirmationCard />
+              <StripeContainer/>
+              </Stack> */}
+              
+              
             </div>
           }
         </div>
