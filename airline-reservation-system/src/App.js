@@ -19,10 +19,15 @@ import ChooseSeats from "./components/chooseSeats/index";
 import Profile from "./components/user-profile";
 import Login from "./components/user-login";
 import UserSearchDepEdit from "./components/user-search-dep-edit";
+import UserSearchRetEdit from "./components/user-search-ret-edit";
 import UserDepFlightsEdit from "./components/user-dep-flights-edit";
+import UserRetFlightsEdit from "./components/user-ret-flights-edit";
 import UserDepSummaryEdit from "./components/user-dep-summary-edit";
+import UserRetSummaryEdit from "./components/user-ret-summary-edit";
 import UserDepChooseSeatsEdit from "./components/user-dep-choose-seats-edit";
+import UserRetChooseSeatsEdit from "./components/user-ret-choose-seats-edit";
 import UserDepItineraryEdit from "./components/user-dep-itinerary-edit";
+import UserRetItineraryEdit from "./components/user-ret-itinerary-edit";
 
 function App() {
   return (
@@ -146,10 +151,19 @@ function App() {
         <Route path="/user-search-dep-edit" component={UserSearchDepEdit} />
       </div>
       <div className="container">
+        <Route path="/user-search-ret-edit" component={UserSearchRetEdit} />
+      </div>
+      <div className="container">
         <Route path="/user-dep-flights-edit" component={UserDepFlightsEdit} />
       </div>
       <div className="container">
+        <Route path="/user-ret-flights-edit" component={UserRetFlightsEdit} />
+      </div>
+      <div className="container">
         <Route path="/user-dep-summary-edit" component={UserDepSummaryEdit} />
+      </div>
+      <div className="container">
+        <Route path="/user-ret-summary-edit" component={UserRetSummaryEdit} />
       </div>
       <div className="container">
         <Route
@@ -159,8 +173,20 @@ function App() {
       </div>
       <div className="container">
         <Route
+          path="/choose-ret-seats-edit"
+          component={UserRetChooseSeatsEdit}
+        />
+      </div>
+      <div className="container">
+        <Route
           path="/user-dep-itinerary-edit"
           component={UserDepItineraryEdit}
+        />
+      </div>
+      <div className="container">
+        <Route
+          path="/user-ret-itinerary-edit"
+          component={UserRetItineraryEdit}
         />
       </div>
     </Router>

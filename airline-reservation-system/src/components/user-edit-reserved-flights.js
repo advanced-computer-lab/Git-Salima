@@ -96,13 +96,46 @@ const ReservedFlights = () => {
   };
 
   const editRetFlightHandler = async (input) => {
+
     const temp = JSON.stringify(input);
     const temp2 = JSON.parse(temp);
+    localStorage.setItem("ReturnDepAirportEdit", temp2.DepartureAirport);
+    localStorage.setItem("ReturnArrAirportEdit", temp2.ArrivalAirport);
+    localStorage.setItem(
+      "OutboundDepDateEdit",
+      reservedFlight[0].DepartureDate
+    );
+    let pricePerSeatEdit;
+    if (reservedFlight[0].Cabin === "Economy") {
+      pricePerSeatEdit = reservedFlight[0].ReturnEconomyPrice;
+    } else if (reservedFlight[0].Cabin === "Business") {
+      pricePerSeatEdit = reservedFlight[0].ReturnBusinessClassPrice;
+    } else if (reservedFlight[0].Cabin === "First Class") {
+      pricePerSeatEdit = reservedFlight[0].ReturnFirstClassPrice;
+    }
+    localStorage.setItem(
+      "OldRetFlightPrice",
+      pricePerSeatEdit * reservedFlight[0].ReturnTakenSeats.length
+    );
+    let pricePerSeatEditOutbound;
+    if (reservedFlight[0].Cabin === "Economy") {
+      pricePerSeatEditOutbound = reservedFlight[0].EconomyPrice;
+    } else if (reservedFlight[0].Cabin === "Business") {
+      pricePerSeatEditOutbound = reservedFlight[0].BusinessClassPrice;
+    } else if (reservedFlight[0].Cabin === "First Class") {
+      pricePerSeatEditOutbound = reservedFlight[0].FirstClassPrice;
+    }
+    localStorage.setItem(
+      "CurrentDepFlightPrice",
+      pricePerSeatEditOutbound * reservedFlight[0].TakenSeats.length
+    );
+
+    history.push("/user-search-ret-edit");
   };
 
-  const changeDepSeatsHandler = async (input) => {};
+  const changeDepSeatsHandler = async (input) => { };
 
-  const changeRetSeatsHandler = async (input) => {};
+  const changeRetSeatsHandler = async (input) => { };
 
   return (
     <div>

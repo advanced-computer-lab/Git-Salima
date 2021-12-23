@@ -58,6 +58,7 @@ const FlightsSummary = () => {
 
   let history = useHistory();
   const clickHandlerChooseSeats = async (input) => {
+
     if (localStorage.getItem("type") === "User") {
       const temp = JSON.stringify(input);
       const temp2 = JSON.parse(temp);
@@ -93,10 +94,10 @@ const FlightsSummary = () => {
         fixed
         brand="Git Salima Airlines"
         rightLinks={<HeaderLinks />}
-        // changeColorOnScroll={{
-        //   height: 0,
-        //   color: "#082567",
-        // }}
+      // changeColorOnScroll={{
+      //   height: 0,
+      //   color: "#082567",
+      // }}
       />
       <br />
       <br />
