@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import UserFlightCardItinerary from "./user-flight-card-itinerary";
-import UserConfirmationCardEdit from "./user-confirmation-card-edit";
+import UserConfirmationCardEdit from "./user-confirmation-card-dep-edit";
 import axios from "axios";
 import Header from "./Header.js";
 import HeaderLinks from "./HeaderLinks.js";

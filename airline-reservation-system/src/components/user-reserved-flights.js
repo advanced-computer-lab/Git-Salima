@@ -62,6 +62,8 @@ const ReservedFlights = () => {
       TakenSeats: temp2.TakenSeats,
       ReturnTakenSeats: temp2.ReturnTakenSeats,
       Cabin: temp2.Cabin,
+      //ADD RETURN CABINN
+      //5ALIII BALAAAK
       BookingNumber: temp2.BookingNumber,
     };
 

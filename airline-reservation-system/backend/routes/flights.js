@@ -422,4 +422,16 @@ router.post("/removeSeats", async (req, res) => {
     res.send(result);
   });
 });
+router.post("/updateBooking", async (req, res) => {
+  const user = req.body;
+  const query = {};
+  for (const p in user) {
+    if (!(user[p] == user._id)) {
+      query[`${p}`] = user[p];
+    }
+  }
+  Booking.findByIdAndUpdate(user._id, query).then((result) => {
+    res.send(result);
+  });
+});
 module.exports = router;

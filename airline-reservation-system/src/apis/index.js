@@ -120,3 +120,10 @@ export const sendEmailAPI = async (flight) => {
     return res.data;
   });
 };
+export const updateBookingAPI = async (flight) => {
+  return await axios
+    .post("http://localhost:8000/updateBooking", flight)
+    .then((res) => {
+      return res.data;
+    });
+};

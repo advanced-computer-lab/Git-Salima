@@ -11,6 +11,7 @@ import HeaderLinks from "./HeaderLinks.js";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
+import { removeSeatsAPI } from "../apis";
 import "../styles/header.css";
 
 const steps = [
@@ -67,6 +68,8 @@ const ReservedFlights = () => {
       "ReturnDepDateEdit",
       reservedFlight[0].ReturnDepartureDate
     );
+    localStorage.setItem("OldTakenSeatsDep", reservedFlight[0].TakenSeats);
+    localStorage.setItem("OldDepID", reservedFlight[0]._id);
     let pricePerSeatEdit;
     if (reservedFlight[0].Cabin === "Economy") {
       pricePerSeatEdit = reservedFlight[0].EconomyPrice;
@@ -96,7 +99,6 @@ const ReservedFlights = () => {
   };
 
   const editRetFlightHandler = async (input) => {
-
     const temp = JSON.stringify(input);
     const temp2 = JSON.parse(temp);
     localStorage.setItem("ReturnDepAirportEdit", temp2.DepartureAirport);
@@ -105,6 +107,11 @@ const ReservedFlights = () => {
       "OutboundDepDateEdit",
       reservedFlight[0].DepartureDate
     );
+    localStorage.setItem(
+      "OldTakenSeatsRet",
+      reservedFlight[0].ReturnTakenSeats
+    );
+    localStorage.setItem("OldRetID", reservedFlight[0].Return_id);
     let pricePerSeatEdit;
     if (reservedFlight[0].Cabin === "Economy") {
       pricePerSeatEdit = reservedFlight[0].ReturnEconomyPrice;
@@ -133,9 +140,20 @@ const ReservedFlights = () => {
     history.push("/user-search-ret-edit");
   };
 
-  const changeDepSeatsHandler = async (input) => { };
+  const changeDepSeatsHandler = async (input) => {
+    const temp = JSON.stringify(input);
+    const temp2 = JSON.parse(temp);
+    localStorage.setItem("SelectedFlightChooseSeats", temp2._id);
+    localStorage.setItem("SelectedFlightReservedSeats", temp2.FlightNo);
+    const seatsToRemove = {
+      _id: temp2._id,
+      TakenSeats: temp2.TakenSeats,
+    };
+    removeSeatsAPI(seatsToRemove);
+    history.push("/change-seats");
+  };
 
-  const changeRetSeatsHandler = async (input) => { };
+  const changeRetSeatsHandler = async (input) => {};
 
   return (
     <div>

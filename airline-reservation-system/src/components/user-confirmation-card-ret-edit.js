@@ -11,7 +11,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { styled } from "@mui/material/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { updateSeatsAPI, createBookingAPI } from "../apis";
+import { updateSeatsAPI, updateBookingAPI, removeSeatsAPI } from "../apis";
 import Stack from "@mui/material/Stack";
 import { useHistory } from "react-router-dom";
 export default function MultiActionAreaCard() {
@@ -54,19 +54,24 @@ export default function MultiActionAreaCard() {
   let history = useHistory();
   const confirmHandler = async () => {
     const bookedFlight = {
-      _id: localStorage.getItem("FlightIDAro"),
-      Return_id: localStorage.getItem("FlightIDKizo"),
-      TakenSeats: JSON.parse(localStorage.getItem("departureSeats")),
-      ReturnTakenSeats: JSON.parse(localStorage.getItem("returnSeats")),
       Cabin: localStorage.getItem("UFSFClass"),
+      //should be return cabin^^^^^
+      //5ALII BALAAAK
+      Return_id: localStorage.getItem("FlightIDKizo"),
+      ReturnTakenSeats: JSON.parse(localStorage.getItem("returnSeats")),
       BookingNumber: localStorage.getItem("bookingNumber"),
       TotalPrice: localStorage.getItem("totalPrice"),
       User_id: localStorage.getItem("userID"),
     };
-
+    const oldFlight = {
+      _id: localStorage.getItem("OldRetID"),
+      TakenSeats: JSON.parse(localStorage.getItem("OldTakenSeatsRet")),
+    };
     handleClickOpenNext();
+    ///here remove seats from previously booked flight
+    await removeSeatsAPI(oldFlight);
     await updateSeatsAPI(bookedFlight);
-    await createBookingAPI(bookedFlight).then(() => console.log("ay haga 2"));
+    await updateBookingAPI(bookedFlight).then(() => console.log("ay haga 2"));
   };
   const handleOK = () => {
     history.push("/user-reserved-flights");
@@ -166,9 +171,9 @@ export default function MultiActionAreaCard() {
                 <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
-                    Flight booked successfully!
+                    Flight updated successfully!
                     <br />
-                    Your Flight Booking Number is{" "}
+                    Your Flight Booking Number is Still{" "}
                     {localStorage.getItem("bookingNumber")}
                   </DialogContentText>
                 </DialogContent>

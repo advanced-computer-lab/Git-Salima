@@ -85,7 +85,7 @@ const Profile = () => {
         <Card>
           <CardContent style={{ backgroundColor: "#EFEAE4" }}>
             <form onSubmit={loginHandler}>
-              <div className="row">
+              <div className="form-row">
                 <div className="col">
                   <TextField
                     id="filled-helperText"

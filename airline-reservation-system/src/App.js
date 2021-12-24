@@ -28,7 +28,7 @@ import UserDepChooseSeatsEdit from "./components/user-dep-choose-seats-edit";
 import UserRetChooseSeatsEdit from "./components/user-ret-choose-seats-edit";
 import UserDepItineraryEdit from "./components/user-dep-itinerary-edit";
 import UserRetItineraryEdit from "./components/user-ret-itinerary-edit";
-
+import ChangeSeats from "./components/changeSeats/change-seats";
 function App() {
   return (
     <Router>
@@ -188,6 +188,9 @@ function App() {
           path="/user-ret-itinerary-edit"
           component={UserRetItineraryEdit}
         />
+      </div>
+      <div className="container">
+        <Route path="/change-seats" component={ChangeSeats} />
       </div>
     </Router>
   );
