@@ -5,9 +5,9 @@ const Booking = require("../models/booking");
 const User = require("../models/user");
 const axios = require("axios").default;
 var nodemailer = require("nodemailer");
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcrypt')
 //const passport = require('passport')
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken')
 let accessT;
 var transporter = nodemailer.createTransport({
   service: "gmail",
@@ -88,7 +88,9 @@ async function authenticateToken(req, res, next) {
     refreshTokens = res1.data;
   });
   // console.log(refreshTokens)
-  if (!refreshTokens.includes(token)) return res.sendStatus(403);
+  if (!refreshTokens.includes(token)) {
+    res.send(false);
+  };
   jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
     //console.log(err)
     console.log("alomeen");
