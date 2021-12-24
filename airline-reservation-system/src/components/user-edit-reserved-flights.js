@@ -73,7 +73,7 @@ const ReservedFlights = () => {
       reservedFlight[0].ReturnDepartureDate
     );
     localStorage.setItem("OldTakenSeatsDep", reservedFlight[0].TakenSeats);
-    localStorage.setItem("OldDepID", reservedFlight[0]._id);
+    localStorage.setItem("OldDepID", reservedFlight[0].Flight_ID);
     localStorage.setItem("OldDepCabin", reservedFlight[0].Cabin);
     let pricePerSeatEdit;
     if (reservedFlight[0].Cabin === "Economy") {
@@ -116,7 +116,7 @@ const ReservedFlights = () => {
       "OldTakenSeatsRet",
       reservedFlight[0].ReturnTakenSeats
     );
-    localStorage.setItem("OldRetID", reservedFlight[0].Return_id);
+    localStorage.setItem("OldRetID", reservedFlight[0].ReturnFlight_ID);
     let pricePerSeatEdit;
     if (reservedFlight[0].ReturnCabin === "Economy") {
       pricePerSeatEdit = reservedFlight[0].ReturnEconomyPrice;
