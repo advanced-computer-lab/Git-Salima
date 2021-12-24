@@ -57,6 +57,7 @@ export default function MultiActionAreaCard() {
       TakenSeats: JSON.parse(localStorage.getItem("departureSeats")),
       ReturnTakenSeats: JSON.parse(localStorage.getItem("returnSeats")),
       Cabin: localStorage.getItem("UFSFClass"),
+      ReturnCabin: localStorage.getItem("UFSFClass"),
       BookingNumber: localStorage.getItem("bookingNumber"),
       TotalPrice: localStorage.getItem("totalPrice"),
       User_id: localStorage.getItem("userID"),

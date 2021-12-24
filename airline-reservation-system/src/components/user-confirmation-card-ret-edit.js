@@ -54,7 +54,7 @@ export default function MultiActionAreaCard() {
   let history = useHistory();
   const confirmHandler = async () => {
     const bookedFlight = {
-      Cabin: localStorage.getItem("UFSFClass"),
+      ReturnCabin: localStorage.getItem("UFSFClass"),
       //should be return cabin^^^^^
       //5ALII BALAAAK
       Return_id: localStorage.getItem("FlightIDKizo"),

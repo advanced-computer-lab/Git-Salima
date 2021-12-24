@@ -12,6 +12,8 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import { removeSeatsAPI } from "../apis";
+
+import { searchBookingsAPI } from "../../src/apis";
 import "../styles/header.css";
 
 const steps = [
@@ -42,11 +44,13 @@ const ReservedFlights = () => {
     const flight = {
       BookingNumber: localStorage.getItem("BookingNumberToEdit"),
     };
-    axios
-      .get("http://localhost:8000/searchBookings", { params: flight })
-      .then((res) => {
-        setReservedFlight(res.data);
-      });
+    (async function () {
+      try {
+        setReservedFlight(await searchBookingsAPI(flight));
+      } catch (e) {
+        console.error(e);
+      }
+    })();
   }, []);
 
   let history = useHistory();
@@ -70,6 +74,7 @@ const ReservedFlights = () => {
     );
     localStorage.setItem("OldTakenSeatsDep", reservedFlight[0].TakenSeats);
     localStorage.setItem("OldDepID", reservedFlight[0]._id);
+    localStorage.setItem("OldDepCabin", reservedFlight[0].Cabin);
     let pricePerSeatEdit;
     if (reservedFlight[0].Cabin === "Economy") {
       pricePerSeatEdit = reservedFlight[0].EconomyPrice;
@@ -113,23 +118,25 @@ const ReservedFlights = () => {
     );
     localStorage.setItem("OldRetID", reservedFlight[0].Return_id);
     let pricePerSeatEdit;
-    if (reservedFlight[0].Cabin === "Economy") {
+    if (reservedFlight[0].ReturnCabin === "Economy") {
       pricePerSeatEdit = reservedFlight[0].ReturnEconomyPrice;
-    } else if (reservedFlight[0].Cabin === "Business") {
+    } else if (reservedFlight[0].ReturnCabin === "Business") {
       pricePerSeatEdit = reservedFlight[0].ReturnBusinessClassPrice;
-    } else if (reservedFlight[0].Cabin === "First Class") {
+    } else if (reservedFlight[0].ReturnCabin === "First Class") {
       pricePerSeatEdit = reservedFlight[0].ReturnFirstClassPrice;
     }
     localStorage.setItem(
       "OldRetFlightPrice",
       pricePerSeatEdit * reservedFlight[0].ReturnTakenSeats.length
     );
+
+    localStorage.setItem("OldRetCabin", reservedFlight[0].ReturnCabin);
     let pricePerSeatEditOutbound;
-    if (reservedFlight[0].Cabin === "Economy") {
+    if (reservedFlight[0].ReturnCabin === "Economy") {
       pricePerSeatEditOutbound = reservedFlight[0].EconomyPrice;
-    } else if (reservedFlight[0].Cabin === "Business") {
+    } else if (reservedFlight[0].ReturnCabin === "Business") {
       pricePerSeatEditOutbound = reservedFlight[0].BusinessClassPrice;
-    } else if (reservedFlight[0].Cabin === "First Class") {
+    } else if (reservedFlight[0].ReturnCabin === "First Class") {
       pricePerSeatEditOutbound = reservedFlight[0].FirstClassPrice;
     }
     localStorage.setItem(
@@ -225,7 +232,7 @@ const ReservedFlights = () => {
               DepartureAirport={flight.ReturnDepartureAirport}
               ArrivalAirport={flight.ReturnArrivalAirport}
               TakenSeats={flight.ReturnTakenSeats}
-              Cabin={flight.Cabin}
+              Cabin={flight.ReturnCabin}
               onClickChangeRetSeats={changeRetSeatsHandler}
               onClickEditRetFlight={editRetFlightHandler}
             />

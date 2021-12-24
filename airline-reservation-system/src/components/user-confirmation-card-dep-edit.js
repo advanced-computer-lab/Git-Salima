@@ -63,8 +63,9 @@ export default function MultiActionAreaCard() {
       User_id: localStorage.getItem("userID"),
     };
     const oldFlight = {
-      _id: localStorage.getItem("OldDepID"),
-      TakenSeats: JSON.parse(localStorage.getItem("OldTakenSeatsDep")),
+      Flight_ID: localStorage.getItem("OldDepID"),
+      TakenSeats: localStorage.getItem("OldTakenSeatsDep"),
+      Cabin: localStorage.getItem("OldDepCabin"),
     };
 
     handleClickOpenNext();
@@ -122,7 +123,7 @@ export default function MultiActionAreaCard() {
               <Typography variant="h6" color="primary.main">
                 Price Difference:
               </Typography>
-              <Typography variant="h6" color="primary.green">
+              <Typography variant="h6" color="primary.red">
                 +{localStorage.getItem("priceDiff")} EGP
               </Typography>
             </Stack>
@@ -132,7 +133,7 @@ export default function MultiActionAreaCard() {
               <Typography variant="h6" color="primary.main">
                 Price Difference:
               </Typography>
-              <Typography variant="h6" color="primary.red">
+              <Typography variant="h6" color="primary.green">
                 {localStorage.getItem("priceDiff")} EGP
               </Typography>
             </Stack>

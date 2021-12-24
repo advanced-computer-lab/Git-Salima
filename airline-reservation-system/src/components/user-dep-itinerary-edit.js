@@ -7,6 +7,7 @@ import HeaderLinks from "./HeaderLinks.js";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
+import { userSearchFlightsAPI } from "../../src/apis";
 
 import LinearProgress from "@mui/material/LinearProgress";
 
@@ -30,11 +31,13 @@ const FlightsItinerary = () => {
       _id: localStorage.getItem("FlightIDAro"),
     };
 
-    axios
-      .get("http://localhost:8000/search", { params: departureFlight })
-      .then((res) => {
-        setDepartureFlight(res.data);
-      });
+    (async function () {
+      try {
+        setDepartureFlight(await userSearchFlightsAPI(departureFlight));
+      } catch (e) {
+        console.error(e);
+      }
+    })();
 
     setTimeout(() => setSpinner(false), 3000);
   }, []);

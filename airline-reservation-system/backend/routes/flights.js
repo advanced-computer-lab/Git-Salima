@@ -413,7 +413,7 @@ router.post("/updateBooking", async (req, res) => {
   const user = req.body;
   const query = {};
   for (const p in user) {
-    if (!(user[p] == user._id)) {
+    if (!(user[p] == user._id) && !(p === "BookingNumber")) {
       query[`${p}`] = user[p];
     }
   }
@@ -556,27 +556,28 @@ router.post("/removeSeats", async (req, res) => {
     await Flight.findByIdAndUpdate(flight.Flight_ID, {
       $inc: { FreeFirstClassSeats: flight.TakenSeats.length * 1 },
     });
+  if (flight["ReturnTakenSeats"]) {
+    for (const p of flight.ReturnTakenSeats) {
+      const query = { $pull: { TakenSeats: p } };
 
-  for (const p of flight.ReturnTakenSeats) {
-    const query = { $pull: { TakenSeats: p } };
+      await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, query);
+    }
+    if (flight.Cabin == "Economy")
+      await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, {
+        $inc: { FreeEconomySeats: flight.TakenSeats.length * 1 },
+      });
+    if (flight.Cabin == "Business")
+      await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, {
+        $inc: { FreeBusinessClassSeats: flight.TakenSeats.length * 1 },
+      });
+    if (flight.Cabin == "First Class")
+      await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, {
+        $inc: { FreeFirstClassSeats: flight.TakenSeats.length * 1 },
+      });
 
-    await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, query);
+    Flight.findById(flight.Flight_ID).then((result) => {
+      res.send(result);
+    });
   }
-  if (flight.Cabin == "Economy")
-    await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, {
-      $inc: { FreeEconomySeats: flight.TakenSeats.length * 1 },
-    });
-  if (flight.Cabin == "Business")
-    await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, {
-      $inc: { FreeBusinessClassSeats: flight.TakenSeats.length * 1 },
-    });
-  if (flight.Cabin == "First Class")
-    await Flight.findByIdAndUpdate(flight.ReturnFlight_ID, {
-      $inc: { FreeFirstClassSeats: flight.TakenSeats.length * 1 },
-    });
-
-  Flight.findById(flight.Flight_ID).then((result) => {
-    res.send(result);
-  });
 });
 module.exports = router;

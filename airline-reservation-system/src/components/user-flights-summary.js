@@ -16,6 +16,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Card from "@mui/material/Card";
+import { userSearchFlightsAPI } from "../../src/apis";
 
 import "../styles/header.css";
 
@@ -52,16 +53,20 @@ const FlightsSummary = () => {
     const returnFlight = {
       _id: localStorage.getItem("FlightIDKizo"),
     };
-    axios
-      .get("http://localhost:8000/search", { params: departureFlight })
-      .then((res) => {
-        setDepFlight(res.data);
-      });
-    axios
-      .get("http://localhost:8000/search", { params: returnFlight })
-      .then((res) => {
-        setReturnFlight(res.data);
-      });
+    (async function () {
+      try {
+        setDepFlight(await userSearchFlightsAPI(departureFlight));
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+    (async function () {
+      try {
+        setReturnFlight(await userSearchFlightsAPI(returnFlight));
+      } catch (e) {
+        console.error(e);
+      }
+    })();
   }, []);
 
   let history = useHistory();

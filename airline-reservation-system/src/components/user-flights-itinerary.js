@@ -7,7 +7,7 @@ import HeaderLinks from "./HeaderLinks.js";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-
+import { userSearchFlightsAPI } from "../../src/apis";
 import LinearProgress from "@mui/material/LinearProgress";
 
 import "../styles/header.css";
@@ -37,16 +37,20 @@ const FlightsItinerary = () => {
     const returnFlight = {
       _id: localStorage.getItem("FlightIDKizo"),
     };
-    axios
-      .get("http://localhost:8000/search", { params: departureFlight })
-      .then((res) => {
-        setDepartureFlight(res.data);
-      });
-    axios
-      .get("http://localhost:8000/search", { params: returnFlight })
-      .then((res) => {
-        setReturnFlight(res.data);
-      });
+    (async function () {
+      try {
+        setDepartureFlight(await userSearchFlightsAPI(departureFlight));
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+    (async function () {
+      try {
+        setReturnFlight(await userSearchFlightsAPI(returnFlight));
+      } catch (e) {
+        console.error(e);
+      }
+    })();
     setTimeout(() => setSpinner(false), 3000);
   }, []);
 

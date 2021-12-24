@@ -9,6 +9,7 @@ import Stack from "@mui/material/Stack";
 import Link from "@mui/material/Link";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useHistory } from "react-router-dom";
+import { searchBookingsAPI } from "../../src/apis";
 
 var resultsAvailable = false;
 const ReservedFlights = () => {
@@ -40,15 +41,14 @@ const ReservedFlights = () => {
   };
 
   useEffect(() => {
-    const temp1 = JSON.stringify(flight);
-    const temp2 = JSON.parse(temp1);
-    axios
-      .get("http://localhost:8000/searchBookings", { params: temp2 })
-      .then((res) => {
-        setReservedFlights(res.data);
-      });
+    (async function () {
+      try {
+        setReservedFlights(await searchBookingsAPI(flight));
+      } catch (e) {
+        console.error(e);
+      }
+    })();
     setTimeout(() => setSpinner(false), 4000);
-    return <h1>enta sa7 ya kizo ...</h1>;
   }, []);
   if (reservedFlights.length > 0) resultsAvailable = true;
 
@@ -62,8 +62,7 @@ const ReservedFlights = () => {
       TakenSeats: temp2.TakenSeats,
       ReturnTakenSeats: temp2.ReturnTakenSeats,
       Cabin: temp2.Cabin,
-      //ADD RETURN CABINN
-      //5ALIII BALAAAK
+      ReturnCabin: temp2.ReturnCabin,
       BookingNumber: temp2.BookingNumber,
     };
 
@@ -134,6 +133,7 @@ const ReservedFlights = () => {
                       BookingNumber={flight.BookingNumber}
                       TotalPrice={flight.TotalPrice}
                       Cabin={flight.Cabin}
+                      ReturnCabin={flight.ReturnCabin}
                       Return_id={flight.Return_id}
                       ReturnFlightNo={flight.ReturnFlightNo}
                       ReturnDepartureDate={flight.ReturnDepartureDate}

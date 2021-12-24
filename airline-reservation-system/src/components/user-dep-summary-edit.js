@@ -16,6 +16,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Card from "@mui/material/Card";
+import { userSearchFlightsAPI } from "../../src/apis";
 
 import "../styles/header.css";
 
@@ -49,16 +50,17 @@ const FlightsSummary = () => {
       _id: localStorage.getItem("FlightIDAro"),
     };
 
-    axios
-      .get("http://localhost:8000/search", { params: departureFlight })
-      .then((res) => {
-        setDepFlight(res.data);
-      });
+    (async function () {
+      try {
+        setDepFlight(await userSearchFlightsAPI(departureFlight));
+      } catch (e) {
+        console.error(e);
+      }
+    })();
   }, []);
 
   let history = useHistory();
   const clickHandlerChooseSeats = async (input) => {
-
     if (localStorage.getItem("type") === "User") {
       const temp = JSON.stringify(input);
       const temp2 = JSON.parse(temp);
@@ -94,10 +96,10 @@ const FlightsSummary = () => {
         fixed
         brand="Git Salima Airlines"
         rightLinks={<HeaderLinks />}
-      // changeColorOnScroll={{
-      //   height: 0,
-      //   color: "#082567",
-      // }}
+        // changeColorOnScroll={{
+        //   height: 0,
+        //   color: "#082567",
+        // }}
       />
       <br />
       <br />
