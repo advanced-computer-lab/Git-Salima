@@ -34,7 +34,6 @@ const Seats = () => {
     const BookedSeats = [];
     const BookedSeatsAro = JSON.parse(localStorage.getItem("BookedSeatsAro"));
     const BookedSeatsKizo = JSON.parse(localStorage.getItem("BookedSeatsKizo"));
-    // const BookedSeatsKizo = localStorage.getItem("BookedSeatsKizo")
     const BookedSeatsIDs = [];
     let i;
     if (
@@ -360,11 +359,7 @@ const Seats = () => {
             rows.push(row);
         }
     }
-    // for(let i=0;i<rows.length;i++){
-    //   for(let j=0;j<6;j++){
-    //     if(takenSeats[i][j] )
-    //   }
-    // }
+
     const ColorButton = styled(Button)(({ theme }) => ({
         color: theme.palette.getContrastText("#082567"),
         backgroundColor: "#082567",

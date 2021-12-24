@@ -53,25 +53,37 @@ export default function MultiActionAreaCard() {
   };
   let history = useHistory();
   const confirmHandler = async () => {
+
     const bookedFlight = {
-      ReturnCabin: localStorage.getItem("UFSFClass"),
-      //should be return cabin^^^^^
-      //5ALII BALAAAK
-      Return_id: localStorage.getItem("FlightIDKizo"),
-      ReturnTakenSeats: JSON.parse(localStorage.getItem("returnSeats")),
+      Cabin: localStorage.getItem("UFSFClass"),
+      _id: localStorage.getItem("FlightIDKizo"),
+      TakenSeats: JSON.parse(localStorage.getItem("returnSeats")),
       BookingNumber: localStorage.getItem("bookingNumber"),
       TotalPrice: localStorage.getItem("totalPrice"),
-      User_id: localStorage.getItem("userID"),
+      User_id: localStorage.getItem("userID")
     };
+
+    const booking = {
+      ReturnFlight_ID: localStorage.getItem("FlightIDKizo"),
+      ReturnTakenSeats: JSON.parse(localStorage.getItem("returnSeats")),
+      ReturnCabin: localStorage.getItem("UFSFClass"),
+      BookingNumber: localStorage.getItem("bookingNumber"),
+      TotalPrice: localStorage.getItem("totalPrice"),
+      User_ID: localStorage.getItem("userID")
+    };
+
     const oldFlight = {
-      _id: localStorage.getItem("OldRetID"),
-      TakenSeats: JSON.parse(localStorage.getItem("OldTakenSeatsRet")),
+      Flight_ID: localStorage.getItem("OldRetID"),
+      TakenSeats: localStorage.getItem("OldTakenSeatsRet"),
+      Cabin: localStorage.getItem("OldRetCabin")
     };
+
+
     handleClickOpenNext();
-    ///here remove seats from previously booked flight
+
     await removeSeatsAPI(oldFlight);
     await updateSeatsAPI(bookedFlight);
-    await updateBookingAPI(bookedFlight).then(() => console.log("ay haga 2"));
+    await updateBookingAPI(booking);
   };
   const handleOK = () => {
     history.push("/user-reserved-flights");
@@ -122,7 +134,7 @@ export default function MultiActionAreaCard() {
               <Typography variant="h6" color="primary.main">
                 Price Difference:
               </Typography>
-              <Typography variant="h6" color="primary.green">
+              <Typography variant="h6" color="primary.red">
                 +{localStorage.getItem("priceDiff")} EGP
               </Typography>
             </Stack>
@@ -132,7 +144,7 @@ export default function MultiActionAreaCard() {
               <Typography variant="h6" color="primary.main">
                 Price Difference:
               </Typography>
-              <Typography variant="h6" color="primary.red">
+              <Typography variant="h6" color="primary.green">
                 {localStorage.getItem("priceDiff")} EGP
               </Typography>
             </Stack>
