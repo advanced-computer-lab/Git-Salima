@@ -43,26 +43,16 @@ const theme = createTheme({
 
 const FlightsSummary = () => {
   const [depFlight, setDepFlight] = useState([]);
-  const [returnFlight, setReturnFlight] = useState([]);
   const [popup, setpopup] = React.useState(false);
 
   useEffect(() => {
     const departureFlight = {
       _id: localStorage.getItem("FlightIDAro"),
     };
-    const returnFlight = {
-      _id: localStorage.getItem("FlightIDKizo"),
-    };
+
     (async function () {
       try {
         setDepFlight(await userSearchFlightsAPI(departureFlight));
-      } catch (e) {
-        console.error(e);
-      }
-    })();
-    (async function () {
-      try {
-        setReturnFlight(await userSearchFlightsAPI(returnFlight));
       } catch (e) {
         console.error(e);
       }
@@ -76,7 +66,7 @@ const FlightsSummary = () => {
       const temp2 = JSON.parse(temp);
       localStorage.setItem("SelectedFlightChooseSeats", temp2._id);
       localStorage.setItem("SelectedFlightReservedSeats", temp2.FlightNo);
-      history.push("/choose-seats");
+      history.push("/choose-dep-seats-edit");
     } else if (localStorage.getItem("type") === "Guest") {
       setpopup(true);
     }
@@ -84,8 +74,7 @@ const FlightsSummary = () => {
 
   const handleConfirmSeats = () => {
     localStorage.setItem("depSeatsFlag", false);
-    localStorage.setItem("retSeatsFlag", false);
-    history.push("/user-flights-itinerary");
+    history.push("/user-dep-itinerary-edit");
   };
   const handleClose = (e) => {
     e.preventDefault();
@@ -153,32 +142,8 @@ const FlightsSummary = () => {
           />
         </div>
       ))}
-      {returnFlight.map((flight) => (
-        <div>
-          <UserFlightCardSeats
-            _id={flight._id}
-            FlightNo={flight.FlightNo}
-            DepartureDate={flight.DepartureDate}
-            ArrivalDate={flight.ArrivalDate}
-            DepartureTime={flight.DepartureTime}
-            ArrivalTime={flight.ArrivalTime}
-            EconomySeats={flight.EconomySeats}
-            BusinessClassSeats={flight.BusinessClassSeats}
-            FirstClassSeats={flight.FirstClassSeats}
-            EconomyLuggage={flight.EconomyLuggage}
-            BusinessClassLuggage={flight.BusinessClassLuggage}
-            FirstClassLuggage={flight.FirstClassLuggage}
-            EconomyPrice={flight.EconomyPrice}
-            BusinessClassPrice={flight.BusinessClassPrice}
-            FirstClassPrice={flight.FirstClassPrice}
-            DepartureAirport={flight.DepartureAirport}
-            ArrivalAirport={flight.ArrivalAirport}
-            onClickChooseSeats={clickHandlerChooseSeats}
-          />
-        </div>
-      ))}
-      {JSON.parse(localStorage.getItem("depSeatsFlag")) &&
-      JSON.parse(localStorage.getItem("retSeatsFlag")) ? (
+
+      {JSON.parse(localStorage.getItem("depSeatsFlag")) ? (
         <ThemeProvider theme={theme}>
           <ColorButton variant="contained" onClick={handleConfirmSeats}>
             Proceed to Checkout
@@ -211,6 +176,7 @@ const FlightsSummary = () => {
           </Dialog>
         </Card>
       </ThemeProvider>
+      <br />
     </div>
   );
 };

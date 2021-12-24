@@ -11,7 +11,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { styled } from "@mui/material/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { updateSeatsAPI, createBookingAPI } from "../apis";
+import { updateSeatsAPI, updateBookingAPI, removeSeatsAPI } from "../apis";
 import Stack from "@mui/material/Stack";
 import { useHistory } from "react-router-dom";
 export default function MultiActionAreaCard() {
@@ -19,6 +19,8 @@ export default function MultiActionAreaCard() {
     palette: {
       primary: {
         main: "#082567",
+        red: "#ff0000",
+        green: "#00ff00",
       },
     },
     typography: {
@@ -51,21 +53,36 @@ export default function MultiActionAreaCard() {
   };
   let history = useHistory();
   const confirmHandler = async () => {
+    const booking = {
+      Flight_ID: localStorage.getItem("FlightIDAro"),
+      TakenSeats: JSON.parse(localStorage.getItem("departureSeats")),
+      Cabin: localStorage.getItem("UFSFClass"),
+      //departure cabin^^^^^
+      BookingNumber: localStorage.getItem("bookingNumber"),
+      TotalPrice: localStorage.getItem("totalPrice"),
+      User_ID: localStorage.getItem("userID"),
+    };
     const bookedFlight = {
       _id: localStorage.getItem("FlightIDAro"),
-      Return_id: localStorage.getItem("FlightIDKizo"),
       TakenSeats: JSON.parse(localStorage.getItem("departureSeats")),
-      ReturnTakenSeats: JSON.parse(localStorage.getItem("returnSeats")),
       Cabin: localStorage.getItem("UFSFClass"),
-      ReturnCabin: localStorage.getItem("UFSFClass"),
+      //departure cabin^^^^^
       BookingNumber: localStorage.getItem("bookingNumber"),
       TotalPrice: localStorage.getItem("totalPrice"),
       User_id: localStorage.getItem("userID"),
     };
+    const oldFlight = {
+      Flight_ID: localStorage.getItem("OldDepID"),
+      TakenSeats: localStorage.getItem("OldTakenSeatsDep"),
+      Cabin: localStorage.getItem("OldDepCabin"),
+    };
+
 
     handleClickOpenNext();
-    await updateSeatsAPI(bookedFlight);
-    await createBookingAPI(bookedFlight).then(() => console.log("ay haga 2"));
+    ///here remove seats from previously booked flight
+    await removeSeatsAPI(oldFlight).then(() => console.log("ay haga 1"));
+    await updateSeatsAPI(bookedFlight).then(() => console.log("ay haga 2"));
+    await updateBookingAPI(booking).then(() => console.log("ay haga 3"));
   };
   const handleOK = () => {
     history.push("/user-reserved-flights");
@@ -111,6 +128,26 @@ export default function MultiActionAreaCard() {
               }}
             />
           </Stack>
+          {localStorage.getItem("priceDiff") >= 0 && (
+            <Stack spacing={1} direction="row">
+              <Typography variant="h6" color="primary.main">
+                Price Difference:
+              </Typography>
+              <Typography variant="h6" color="primary.red">
+                +{localStorage.getItem("priceDiff")} EGP
+              </Typography>
+            </Stack>
+          )}
+          {localStorage.getItem("priceDiff") < 0 && (
+            <Stack spacing={1} direction="row">
+              <Typography variant="h6" color="primary.main">
+                Price Difference:
+              </Typography>
+              <Typography variant="h6" color="primary.green">
+                {localStorage.getItem("priceDiff")} EGP
+              </Typography>
+            </Stack>
+          )}
           <Typography variant="h5" color="primary.main">
             Total Price: {localStorage.getItem("totalPrice")} EGP
           </Typography>
@@ -145,9 +182,9 @@ export default function MultiActionAreaCard() {
                 <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
-                    Flight booked successfully!
+                    Flight updated successfully!
                     <br />
-                    Your Flight Booking Number is{" "}
+                    Your Flight Booking Number is Still{" "}
                     {localStorage.getItem("bookingNumber")}
                   </DialogContentText>
                 </DialogContent>

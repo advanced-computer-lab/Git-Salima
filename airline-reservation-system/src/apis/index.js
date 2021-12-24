@@ -5,14 +5,12 @@ export const createFlightAPI = async (flight) => {
 };
 
 export const accessCheck = async (accessT) => {
-
   const config = {
-    headers: { Authorization: `Bearer ${accessT}` }
-};
+    headers: { Authorization: `Bearer ${accessT}` },
+  };
 
-await axios.post("http://localhost:8000/checkauth", null,config);
+  await axios.post("http://localhost:8000/checkauth", null, config);
 };
-
 
 export const createUserAPI = async (flight) => {
   const temp1 = JSON.stringify(flight);
@@ -29,18 +27,16 @@ export const searchFlightsAPI = async (flight) => {
   const temp1 = JSON.stringify(flight);
   const temp2 = JSON.parse(temp1);
 
-  return await axios
-    .post("http://localhost:8000/search", temp2 )
-    .then((res) => {
-      return res.data;
-    });
+  return await axios.post("http://localhost:8000/search", temp2).then((res) => {
+    return res.data;
+  });
 };
 export const searchUsersAPI = async (flight) => {
   const temp1 = JSON.stringify(flight);
   const temp2 = JSON.parse(temp1);
 
   return await axios
-    .post("http://localhost:8000/searchUsers",  temp2 )
+    .post("http://localhost:8000/searchUsers", temp2)
     .then((res) => {
       return res.data;
     });
@@ -51,13 +47,13 @@ export const userSearchFlightsAPI = async (flight) => {
   const temp2 = JSON.parse(temp1);
 
   return await axios
-    .post("http://localhost:8000/user/search", temp2 )
+    .post("http://localhost:8000/user/search", temp2)
     .then((res) => {
       return res.data;
     });
 };
 
-export const userFlightsAPI = async (flight) => {
+export const searchBookingsAPI = async (flight) => {
   const temp1 = JSON.stringify(flight);
   const temp2 = JSON.parse(temp1);
 
@@ -72,11 +68,9 @@ export const deleteFlightsAPI = async (flight) => {
   const temp = JSON.stringify(flight);
   const temp2 = JSON.parse(temp);
 
-  return await axios
-    .post("http://localhost:8000/delete", temp2 )
-    .then((res) => {
-      return res.data;
-    });
+  return await axios.post("http://localhost:8000/delete", temp2).then((res) => {
+    return res.data;
+  });
 };
 
 export const editFlightsAPI = async (flight) => {
@@ -129,4 +123,11 @@ export const sendEmailAPI = async (flight) => {
   return await axios.post("http://localhost:8000/email", flight).then((res) => {
     return res.data;
   });
+};
+export const updateBookingAPI = async (flight) => {
+  return await axios
+    .post("http://localhost:8000/updateBooking", flight)
+    .then((res) => {
+      return res.data;
+    });
 };

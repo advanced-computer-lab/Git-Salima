@@ -7,11 +7,10 @@ import HeaderLinks from "./HeaderLinks.js";
 import "../styles/header.css";
 import Stack from "@mui/material/Stack";
 import Link from "@mui/material/Link";
-import ClipLoader from "react-spinners/ClipLoader";
-import { SpinnerCircular } from "spinners-react";
 import LinearProgress from "@mui/material/LinearProgress";
+import { useHistory } from "react-router-dom";
+import { searchBookingsAPI } from "../../src/apis";
 
-import Box from "@mui/material/Box";
 var resultsAvailable = false;
 const ReservedFlights = () => {
   const [reservedFlights, setReservedFlights] = useState([]);
@@ -42,15 +41,14 @@ const ReservedFlights = () => {
   };
 
   useEffect(() => {
-    const temp1 = JSON.stringify(flight);
-    const temp2 = JSON.parse(temp1);
-    axios
-      .get("http://localhost:8000/searchBookings", { params: temp2 })
-      .then((res) => {
-        setReservedFlights(res.data);
-      });
+    (async function () {
+      try {
+        setReservedFlights(await searchBookingsAPI(flight));
+      } catch (e) {
+        console.error(e);
+      }
+    })();
     setTimeout(() => setSpinner(false), 4000);
-    return <h1>enta sa7 ya kizo ...</h1>;
   }, []);
   if (reservedFlights.length > 0) resultsAvailable = true;
 
@@ -64,12 +62,22 @@ const ReservedFlights = () => {
       TakenSeats: temp2.TakenSeats,
       ReturnTakenSeats: temp2.ReturnTakenSeats,
       Cabin: temp2.Cabin,
+      ReturnCabin: temp2.ReturnCabin,
       BookingNumber: temp2.BookingNumber,
     };
 
     removeSeatsAPI(deletedBooking);
     removeBookingAPI(deletedBooking);
     sendEmailAPI(email);
+  };
+
+  let history = useHistory();
+  const editReservationHandler = async (input) => {
+    const temp = JSON.stringify(input);
+    const temp2 = JSON.parse(temp);
+
+    localStorage.setItem("BookingNumberToEdit", temp2.BookingNumber);
+    history.push("/user-edit-reserved-flights");
   };
 
   return (
@@ -125,6 +133,7 @@ const ReservedFlights = () => {
                       BookingNumber={flight.BookingNumber}
                       TotalPrice={flight.TotalPrice}
                       Cabin={flight.Cabin}
+                      ReturnCabin={flight.ReturnCabin}
                       Return_id={flight.Return_id}
                       ReturnFlightNo={flight.ReturnFlightNo}
                       ReturnDepartureDate={flight.ReturnDepartureDate}
@@ -146,6 +155,7 @@ const ReservedFlights = () => {
                       ReturnArrivalAirport={flight.ReturnArrivalAirport}
                       ReturnTakenSeats={flight.ReturnTakenSeats}
                       onClickCancel={cancelReservationHandler}
+                      onClickEdit={editReservationHandler}
                     />
                   </div>
                 ))}

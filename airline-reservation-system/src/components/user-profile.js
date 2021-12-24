@@ -17,6 +17,12 @@ import HeaderLinks from "./HeaderLinks.js";
 import { useHistory } from "react-router-dom";
 import Stack from "@mui/material/Stack";
 import Link from "@mui/material/Link";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { searchUsersAPI } from "../apis";
 const Profile = () => {
   const [userFirstName, setuserFirstName] = useState(
     localStorage.getItem("userFName")
@@ -30,7 +36,9 @@ const Profile = () => {
   );
   const [editOccured, seteditOccured] = useState("false");
   const [popup, setpopup] = React.useState(false);
-
+  const [currentPassword, setcurrentPassword] = useState("");
+  const [IncorrectCurrentPassword, setIncorrectCurrentPassword] =
+    useState(true);
   const profileInfo = {
     FirstName: userFirstName,
     LastName: userLastName,
@@ -80,6 +88,21 @@ const Profile = () => {
     e.preventDefault();
     history.push("/user-home");
   };
+  const passwordHandler = async (e) => {
+    e.preventDefault();
+    const profile = {
+      Email: localStorage.getItem("userEmail"),
+      //5AALI BALAK
+      Password: currentPassword,
+    };
+    const res = searchUsersAPI(profile);
+    if (
+      res[0]._id === localStorage.getItem("userID") &&
+      res[0].Password === currentPassword
+    ) {
+      //editUser
+    } else setIncorrectCurrentPassword(false);
+  };
   return (
     <div>
       <h1 style={{ textAlign: "center" }}>Edit Your Profile</h1>
@@ -100,11 +123,17 @@ const Profile = () => {
         <br />
         {localStorage.getItem("type") === "User" && (
           <div>
-            <Card>
+            <Card
+              sx={{
+                maxWidth: "50%",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            >
               <CardContent style={{ backgroundColor: "#EFEAE4" }}>
                 {/* <form onSubmit={searchFlight}> */}
-                <div className="row">
-                  <div className="col">
+                <div className="row ">
+                  <div className="col-md-4 offset-md-1">
                     <TextField
                       id="filled-helperText"
                       label="First Name"
@@ -117,7 +146,7 @@ const Profile = () => {
                     />
                   </div>
 
-                  <div className="col-md-10">
+                  <div className="col-md-4 offset-md-2">
                     <TextField
                       id="filled-helperText"
                       label="Last Name"
@@ -131,33 +160,94 @@ const Profile = () => {
                   </div>
                 </div>
                 <br />
-
-                <div className="form-group col-md-2">
-                  <TextField
-                    id="filled-helperText"
-                    label="Email"
-                    defaultValue={profileInfo.Email}
-                    variant="filled"
-                    onChange={(e) => {
-                      setuserEmail(e.target.value);
-                      seteditOccured("true");
-                    }}
-                  />
+                <div className="row">
+                  <div className="col-md-4 offset-md-1">
+                    <TextField
+                      id="filled-helperText"
+                      label="Email"
+                      defaultValue={profileInfo.Email}
+                      variant="filled"
+                      onChange={(e) => {
+                        setuserEmail(e.target.value);
+                        seteditOccured("true");
+                      }}
+                    />
+                  </div>
+                  <br />
+                  <div className="col-md-4 offset-md-2">
+                    <TextField
+                      id="filled-helperText"
+                      label="Passport Number"
+                      defaultValue={profileInfo.PassportNumber}
+                      variant="filled"
+                      onChange={(e) => {
+                        setuserPassport(e.target.value);
+                        seteditOccured("true");
+                      }}
+                    />
+                  </div>
                 </div>
                 <br />
-                <div className="col-md-2 ">
-                  <TextField
-                    id="filled-helperText"
-                    label="Passport Number"
-                    defaultValue={profileInfo.PassportNumber}
-                    variant="filled"
-                    onChange={(e) => {
-                      setuserPassport(e.target.value);
-                      seteditOccured("true");
-                    }}
-                  />
-                </div>
-
+                <Accordion
+                  style={{
+                    backgroundColor: "#EFEAE4",
+                    maxWidth: "80%",
+                    marginLeft: "10%",
+                  }}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>Change Password</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <form onSubmit={passwordHandler}>
+                      <div className="col">
+                        <TextField
+                          label="Your Current Password"
+                          variant="filled"
+                          onChange={(e) => {
+                            setcurrentPassword(e.target.value);
+                          }}
+                        />
+                      </div>
+                      <br />
+                      <div className="col">
+                        <TextField
+                          label="New Password"
+                          variant="filled"
+                          onChange={(e) => {
+                            setuserPassport(e.target.value);
+                            seteditOccured("true");
+                          }}
+                        />
+                      </div>
+                      <br />
+                      <div className="col">
+                        <TextField
+                          label="Confirm New Password"
+                          variant="filled"
+                          onChange={(e) => {
+                            setuserPassport(e.target.value);
+                            seteditOccured("true");
+                          }}
+                        />
+                      </div>
+                      <div style={{ marginLeft: "60%" }}>
+                        <br />
+                        <ColorButton
+                          variant="contained"
+                          onClick={editHandler}
+                          style={{ fontFamily: "Philosopher" }}
+                        >
+                          Edit Password
+                        </ColorButton>
+                      </div>
+                    </form>
+                  </AccordionDetails>
+                </Accordion>
                 <br />
 
                 <br />

@@ -70,6 +70,11 @@ export default function ReservationFlightCard(props) {
     setOpen(false);
     window.location.reload(false);
   };
+
+  const editHandler = () => {
+    props.onClickEdit(props);
+  };
+
   var durString = "";
   const arrDay = Number(props.ArrivalDate.substring(8, 10));
   const depDay = Number(props.DepartureDate.substring(8, 10));
@@ -274,18 +279,19 @@ export default function ReservationFlightCard(props) {
                 </Stack>
               )}
             </Stack>
-            <hr
-              style={{
-                marginTop: 35,
-                color: "text.secondary",
-                backgroundColor: "text.secondary",
-                height: 3,
-                width: { w },
-              }}
-            />
           </CardContent>
         </ThemeProvider>
         <ThemeProvider theme={theme}>
+          {props.ReturnCabin === "First Class" && (
+            <CardMedia component="img" alt="header" height="50" image={FH} />
+          )}
+          {props.ReturnCabin === "Business" && (
+            <CardMedia component="img" alt="header" height="50" image={BH} />
+          )}
+          {props.ReturnCabin === "Economy" && (
+            <CardMedia component="img" alt="header" height="50" image={EH} />
+          )}
+
           <CssBaseline />
           <CardContent style={{ backgroundColor: "#EFEAE4" }}>
             <Stack
@@ -302,6 +308,7 @@ export default function ReservationFlightCard(props) {
                 Return Flight Number: {props.ReturnFlightNo}
               </Typography>
             </Stack>
+
             <Stack
               direction="row"
               justifyContent="space-around"
@@ -464,10 +471,10 @@ export default function ReservationFlightCard(props) {
               }}
             />
             <Stack
-              spacing={20}
+              spacing={0}
               direction="row"
               justifyContent="space-between"
-              marginLeft="40px"
+              marginLeft="50px"
               alignItems="center"
             >
               <Stack>
@@ -493,6 +500,9 @@ export default function ReservationFlightCard(props) {
                 </Typography>
               </Stack>
               <CardActions>
+                <ColorButton variant="contained" onClick={editHandler}>
+                  Edit Reservation
+                </ColorButton>
                 <ColorButton variant="contained" onClick={handleClickOpen}>
                   Cancel Reservation
                 </ColorButton>

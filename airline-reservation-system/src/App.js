@@ -14,10 +14,21 @@ import UserRetFlights from "./components/user-ret-flights";
 import UserFlightsSummary from "./components/user-flights-summary";
 import UserFlightsItinerary from "./components/user-flights-itinerary";
 import UserReservedFlights from "./components/user-reserved-flights";
+import UserReservedEditFlights from "./components/user-edit-reserved-flights";
 import ChooseSeats from "./components/chooseSeats/index";
 import Profile from "./components/user-profile";
 import Login from "./components/user-login";
-
+import UserSearchDepEdit from "./components/user-search-dep-edit";
+import UserSearchRetEdit from "./components/user-search-ret-edit";
+import UserDepFlightsEdit from "./components/user-dep-flights-edit";
+import UserRetFlightsEdit from "./components/user-ret-flights-edit";
+import UserDepSummaryEdit from "./components/user-dep-summary-edit";
+import UserRetSummaryEdit from "./components/user-ret-summary-edit";
+import UserDepChooseSeatsEdit from "./components/user-dep-choose-seats-edit";
+import UserRetChooseSeatsEdit from "./components/user-ret-choose-seats-edit";
+import UserDepItineraryEdit from "./components/user-dep-itinerary-edit";
+import UserRetItineraryEdit from "./components/user-ret-itinerary-edit";
+import ChangeSeats from "./components/changeSeats/change-seats";
 function App() {
   return (
     <Router>
@@ -129,6 +140,57 @@ function App() {
       </div>
       <div className="container">
         <Route exact path="/" Redirect to="/user-login" component={Login} />
+      </div>
+      <div className="container">
+        <Route
+          path="/user-edit-reserved-flights"
+          component={UserReservedEditFlights}
+        />
+      </div>
+      <div className="container">
+        <Route path="/user-search-dep-edit" component={UserSearchDepEdit} />
+      </div>
+      <div className="container">
+        <Route path="/user-search-ret-edit" component={UserSearchRetEdit} />
+      </div>
+      <div className="container">
+        <Route path="/user-dep-flights-edit" component={UserDepFlightsEdit} />
+      </div>
+      <div className="container">
+        <Route path="/user-ret-flights-edit" component={UserRetFlightsEdit} />
+      </div>
+      <div className="container">
+        <Route path="/user-dep-summary-edit" component={UserDepSummaryEdit} />
+      </div>
+      <div className="container">
+        <Route path="/user-ret-summary-edit" component={UserRetSummaryEdit} />
+      </div>
+      <div className="container">
+        <Route
+          path="/choose-dep-seats-edit"
+          component={UserDepChooseSeatsEdit}
+        />
+      </div>
+      <div className="container">
+        <Route
+          path="/choose-ret-seats-edit"
+          component={UserRetChooseSeatsEdit}
+        />
+      </div>
+      <div className="container">
+        <Route
+          path="/user-dep-itinerary-edit"
+          component={UserDepItineraryEdit}
+        />
+      </div>
+      <div className="container">
+        <Route
+          path="/user-ret-itinerary-edit"
+          component={UserRetItineraryEdit}
+        />
+      </div>
+      <div className="container">
+        <Route path="/change-seats" component={ChangeSeats} />
       </div>
     </Router>
   );
