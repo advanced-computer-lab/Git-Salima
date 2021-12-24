@@ -134,7 +134,7 @@ export default function MultiActionAreaCard() {
               <Typography variant="h6" color="primary.main">
                 Price Difference:
               </Typography>
-              <Typography variant="h6" color="primary.green">
+              <Typography variant="h6" color="primary.red">
                 +{localStorage.getItem("priceDiff")} EGP
               </Typography>
             </Stack>
@@ -144,7 +144,7 @@ export default function MultiActionAreaCard() {
               <Typography variant="h6" color="primary.main">
                 Price Difference:
               </Typography>
-              <Typography variant="h6" color="primary.red">
+              <Typography variant="h6" color="primary.green">
                 {localStorage.getItem("priceDiff")} EGP
               </Typography>
             </Stack>
