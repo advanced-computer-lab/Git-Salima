@@ -1,3 +1,4 @@
+Sprint 1:
 Backend:
 
 Kirolos:
@@ -30,3 +31,55 @@ Youssef Ahmed:
 Part of Edit Flight
 Delete Flight
 Edit and delete button functionality
+-------------------------------------------------------------------------------------------
+Sprint 2 :
+1-Search for available flights:
+FE: Philopateer Amgad
+BE: Philopateer Atef , Youssef Ahmed
+
+2- View ,Select and See Details of Return and Outbound Flights
+FE : Mario Ayman , Kirolos Habib , Philopateer Amgad
+BE : Philopateer Atef
+
+3- Summary & Itinerary
+FE : Mario Ayman , Kirolos Habib 
+BE : Philopateer Atef
+
+4- Confirmation Of Flight
+FE : Mario Ayman
+BE : Philopateer Atef
+
+5- Seats Selection , Confirmation and Viewing
+FE : Kirolos Habib
+BE : Philopateer Atef
+
+6- View Reserved Flights
+FE : Mario Ayman
+BE : Philopateer Atef
+
+7- Cancel Reservation 
+FE : Mario Ayman,  Philopateer Amgad
+BE : Philopateer Atef
+
+8- Emailing
+FE :  Philopateer Amgad , Youssef Ahmed
+BE :  Youssef Ahmed 
+
+9- Profile & Edit Profile & Reflecting Changes
+FE : Philopateer Amgad
+BE : Philopateer Atef
+
+10- Login
+FE : Mario Ayman
+BE : Philopateer Atef
+
+11- Design & Colour Templates 
+Philopateer Amgad
+
+12- Design for Erros
+Mario Ayman , Philopateer Amgad , Philopateer Atef
+
+
+
+
+
