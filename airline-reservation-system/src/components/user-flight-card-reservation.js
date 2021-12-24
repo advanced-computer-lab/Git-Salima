@@ -401,7 +401,7 @@ export default function ReservationFlightCard(props) {
               alignItems="center"
               marginRight="5px"
             >
-              {props.Cabin === "First Class" && (
+              {props.ReturnCabin === "First Class" && (
                 <Stack direction="row">
                   <LuggageIcon color="primary" sx={{ fontSize: 30 }} />
                   <Typography variant="h5" color="text.secondary">
@@ -409,7 +409,7 @@ export default function ReservationFlightCard(props) {
                   </Typography>
                 </Stack>
               )}
-              {props.Cabin === "Business" && (
+              {props.ReturnCabin === "Business" && (
                 <Stack direction="row">
                   <LuggageIcon color="primary" sx={{ fontSize: 30 }} />
                   <Typography variant="h5" color="text.secondary">
@@ -417,7 +417,7 @@ export default function ReservationFlightCard(props) {
                   </Typography>
                 </Stack>
               )}
-              {props.Cabin === "Economy" && (
+              {props.ReturnCabin === "Economy" && (
                 <Stack direction="row">
                   <LuggageIcon color="primary" sx={{ fontSize: 30 }} />
                   <Typography variant="h5" color="text.secondary">
@@ -430,7 +430,7 @@ export default function ReservationFlightCard(props) {
                   Seats: {returnTakenSeats}
                 </Typography>
               </Stack>
-              {props.Cabin === "First Class" && (
+              {props.ReturnCabin === "First Class" && (
                 <Stack>
                   <Typography variant="h6" color="text.secondary">
                     Price Per Seat:
@@ -440,7 +440,7 @@ export default function ReservationFlightCard(props) {
                   </Typography>
                 </Stack>
               )}
-              {props.Cabin === "Business" && (
+              {props.ReturnCabin === "Business" && (
                 <Stack marginRight="250px">
                   <Typography variant="h6" color="text.secondary">
                     Price Per Seat:
@@ -450,7 +450,7 @@ export default function ReservationFlightCard(props) {
                   </Typography>
                 </Stack>
               )}
-              {props.Cabin === "Economy" && (
+              {props.ReturnCabin === "Economy" && (
                 <Stack marginRight="250px">
                   <Typography variant="h6" color="text.secondary">
                     Price Per Seat:

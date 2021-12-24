@@ -81,7 +81,7 @@ const ReservedFlights = () => {
   };
 
   return (
-    // spinner && <LinearProgress /> && (
+
     <div>
       {!spinner ? (
         <div>
@@ -90,10 +90,10 @@ const ReservedFlights = () => {
             fixed
             brand="Git Salima Airlines"
             rightLinks={<HeaderLinks />}
-            // changeColorOnScroll={{
-            //   height: 0,
-            //   color: "#082567",
-            // }}
+          // changeColorOnScroll={{
+          //   height: 0,
+          //   color: "#082567",
+          // }}
           />
           <br />
           <br />

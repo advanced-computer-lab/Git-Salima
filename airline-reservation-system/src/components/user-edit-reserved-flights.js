@@ -117,6 +117,7 @@ const ReservedFlights = () => {
       reservedFlight[0].ReturnTakenSeats
     );
     localStorage.setItem("OldRetID", reservedFlight[0].ReturnFlight_ID);
+    localStorage.setItem("OldRetCabin", reservedFlight[0].ReturnCabin);
     let pricePerSeatEdit;
     if (reservedFlight[0].ReturnCabin === "Economy") {
       pricePerSeatEdit = reservedFlight[0].ReturnEconomyPrice;
@@ -160,7 +161,7 @@ const ReservedFlights = () => {
     history.push("/change-seats");
   };
 
-  const changeRetSeatsHandler = async (input) => {};
+  const changeRetSeatsHandler = async (input) => { };
 
   return (
     <div>
