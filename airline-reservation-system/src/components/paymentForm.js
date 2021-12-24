@@ -15,7 +15,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { styled } from "@mui/material/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { updateSeatsAPI, createBookingAPI } from "../apis";
+import { updateSeatsAPI, createBookingAPI, sendEmailAPI } from "../apis";
 import Stack from "@mui/material/Stack";
 import { useHistory } from "react-router-dom";
 
@@ -69,6 +69,28 @@ export default function PaymentForm() {
     const [open, setOpen] = React.useState(false);
   const [openNext, setOpenNext] = React.useState(false);
 
+  const email = {
+    to: localStorage.getItem("userEmail"),
+    subject: "Flight Itinerary",
+    text:
+      "Dear " +
+      localStorage.getItem("userFName") +
+      " " +
+      localStorage.getItem("userLName") +
+      "," +
+      "\n" +
+      "Thank you for booking with Git Salima Airlines \n" +
+      "Your airlines booking reference:"+
+      localStorage.getItem("bookingNumber") + "\n" +
+      "Your flight booking has been confirmed and electronic ticket been issued"  +
+      "\n" +
+      "Ticket total price: " +
+      localStorage.getItem("totalPrice") +
+      " EGP" +
+      "\n" +
+      "The Git Salima Team",
+  };
+
   const handleSubmit = async (e) => {
     // e.preventDefault();
     const {error, paymentMethod} = await stripe.createPaymentMethod({
@@ -88,6 +110,7 @@ export default function PaymentForm() {
                 console.log("successful payment");
                 setSuccess(true);
             }
+            sendEmailAPI(email);
             handleClickOpenNext();
         } catch (error) {
             console.log("Error",error);
