@@ -6,6 +6,7 @@ const User = require("../models/user");
 const axios = require("axios").default;
 var nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
+require("dotenv").config();
 //const passport = require('passport')
 const jwt = require("jsonwebtoken");
 let accessT;
@@ -13,11 +14,13 @@ const cors = require("cors")
 const Stripe = require('stripe');
 
 var transporter = nodemailer.createTransport({
+  
   service: "gmail",
   auth: {
-    user: "git.salima.airlines@gmail.com",
-    pass: "pa$word_123",
+    user:  process.env.USER1,
+    pass:  process.env.PASS1
   },
+
 });
 router.get("/", (req, res) => {
   res.status(200).send("You have everything installed !");
@@ -37,6 +40,7 @@ router.post("/email", (req, res) => {
   };
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
+      console.log(transporter)
       console.log(error);
     } else {
       console.log("Email sent: " + info.response);

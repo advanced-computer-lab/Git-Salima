@@ -21,6 +21,7 @@ import "../styles/header.css";
 const Profile = () => {
   const [userEmail, setuserEmail] = useState("");
   const [userPassword, setuserPassword] = useState("");
+  const [userPassport, setuserPassport] = useState("");
   const [loginError, setloginError] = useState(false);
   const [homeAddress, setHomeAddress] = useState("");
   const [countryCode, setCountryCode] = useState("");
