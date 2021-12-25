@@ -8,9 +8,17 @@ export const accessCheck = async (accessT) => {
   const config = {
     headers: { Authorization: `Bearer ${accessT}` },
   };
-  localStorage.getItem("userToken");
+
 
   return await axios.post("http://localhost:8000/checkauth", null, config);
+};
+export const logout = async (accessT) => {
+  const config = {
+    headers: { Authorization: `Bearer ${accessT}` },
+  };
+  
+
+  return await axios.post("http://localhost:8000/logout", null, config);
 };
 
 export const accessCheckAdmin = async (accessT) => {
