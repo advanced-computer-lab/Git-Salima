@@ -22,7 +22,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { searchUsersAPI } from "../apis";
+import { searchUsersAPI, changePassword } from "../apis";
 const Profile = () => {
   const [userFirstName, setuserFirstName] = useState(
     localStorage.getItem("userFName")
@@ -34,16 +34,35 @@ const Profile = () => {
   const [userPassport, setuserPassport] = useState(
     localStorage.getItem("userPassport")
   );
+  const [userHomeAddress, setuserHomeAddress] = useState(
+    localStorage.getItem("userHomeAddress")
+  );
+  const [userCountryCode, setuserCountryCode] = useState(
+    localStorage.getItem("userCountryCode")
+  );
+  const [userTelephoneNumbers, setuserTelephoneNumbers] = useState(
+    localStorage.getItem("userTelephoneNumbers")
+  );
+
   const [editOccured, seteditOccured] = useState("false");
   const [popup, setpopup] = React.useState(false);
+  const [passwordpopup, setpasswordpopup] = React.useState(false);
   const [currentPassword, setcurrentPassword] = useState("");
   const [IncorrectCurrentPassword, setIncorrectCurrentPassword] =
-    useState(true);
+    useState(false);
+  const [userNewPassword1, setuserNewPassword1] = useState("");
+  const [userNewPassword2, setuserNewPassword2] = useState("");
+  const [match, setmatch] = useState(true);
+  const [errorText, seterrorText] = useState("");
+
   const profileInfo = {
     FirstName: userFirstName,
     LastName: userLastName,
     Email: userEmail,
     PassportNumber: userPassport,
+    HomeAddress: userHomeAddress,
+    CountryCode: userCountryCode,
+    TelephoneNumber: userTelephoneNumbers,
   };
   const theme = createTheme({
     palette: {
@@ -75,12 +94,19 @@ const Profile = () => {
       LastName: userLastName,
       Email: userEmail,
       PassportNumber: userPassport,
+      HomeAddress: userHomeAddress,
+      CountryCode: userCountryCode,
+      TelephoneNumber: userTelephoneNumbers,
     };
     editUsersAPI(profile);
     localStorage.setItem("userFName", userFirstName);
     localStorage.setItem("userLName", userLastName);
     localStorage.setItem("userEmail", userEmail);
     localStorage.setItem("userPassport", userPassport);
+
+    localStorage.setItem("userHomeAddress", userHomeAddress);
+    localStorage.setItem("userCountryCode", userCountryCode);
+    localStorage.setItem("userTelephoneNumbers", userTelephoneNumbers);
     setpopup(true);
   };
   let history = useHistory();
@@ -88,20 +114,44 @@ const Profile = () => {
     e.preventDefault();
     history.push("/user-home");
   };
+  const handleClosePassword = (e) => {
+    e.preventDefault();
+    window.location.reload(false);
+  };
   const passwordHandler = async (e) => {
     e.preventDefault();
     const profile = {
       Email: localStorage.getItem("userEmail"),
       //5AALI BALAK
       Password: currentPassword,
+      newPassword: userNewPassword2,
     };
-    const res = searchUsersAPI(profile);
-    if (
-      res[0]._id === localStorage.getItem("userID") &&
-      res[0].Password === currentPassword
-    ) {
-      //editUser
-    } else setIncorrectCurrentPassword(false);
+    const res = await searchUsersAPI(profile);
+    console.log(res);
+    //if (
+    //res[0].Email === localStorage.getItem("userEmail") &&
+    // res[0].Password === currentPassword
+    // ) {
+    //setIncorrectCurrentPassword(false);
+    if (userNewPassword1 === userNewPassword2) {
+      if (userNewPassword1.length >= 6) {
+        setmatch(true);
+        try {
+          await changePassword(profile);
+          setIncorrectCurrentPassword(false);
+          setpasswordpopup(true);
+        } catch (error) {
+          setIncorrectCurrentPassword(true);
+        }
+      } else {
+        setmatch(false);
+        seterrorText("New password must be at least 6 characters");
+      }
+    } else {
+      setmatch(false);
+      seterrorText("Passwords do not match");
+    }
+    // } else setIncorrectCurrentPassword(true);
   };
   return (
     <div>
@@ -187,6 +237,45 @@ const Profile = () => {
                     />
                   </div>
                 </div>
+                <div className="row">
+                  <div className="col-md-4 offset-md-2">
+                    <TextField
+                      id="filled-helperText"
+                      label="Home Address"
+                      defaultValue={profileInfo.HomeAddress}
+                      variant="filled"
+                      onChange={(e) => {
+                        setuserHomeAddress(e.target.value);
+                        seteditOccured("true");
+                      }}
+                    />
+                  </div>
+                  <div className="col-md-4 offset-md-1">
+                    <TextField
+                      id="filled-helperText"
+                      label="Country Code"
+                      defaultValue={profileInfo.CountryCode}
+                      variant="filled"
+                      onChange={(e) => {
+                        setuserCountryCode(e.target.value);
+                        seteditOccured("true");
+                      }}
+                    />
+                  </div>
+                  <div className="col-md-4 offset-md-1">
+                    <TextField
+                      id="filled-helperText"
+                      label="Telephone Number(s)"
+                      defaultValue={profileInfo.TelephoneNumber}
+                      variant="filled"
+                      onChange={(e) => {
+                        setuserTelephoneNumbers(e.target.value);
+                        seteditOccured("true");
+                      }}
+                    />
+                  </div>
+                  <br />
+                </div>
                 <br />
                 <Accordion
                   style={{
@@ -204,42 +293,95 @@ const Profile = () => {
                   </AccordionSummary>
                   <AccordionDetails>
                     <form onSubmit={passwordHandler}>
-                      <div className="col">
-                        <TextField
-                          label="Your Current Password"
-                          variant="filled"
-                          onChange={(e) => {
-                            setcurrentPassword(e.target.value);
-                          }}
-                        />
-                      </div>
+                      {IncorrectCurrentPassword === false && (
+                        <div className="col">
+                          <TextField
+                            label="Your Current Password"
+                            variant="filled"
+                            type="password"
+                            onChange={(e) => {
+                              setcurrentPassword(e.target.value);
+                            }}
+                          />
+                        </div>
+                      )}
+                      {IncorrectCurrentPassword === true && (
+                        <div className="col">
+                          <TextField
+                            id="filled-error"
+                            error
+                            label="Your Current Password"
+                            variant="filled"
+                            type="password"
+                            helperText="Incorrect password"
+                            onChange={(e) => {
+                              setcurrentPassword(e.target.value);
+                            }}
+                          />
+                        </div>
+                      )}
                       <br />
-                      <div className="col">
-                        <TextField
-                          label="New Password"
-                          variant="filled"
-                          onChange={(e) => {
-                            setuserPassport(e.target.value);
-                            seteditOccured("true");
-                          }}
-                        />
-                      </div>
-                      <br />
-                      <div className="col">
-                        <TextField
-                          label="Confirm New Password"
-                          variant="filled"
-                          onChange={(e) => {
-                            setuserPassport(e.target.value);
-                            seteditOccured("true");
-                          }}
-                        />
-                      </div>
+                      {match === true && (
+                        <div>
+                          <div className="col">
+                            <TextField
+                              label="New Password"
+                              variant="filled"
+                              type="password"
+                              onChange={(e) => {
+                                setuserNewPassword1(e.target.value);
+                              }}
+                            />
+                          </div>
+                          <br />
+                          <div className="col">
+                            <TextField
+                              label="Confirm New Password"
+                              variant="filled"
+                              type="password"
+                              onChange={(e) => {
+                                setuserNewPassword2(e.target.value);
+                              }}
+                            />
+                          </div>
+                        </div>
+                      )}
+                      {match === false && (
+                        <div>
+                          <div className="col">
+                            <TextField
+                              id="filled-error"
+                              error
+                              label="New Password"
+                              variant="filled"
+                              type="password"
+                              helperText={errorText}
+                              onChange={(e) => {
+                                setuserNewPassword1(e.target.value);
+                              }}
+                            />
+                          </div>
+                          <br />
+                          <div className="col">
+                            <TextField
+                              id="filled-error"
+                              error
+                              label="Confirm New Password"
+                              variant="filled"
+                              type="password"
+                              helperText={errorText}
+                              onChange={(e) => {
+                                setuserNewPassword2(e.target.value);
+                              }}
+                            />
+                          </div>
+                        </div>
+                      )}
                       <div style={{ marginLeft: "60%" }}>
                         <br />
                         <ColorButton
                           variant="contained"
-                          onClick={editHandler}
+                          type="submit"
                           style={{ fontFamily: "Philosopher" }}
                         >
                           Edit Password
@@ -291,6 +433,24 @@ const Profile = () => {
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={handleClose}>OK</Button>
+                </DialogActions>
+              </Dialog>
+            </Card>
+            <Card>
+              <Dialog
+                open={passwordpopup}
+                onClose={handleClosePassword}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Password Changed Successfully
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClosePassword}>OK</Button>
                 </DialogActions>
               </Dialog>
             </Card>

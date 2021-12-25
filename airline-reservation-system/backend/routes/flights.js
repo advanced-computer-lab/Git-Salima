@@ -5,19 +5,22 @@ const Booking = require("../models/booking");
 const User = require("../models/user");
 const axios = require("axios").default;
 var nodemailer = require("nodemailer");
-const bcrypt = require('bcrypt')
+const bcrypt = require("bcrypt");
+require("dotenv").config();
 //const passport = require('passport')
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 let accessT;
 const cors = require("cors")
 const Stripe = require('stripe');
 
 var transporter = nodemailer.createTransport({
+  
   service: "gmail",
   auth: {
-    user: "git.salima.airlines@gmail.com",
-    pass: "pa$word_123",
+    user:  process.env.USER1,
+    pass:  process.env.PASS1
   },
+
 });
 router.get("/", (req, res) => {
   res.status(200).send("You have everything installed !");
@@ -37,6 +40,7 @@ router.post("/email", (req, res) => {
   };
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
+      console.log(transporter)
       console.log(error);
     } else {
       console.log("Email sent: " + info.response);
@@ -93,7 +97,9 @@ router.post("/createBooking", async (req, res) => {
 async function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) {return res.send(false);}
+  if (token == null) {
+    return res.send(false);
+  }
   let refreshTokens = [];
   await axios.get("http://localhost:8000/listTokens").then((res1) => {
     refreshTokens = res1.data;
@@ -101,8 +107,8 @@ async function authenticateToken(req, res, next) {
   // console.log(refreshTokens)
   if (!refreshTokens.includes(token)) {
     res.send(false);
-    return
-  };
+    return;
+  }
   jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
     //console.log(err)
     console.log("alomeen");
@@ -120,7 +126,9 @@ async function authenticateToken(req, res, next) {
 async function authenticateTokenAdmin(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) {return res.send(false);}
+  if (token == null) {
+    return res.send(false);
+  }
   let refreshTokens = [];
   await axios.get("http://localhost:8000/listTokens").then((res1) => {
     refreshTokens = res1.data;
@@ -128,7 +136,7 @@ async function authenticateTokenAdmin(req, res, next) {
   // console.log(refreshTokens)
   if (!refreshTokens.includes(token)) {
     res.send(false);
-  };
+  }
   jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
     //console.log(err)
     console.log("alomeen");
@@ -137,10 +145,10 @@ async function authenticateTokenAdmin(req, res, next) {
       res.send(false);
       return;
     }
-    if(user.Email=="admin@gitsalima.com"){
-    req.user = user;
-    next();}
-    else{
+    if (user.Email == "admin@gitsalima.com") {
+      req.user = user;
+      next();
+    } else {
       res.send(false);
       return;
     }
@@ -460,7 +468,7 @@ router.post("/updateBooking", async (req, res) => {
   if (user["TakenSeats"]) {
     const seats = req.body.TakenSeats;
     let TakenSeats = [];
-    console.log(seats)
+    console.log(seats);
     for (const p of seats) {
       const a = p.row.concat(p.number);
       const b = a.concat(p.id);
@@ -472,7 +480,7 @@ router.post("/updateBooking", async (req, res) => {
   if (user["ReturnTakenSeats"]) {
     const seats = req.body.ReturnTakenSeats;
     let ReturnTakenSeats = [];
-    console.log(seats)
+    console.log(seats);
     for (const p of seats) {
       const a = p.row.concat(p.number);
       const b = a.concat(p.id);
@@ -481,7 +489,12 @@ router.post("/updateBooking", async (req, res) => {
     query["ReturnTakenSeats"] = ReturnTakenSeats;
   }
   for (const p in user) {
-    if (!(user[p] == user._id) && !(p == "BookingNumber") && !(p == "TakenSeats") && !(p == "ReturnTakenSeats")) {
+    if (
+      !(user[p] == user._id) &&
+      !(p == "BookingNumber") &&
+      !(p == "TakenSeats") &&
+      !(p == "ReturnTakenSeats")
+    ) {
       query[`${p}`] = user[p];
     }
   }
@@ -607,8 +620,9 @@ router.post("/updateSeats", async (req, res) => {
     Flight.findById(flight._id).then((result) => {
       res.send(result);
     });
+  } else {
+    res.send("teez");
   }
-  else { res.send("teez") }
 });
 
 router.post("/removeSeats", async (req, res) => {
@@ -619,7 +633,7 @@ router.post("/removeSeats", async (req, res) => {
     let query = { $pull: { TakenSeats: p } };
     console.log(query);
     await Flight.findByIdAndUpdate(flight.Flight_ID, query).then((result) => {
-      console.log("edeelo")
+      console.log("edeelo");
     });
   }
   if (flight.Cabin == "Economy")

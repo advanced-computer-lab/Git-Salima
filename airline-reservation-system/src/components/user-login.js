@@ -11,15 +11,18 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { createUserAPI } from "../apis";
+import { loginAPI, searchUsersAPI } from "../apis";
 import Stack from "@mui/material/Stack";
 import { useHistory } from "react-router-dom";
+import bg from "./images/boarding.jpg";
+
+import { Typography } from "@mui/material";
+import "../styles/header.css";
 const Profile = () => {
-  const [userFirstName, setuserFirstName] = useState("");
-  const [userLastName, setuserLastName] = useState("");
   const [userEmail, setuserEmail] = useState("");
-  const [userPassport, setuserPassport] = useState("");
   const [userPassword, setuserPassword] = useState("");
+  const [userPassport, setuserPassport] = useState("");
+  const [loginError, setloginError] = useState(false);
   const [homeAddress, setHomeAddress] = useState("");
   const [countryCode, setCountryCode] = useState("");
   const [telephoneNumber, setTelephoneNumber] = useState([]);
@@ -45,24 +48,40 @@ const Profile = () => {
 
     const profile = {
       Password: userPassword,
-      FirstName: userFirstName,
-      LastName: userLastName,
       Email: userEmail,
       PassportNumber: userPassport,
       HomeAddress: homeAddress,
       CountryCode: countryCode,
       TelephoneNumber: telephoneNumber,
     };
-    const userProfile = await createUserAPI(profile);
+    const profileSuccess = {
+      Email: userEmail,
+    };
+    // const userProfile = await createUserAPI(profile);
 
-    localStorage.setItem("userID", userProfile._id);
-    localStorage.setItem("userFName", userFirstName);
-    localStorage.setItem("userLName", userLastName);
-    localStorage.setItem("userEmail", userEmail);
-    localStorage.setItem("userPassport", userPassport);
-    localStorage.setItem("type", "User");
+    const token = await loginAPI(profile);
+    console.log(token); //console.log(token.data);
 
-    setpopup(true);
+    if (token === false) {
+      setloginError(true);
+    } else {
+      const userData = await searchUsersAPI(profileSuccess);
+      console.dir(userData);
+      console.log(userData);
+      localStorage.setItem("userToken", token);
+      localStorage.setItem("userID", userData._id);
+      //dont forget to get all of these from db
+      localStorage.setItem("userFName", userData[0].FirstName);
+      localStorage.setItem("userLName", userData[0].LastName);
+      localStorage.setItem("userEmail", userData[0].Email);
+      localStorage.setItem("userPassport", userData[0].PassportNumber);
+      localStorage.setItem("userHomeAddress", userData[0].HomeAddress);
+      localStorage.setItem("userCountryCode", userData[0].CountryCode);
+      localStorage.setItem("userTelephoneNumbers", userData[0].TelephoneNumber);
+      localStorage.setItem("type", "User");
+      console.log(token);
+      setpopup(true);
+    }
   };
 
   const guestHandler = async (e) => {
@@ -77,184 +96,159 @@ const Profile = () => {
     history.push("/user-home");
   };
 
+  const signUpHandler = async (e) => {
+    e.preventDefault();
+    history.push("/user-signup");
+  };
+
   const handleClose = (e) => {
     e.preventDefault();
     history.push("/user-home");
   };
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>
+      <div class="box">
+        <img src={bg} alt="Background" class="bg" />
+      </div>
+      {/* <h1 style={{ textAlign: "center" }} class="wlcmtxt3">
         Please Login or Continue As a Guest
-      </h1>
+      </h1> */}
       <br />
-      <ThemeProvider theme={theme}>
-        <Card>
-          <CardContent style={{ backgroundColor: "#EFEAE4" }}>
-            <form onSubmit={loginHandler}>
-              <div className="form-row">
-                <div className="col">
-                  <TextField
-                    id="filled-helperText"
-                    label="First Name"
-                    variant="filled"
-                    required
-                    onChange={(e) => {
-                      setuserFirstName(e.target.value);
-                    }}
-                  />
-                </div>
+      <div class="card2">
+        <ThemeProvider theme={theme}>
+          <Card sx={{ zIndex: 5 }}>
+            <CardContent style={{ backgroundColor: "#EFEAE4" }}>
+              <Typography variant="h3" color="#082567" textAlign="center">
+                Please Login or Continue As a Guest
+              </Typography>
+              <form onSubmit={loginHandler}>
+                {loginError === false && (
+                  <div>
+                    <div className="form-group col-md-4">
+                      <TextField
+                        required
+                        id="filled-helperText"
+                        type="email"
+                        aria-describedby="emailHelp"
+                        label="Email"
+                        variant="filled"
+                        onChange={(e) => {
+                          setuserEmail(e.target.value);
+                        }}
+                      />
+                    </div>
 
+                    <br />
+
+                    <div className="col-md-4">
+                      <TextField
+                        id="filled-helperText"
+                        label="Password"
+                        variant="filled"
+                        type="password"
+                        required
+                        onChange={(e) => {
+                          setuserPassword(e.target.value);
+                        }}
+                      />
+                    </div>
+                  </div>
+                )}
+                {loginError === true && (
+                  <div>
+                    <div className="form-group col-md-4">
+                      <TextField
+                        required
+                        error
+                        id="filled-helperText"
+                        type="email"
+                        aria-describedby="emailHelp"
+                        label="Email"
+                        variant="filled"
+                        onChange={(e) => {
+                          setuserEmail(e.target.value);
+                        }}
+                      />
+                    </div>
+
+                    <br />
+
+                    <div className="col-md-4">
+                      <TextField
+                        id="filled-helperText"
+                        error
+                        label="Password"
+                        variant="filled"
+                        type="password"
+                        required
+                        helperText="Incorrect credentials"
+                        onChange={(e) => {
+                          setuserPassword(e.target.value);
+                        }}
+                      />
+                    </div>
+                  </div>
+                )}
                 <br />
+                <Stack direction="row" spacing={2}>
+                  <div className="form-group">
+                    <ColorButton
+                      variant="contained"
+                      type="submit"
+                      style={{ fontFamily: "Philosopher" }}
+                    >
+                      Login
+                    </ColorButton>
+                  </div>
 
-                <div className="col-md-10">
-                  <TextField
-                    id="filled-helperText"
-                    label="Last Name"
-                    variant="filled"
-                    required
-                    onChange={(e) => {
-                      setuserLastName(e.target.value);
-                    }}
-                  />
-                </div>
-              </div>
+                  <div className="form-group">
+                    <ColorButton
+                      variant="contained"
+                      onClick={guestHandler}
+                      style={
+                        ({ fontFamily: "Philosopher" }, { marginLeft: "10px" })
+                      }
+                    >
+                      Continue As Guest
+                    </ColorButton>
+                  </div>
 
-              <br />
+                  <div className="form-group">
+                    <ColorButton
+                      variant="contained"
+                      onClick={signUpHandler}
+                      style={
+                        ({ fontFamily: "Philosopher" }, { marginLeft: "10px" })
+                      }
+                    >
+                      Sign Up
+                    </ColorButton>
+                  </div>
+                </Stack>
+              </form>
+            </CardContent>
+          </Card>
 
-              <div className="form-group col-md-4">
-                <TextField
-                  required
-                  id="filled-helperText"
-                  type="email"
-                  aria-describedby="emailHelp"
-                  label="Email"
-                  variant="filled"
-                  onChange={(e) => {
-                    setuserEmail(e.target.value);
-                  }}
-                />
-              </div>
-
-              <br />
-
-              <div className="col-md-4">
-                <TextField
-                  id="filled-helperText"
-                  label="Passport Number"
-                  variant="filled"
-                  required
-                  onChange={(e) => {
-                    setuserPassport(e.target.value);
-                  }}
-                />
-              </div>
-
-              <br />
-
-              <div className="col-md-4">
-                <TextField
-                  id="filled-helperText"
-                  label="Home Address"
-                  variant="filled"
-                  required
-                  onChange={(e) => {
-                    setHomeAddress(e.target.value);
-                  }}
-                />
-              </div>
-
-              <br />
-
-              <div className="col-md-4">
-                <TextField
-                  id="filled-helperText"
-                  label="Country Code"
-                  variant="filled"
-                  type="number"
-                  required
-                  onChange={(e) => {
-                    setCountryCode(e.target.value);
-                  }}
-                />
-              </div>
-
-              <br />
-
-              <div className="col-md-4">
-                <TextField
-                  id="filled-helperText"
-                  label="Telephone Number"
-                  variant="filled"
-                  type="number"
-                  required
-                  onChange={(e) => {
-                    setTelephoneNumber(e.target.value);
-                  }}
-                />
-              </div>
-
-              <br />
-
-              <div className="col-md-4">
-                <TextField
-                  id="filled-helperText"
-                  label="Password"
-                  variant="filled"
-                  type="password"
-                  required
-                  onChange={(e) => {
-                    setuserPassword(e.target.value);
-                  }}
-                />
-              </div>
-
-              <br />
-              <Stack direction="row" spacing={2}>
-                <div className="form-group">
-                  <ColorButton
-                    variant="contained"
-                    type="submit"
-                    style={{ fontFamily: "Philosopher" }}
-                  >
-                    Login
-                  </ColorButton>
-                </div>
-
-                <div className="form-group">
-                  <ColorButton
-                    variant="contained"
-                    onClick={guestHandler}
-                    style={
-                      ({ fontFamily: "Philosopher" }, { marginLeft: "10px" })
-                    }
-                  >
-                    Continue As Guest
-                  </ColorButton>
-                </div>
-              </Stack>
-            </form>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <Dialog
-            open={popup}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Logged In Successfully
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose}>OK</Button>
-            </DialogActions>
-          </Dialog>
-        </Card>
-      </ThemeProvider>
+          <Card>
+            <Dialog
+              open={popup}
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  Logged In Successfully
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>OK</Button>
+              </DialogActions>
+            </Dialog>
+          </Card>
+        </ThemeProvider>
+      </div>
     </div>
   );
 };
