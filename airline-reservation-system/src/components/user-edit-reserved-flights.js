@@ -11,7 +11,7 @@ import HeaderLinks from "./HeaderLinks.js";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import { removeSeatsAPI , searchFlightsAPI} from "../apis";
+import { removeSeatsAPI, searchFlightsAPI } from "../apis";
 
 import { searchBookingsAPI } from "../../src/apis";
 import "../styles/header.css";
@@ -152,30 +152,28 @@ const ReservedFlights = () => {
     const temp = JSON.stringify(input);
     const temp2 = JSON.parse(temp);
 
-    // remove seats
-
     const f = {
       _id: temp2._id
     }
     console.log(temp2._id + "test1")
     const b = await searchBookingsAPI(f);
-    localStorage.setItem("EditedBookingNumber",b[0].BookingNumber)
-    let f2 = await searchFlightsAPI({_id:b[0].Departure_id});
+    localStorage.setItem("EditedBookingNumber", b[0].BookingNumber)
+    let f2 = await searchFlightsAPI({ _id: b[0].Departure_id });
 
-   console.log(b)
+    console.log(b)
     let s = ""
-    localStorage.setItem("clickedSeats",temp2.TakenSeats)
+    localStorage.setItem("clickedSeats", temp2.TakenSeats)
     let TakenSeats
-    if(temp2.TakenSeats.length > 1){
-       TakenSeats = (temp2.TakenSeats).map((seat)=> s += seat+",")
+    if (temp2.TakenSeats.length > 1) {
+      TakenSeats = (temp2.TakenSeats).map((seat) => s += seat + ",")
     }
-    else{
-       TakenSeats = s+temp2.TakenSeats[0];
+    else {
+      TakenSeats = s + temp2.TakenSeats[0];
     }
-    
+
     const seatsToRemove = {
       Flight_ID: f2[0]._id,
-      Cabin:b[0].Cabin,
+      Cabin: b[0].Cabin,
       TakenSeats: s,
     };
     console.dir(b)
@@ -183,9 +181,9 @@ const ReservedFlights = () => {
     await removeSeatsAPI(seatsToRemove);
 
 
-    f2 = await searchFlightsAPI({_id:b[0].Departure_id});
+    f2 = await searchFlightsAPI({ _id: b[0].Departure_id });
 
-//-----
+    //-----
 
     localStorage.setItem("DepartureAirportAro", f2[0].DepartureAirport);
     localStorage.setItem("ArrivalAirportAro", f2[0].ArrivalAirport);
@@ -214,11 +212,11 @@ const ReservedFlights = () => {
     // ----
 
 
-    
+
     history.push("/change-seats");
   };
 
-  const changeRetSeatsHandler = async (input) => { 
+  const changeRetSeatsHandler = async (input) => {
     // for return change return seats
     const temp = JSON.stringify(input);
     const temp2 = JSON.parse(temp);
@@ -231,23 +229,23 @@ const ReservedFlights = () => {
     }
     console.log(temp2)
     const b = await searchBookingsAPI(f);
-    localStorage.setItem("EditedBookingNumber",b[0].BookingNumber)
-    let f2 = await searchFlightsAPI({_id:b[0].ReturnFlight_ID});
+    localStorage.setItem("EditedBookingNumber", b[0].BookingNumber)
+    let f2 = await searchFlightsAPI({ _id: b[0].ReturnFlight_ID });
 
-   
+
     let s = ""
-    localStorage.setItem("clickedSeats",temp2.TakenSeats)
+    localStorage.setItem("clickedSeats", temp2.TakenSeats)
     let TakenSeats
-    if(temp2.TakenSeats.length > 1){
-       TakenSeats = (temp2.TakenSeats).map((seat)=> s += seat+",")
+    if (temp2.TakenSeats.length > 1) {
+      TakenSeats = (temp2.TakenSeats).map((seat) => s += seat + ",")
     }
-    else{
-       TakenSeats = s+temp2.TakenSeats[0];
+    else {
+      TakenSeats = s + temp2.TakenSeats[0];
     }
-    
+
     const seatsToRemove = {
       Flight_ID: f2[0]._id,
-      Cabin:b[0].Cabin,
+      Cabin: b[0].Cabin,
       TakenSeats: s,
     };
     console.dir(b)
@@ -255,23 +253,23 @@ const ReservedFlights = () => {
     await removeSeatsAPI(seatsToRemove);
 
 
-    f2 = await searchFlightsAPI({_id:b[0].ReturnFlight_ID});
+    f2 = await searchFlightsAPI({ _id: b[0].ReturnFlight_ID });
 
-//-----
+    //-----
 
-localStorage.setItem("FlightIDKizo", f2[0]._id);
-if (localStorage.getItem("UFSFClass") === "First Class") {
-  localStorage.setItem("returnFlightPrice", f2[0].FirstClassPrice);
-} else if (localStorage.getItem("UFSFClass") === "Economy") {
-  localStorage.setItem("returnFlightPrice", f2[0].EconomyPrice);
-} else if (localStorage.getItem("UFSFClass") === "Business") {
-  localStorage.setItem("returnFlightPrice", f2[0].BusinessClassPrice);
-}
-localStorage.setItem("FirstClassSeatsKizo", f2[0].FirstClassSeats);
-localStorage.setItem("BusinessClassSeatsKizo", f2[0].BusinessClassSeats);
-localStorage.setItem("EconomySeatsKizo", f2[0].EconomySeats);
-localStorage.setItem("BookedSeatsKizo", JSON.stringify(f2[0].TakenSeats));
-localStorage.setItem("FlightNoKizo", f2[0].FlightNo);
+    localStorage.setItem("FlightIDKizo", f2[0]._id);
+    if (localStorage.getItem("UFSFClass") === "First Class") {
+      localStorage.setItem("returnFlightPrice", f2[0].FirstClassPrice);
+    } else if (localStorage.getItem("UFSFClass") === "Economy") {
+      localStorage.setItem("returnFlightPrice", f2[0].EconomyPrice);
+    } else if (localStorage.getItem("UFSFClass") === "Business") {
+      localStorage.setItem("returnFlightPrice", f2[0].BusinessClassPrice);
+    }
+    localStorage.setItem("FirstClassSeatsKizo", f2[0].FirstClassSeats);
+    localStorage.setItem("BusinessClassSeatsKizo", f2[0].BusinessClassSeats);
+    localStorage.setItem("EconomySeatsKizo", f2[0].EconomySeats);
+    localStorage.setItem("BookedSeatsKizo", JSON.stringify(f2[0].TakenSeats));
+    localStorage.setItem("FlightNoKizo", f2[0].FlightNo);
 
     localStorage.setItem("SelectedFlightChooseSeats", f2[0]._id);
     localStorage.setItem("SelectedFlightReservedSeats", f2[0].FlightNo);
@@ -279,7 +277,7 @@ localStorage.setItem("FlightNoKizo", f2[0].FlightNo);
     // ----
 
 
-    
+
     history.push("/change-seats");
   };
 
