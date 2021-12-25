@@ -90,7 +90,7 @@ const ReservedFlights = () => {
     if (s2.charAt(s2.length - 1) === ',') {
       s2 = s2.substring(0, s2.length - 1)
     }
-
+console.log("lakad wasalt")
     const u1 = {
       Flight_ID: temp2._id,
       TakenSeats: s,
@@ -106,10 +106,19 @@ const ReservedFlights = () => {
     const deletebooking = {
       BookingNumber: temp2.BookingNumber,
     }
-
-    removeSeatsAPI(u1);
-    removeSeatsAPI(u2);
-    removeBookingAPI(deletebooking);
+    console.log(u1);
+     removeSeatsAPI(u1).then((result) => {
+     console.log("ay 7aga 1")
+    });
+    console.log(u2);
+      removeSeatsAPI(u2).then((result) => {
+        console.log("ay 7aga 2")
+       });
+     
+     removeBookingAPI(deletebooking).then((result) => {
+      console.log("ay 7aga 3")
+     });
+     console.log("ay 7aga 4")
     sendEmailAPI(email);
   };
 
@@ -151,7 +160,7 @@ const ReservedFlights = () => {
                 {reservedFlights.map((flight) => (
                   <div>
                     <UserFlightCardReservation
-                      _id={flight._id}
+                      _id={flight.Departure_id}
                       FlightNo={flight.FlightNo}
                       DepartureDate={flight.DepartureDate}
                       ArrivalDate={flight.ArrivalDate}

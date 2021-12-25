@@ -79,7 +79,12 @@ router.post("/createBooking", async (req, res) => {
     TotalPrice,
   });
 
-  return await newBooking.save();
+  try{ await newBooking.save().then((result) => {
+    res.send(result);
+  });}
+  catch (error) {
+    res.send( error);
+  }
 });
 
 async function authenticateToken(req, res, next) {
@@ -303,7 +308,7 @@ router.post("/searchBookings", async (req, res) => {
     let fl = {};
     fl = await Flight.findById(a.ReturnFlight_ID).lean();
     for (const p in fl) {
-      if (!(p == "TakenSeats" || p == "_id")) {
+      if (!(p == "TakenSeats" )) {
         a[`${"Return" + p}`] = fl[p];
       }
     }
@@ -452,7 +457,7 @@ router.post("/updateBooking", async (req, res) => {
   //console.log(user2);
   const Password12 = user2[0]._id;
   //console.log(Password12);
-  Booking.findByIdAndUpdate(Password12, query).then((result) => {
+  Booking.findByIdAndUpdate(Password12, query, { upsert: true }     ).then((result) => {
 
     res.send(result);
   });
