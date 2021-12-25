@@ -95,6 +95,7 @@ const Profile = () => {
 
   const handleClose = (e) => {
     e.preventDefault();
+    // iffaya here
     history.push("/user-home");
   };
   return (
