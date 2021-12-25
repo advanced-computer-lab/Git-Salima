@@ -11,7 +11,7 @@ import HeaderLinks from "./HeaderLinks.js";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import { removeSeatsAPI } from "../apis";
+import { removeSeatsAPI, searchFlightsAPI } from "../apis";
 
 import { searchBookingsAPI } from "../../src/apis";
 import "../styles/header.css";
@@ -151,17 +151,135 @@ const ReservedFlights = () => {
   const changeDepSeatsHandler = async (input) => {
     const temp = JSON.stringify(input);
     const temp2 = JSON.parse(temp);
-    localStorage.setItem("SelectedFlightChooseSeats", temp2._id);
-    localStorage.setItem("SelectedFlightReservedSeats", temp2.FlightNo);
+
+    const f = {
+      _id: temp2._id
+    }
+    console.log(temp2._id + "test1")
+    const b = await searchBookingsAPI(f);
+    localStorage.setItem("EditedBookingNumber", b[0].BookingNumber)
+    let f2 = await searchFlightsAPI({ _id: b[0].Departure_id });
+
+    console.log(b)
+    let s = ""
+    localStorage.setItem("clickedSeats", temp2.TakenSeats)
+    let TakenSeats
+    if (temp2.TakenSeats.length > 1) {
+      TakenSeats = (temp2.TakenSeats).map((seat) => s += seat + ",")
+    }
+    else {
+      TakenSeats = s + temp2.TakenSeats[0];
+    }
+
     const seatsToRemove = {
-      _id: temp2._id,
-      TakenSeats: temp2.TakenSeats,
+      Flight_ID: f2[0]._id,
+      Cabin: b[0].Cabin,
+      TakenSeats: s,
     };
-    removeSeatsAPI(seatsToRemove);
+    console.dir(b)
+    console.log(seatsToRemove)
+    await removeSeatsAPI(seatsToRemove);
+
+
+    f2 = await searchFlightsAPI({ _id: b[0].Departure_id });
+
+    //-----
+
+    localStorage.setItem("DepartureAirportAro", f2[0].DepartureAirport);
+    localStorage.setItem("ArrivalAirportAro", f2[0].ArrivalAirport);
+    localStorage.setItem(
+      "DepartureDateAro",
+      f2[0].DepartureDate.substring(0, 10)
+    );
+    localStorage.setItem("BookedSeatsAro", JSON.stringify(f2[0].TakenSeats));
+    localStorage.setItem("FlightIDAro", f2[0]._id);
+
+    if (localStorage.getItem("UFSFClass") === "First Class") {
+      localStorage.setItem("departureFlightPrice", f2[0].FirstClassPrice);
+    } else if (localStorage.getItem("UFSFClass") === "Economy") {
+      localStorage.setItem("departureFlightPrice", f2[0].EconomyPrice);
+    } else if (localStorage.getItem("UFSFClass") === "Business") {
+      localStorage.setItem("departureFlightPrice", f2[0].BusinessClassPrice);
+    }
+    localStorage.setItem("FirstClassSeatsAro", f2[0].FirstClassSeats);
+    localStorage.setItem("BusinessClassSeatsAro", f2[0].BusinessClassSeats);
+    localStorage.setItem("EconomySeatsAro", f2[0].EconomySeats);
+    localStorage.setItem("FlightNoAro", f2[0].FlightNo);
+
+    localStorage.setItem("SelectedFlightChooseSeats", f2[0]._id);
+    localStorage.setItem("SelectedFlightReservedSeats", f2[0].FlightNo);
+
+    // ----
+
+
+
     history.push("/change-seats");
   };
 
-  const changeRetSeatsHandler = async (input) => { };
+  const changeRetSeatsHandler = async (input) => {
+    // for return change return seats
+    const temp = JSON.stringify(input);
+    const temp2 = JSON.parse(temp);
+
+    // remove seats
+    console.log("INNNNN")
+
+    const f = {
+      _id: temp2._id
+    }
+    console.log(temp2)
+    const b = await searchBookingsAPI(f);
+    localStorage.setItem("EditedBookingNumber", b[0].BookingNumber)
+    let f2 = await searchFlightsAPI({ _id: b[0].ReturnFlight_ID });
+
+
+    let s = ""
+    localStorage.setItem("clickedSeats", temp2.TakenSeats)
+    let TakenSeats
+    if (temp2.TakenSeats.length > 1) {
+      TakenSeats = (temp2.TakenSeats).map((seat) => s += seat + ",")
+    }
+    else {
+      TakenSeats = s + temp2.TakenSeats[0];
+    }
+
+    const seatsToRemove = {
+      Flight_ID: f2[0]._id,
+      Cabin: b[0].Cabin,
+      TakenSeats: s,
+    };
+    console.dir(b)
+    console.log(seatsToRemove)
+    await removeSeatsAPI(seatsToRemove);
+
+
+    f2 = await searchFlightsAPI({ _id: b[0].ReturnFlight_ID });
+
+    //-----
+
+    localStorage.setItem("FlightIDKizo", f2[0]._id);
+    if (localStorage.getItem("UFSFClass") === "First Class") {
+      localStorage.setItem("returnFlightPrice", f2[0].FirstClassPrice);
+    } else if (localStorage.getItem("UFSFClass") === "Economy") {
+      localStorage.setItem("returnFlightPrice", f2[0].EconomyPrice);
+    } else if (localStorage.getItem("UFSFClass") === "Business") {
+      localStorage.setItem("returnFlightPrice", f2[0].BusinessClassPrice);
+    }
+    localStorage.setItem("FirstClassSeatsKizo", f2[0].FirstClassSeats);
+    localStorage.setItem("BusinessClassSeatsKizo", f2[0].BusinessClassSeats);
+    localStorage.setItem("EconomySeatsKizo", f2[0].EconomySeats);
+    localStorage.setItem("BookedSeatsKizo", JSON.stringify(f2[0].TakenSeats));
+    localStorage.setItem("FlightNoKizo", f2[0].FlightNo);
+
+    localStorage.setItem("SelectedFlightChooseSeats", f2[0]._id);
+    localStorage.setItem("SelectedFlightReservedSeats", f2[0].FlightNo);
+
+    // ----
+
+
+
+    history.push("/change-seats");
+  };
 
   return (
     <div>
@@ -215,7 +333,7 @@ const ReservedFlights = () => {
 
           <div>
             <UserReservedFlightCardRetEdit
-              _id={flight.Return_id}
+              _id={flight._id}
               FlightNo={flight.ReturnFlightNo}
               DepartureDate={flight.ReturnDepartureDate}
               ArrivalDate={flight.ReturnArrivalDate}

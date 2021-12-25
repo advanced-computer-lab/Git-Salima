@@ -78,6 +78,7 @@ export default function FlightCard(props) {
 
     const changeDepSeatsHandler = () => {
         props.onClickChangeDepSeats(props);
+        // this calls the parent ( user dep flight edit)
     };
 
     return (

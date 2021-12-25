@@ -22,6 +22,9 @@ const Profile = () => {
   const [userEmail, setuserEmail] = useState("");
   const [userPassword, setuserPassword] = useState("");
   const [loginError, setloginError] = useState(false);
+  const [homeAddress, setHomeAddress] = useState("");
+  const [countryCode, setCountryCode] = useState("");
+  const [telephoneNumber, setTelephoneNumber] = useState([]);
   const [popup, setpopup] = React.useState(false);
 
   const theme = createTheme({
@@ -45,6 +48,10 @@ const Profile = () => {
     const profile = {
       Password: userPassword,
       Email: userEmail,
+      PassportNumber: userPassport,
+      HomeAddress: homeAddress,
+      CountryCode: countryCode,
+      TelephoneNumber: telephoneNumber,
     };
     const profileSuccess = {
       Email: userEmail,

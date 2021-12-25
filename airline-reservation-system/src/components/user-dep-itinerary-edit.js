@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import UserFlightCardItinerary from "./user-flight-card-itinerary";
 import UserConfirmationCardEdit from "./user-confirmation-card-dep-edit";
-import axios from "axios";
 import Header from "./Header.js";
 import HeaderLinks from "./HeaderLinks.js";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import { userSearchFlightsAPI } from "../../src/apis";
-
+import StripeContainer from "./stripeContainer2";
 import LinearProgress from "@mui/material/LinearProgress";
 
 import "../styles/header.css";
@@ -48,12 +47,12 @@ const FlightsItinerary = () => {
 
   const diff =
     parseInt(localStorage.getItem("departureFlightPrice")) *
-      parseInt(departureSeats.length) -
+    parseInt(departureSeats.length) -
     parseInt(localStorage.getItem("OldDepFlightPrice"));
 
   const newTotalPrice =
     parseInt(localStorage.getItem("departureFlightPrice")) *
-      parseInt(departureSeats.length) +
+    parseInt(departureSeats.length) +
     parseInt(localStorage.getItem("CurrentRetFlightPrice"));
   localStorage.setItem("totalPrice", newTotalPrice);
   localStorage.setItem("priceDiff", diff);
@@ -67,10 +66,7 @@ const FlightsItinerary = () => {
             fixed
             brand="Git Salima Airlines"
             rightLinks={<HeaderLinks />}
-            // changeColorOnScroll={{
-            //   height: 0,
-            //   color: "#082567",
-            // }}
+
           />
           <br />
           <br />
@@ -119,6 +115,8 @@ const FlightsItinerary = () => {
           <br />
           {
             <div>
+              <StripeContainer />
+              <br />
               <UserConfirmationCardEdit />
             </div>
           }
