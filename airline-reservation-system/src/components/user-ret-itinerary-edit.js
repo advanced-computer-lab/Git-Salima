@@ -7,6 +7,7 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import { userSearchFlightsAPI } from "../../src/apis";
+import StripeContainer from "./stripeContainer3";
 import LinearProgress from "@mui/material/LinearProgress";
 
 import "../styles/header.css";
@@ -65,10 +66,6 @@ const FlightsItinerary = () => {
             fixed
             brand="Git Salima Airlines"
             rightLinks={<HeaderLinks />}
-          // changeColorOnScroll={{
-          //   height: 0,
-          //   color: "#082567",
-          // }}
           />
           <br />
           <br />
@@ -117,6 +114,8 @@ const FlightsItinerary = () => {
           <br />
           {
             <div>
+              <StripeContainer />
+              <br />
               <UserConfirmationCardEdit />
             </div>
           }

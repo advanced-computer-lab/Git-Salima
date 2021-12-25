@@ -34,7 +34,6 @@ const ReturnFlights = () => {
   const BookedSeats = [];
   const BookedSeatsAro = JSON.parse(localStorage.getItem("BookedSeatsAro"));
   const BookedSeatsKizo = JSON.parse(localStorage.getItem("BookedSeatsKizo"));
-  // const BookedSeatsKizo = localStorage.getItem("BookedSeatsKizo")
   const BookedSeatsIDs = [];
   let i;
   if (

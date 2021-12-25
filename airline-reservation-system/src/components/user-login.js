@@ -21,7 +21,11 @@ import "../styles/header.css";
 const Profile = () => {
   const [userEmail, setuserEmail] = useState("");
   const [userPassword, setuserPassword] = useState("");
+  const [userPassport, setuserPassport] = useState("");
   const [loginError, setloginError] = useState(false);
+  const [homeAddress, setHomeAddress] = useState("");
+  const [countryCode, setCountryCode] = useState("");
+  const [telephoneNumber, setTelephoneNumber] = useState([]);
   const [popup, setpopup] = React.useState(false);
 
   const theme = createTheme({
@@ -45,6 +49,10 @@ const Profile = () => {
     const profile = {
       Password: userPassword,
       Email: userEmail,
+      PassportNumber: userPassport,
+      HomeAddress: homeAddress,
+      CountryCode: countryCode,
+      TelephoneNumber: telephoneNumber,
     };
     const profileSuccess = {
       Email: userEmail,
@@ -61,7 +69,8 @@ const Profile = () => {
       console.dir(userData);
       console.log(userData);
       localStorage.setItem("userToken", token);
-      localStorage.setItem("userID", userData._id);
+      localStorage.setItem("userID", userData[0]._id);
+      console.log(userData[0]._id)
       //dont forget to get all of these from db
       localStorage.setItem("userFName", userData[0].FirstName);
       localStorage.setItem("userLName", userData[0].LastName);

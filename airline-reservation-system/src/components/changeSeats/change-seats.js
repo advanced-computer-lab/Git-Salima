@@ -9,9 +9,30 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import {updateBookingAPI,updateSeatsAPI} from '../../apis'
 
 const ReturnFlights = () => {
   const [takenSeats, setTakenSeats] = useState([]);
+
+  // useEffect(() => {
+  //   <SeatPicker/>
+  //   const seats = JSON.parse(JSON.stringify(localStorage.getItem("clickedSeats")))
+  //   let tmp = 0;
+  //   let arr = [];
+  //   for(let i =0 ; i<= seats.length ; i++){
+  //     if(seats[i] === ','){
+  //       arr.push(seats.substring(tmp,i))
+  //       tmp = i + 1;
+  //     }
+  //   }
+  //   console.log(arr)
+  //   arr.map((seat) => {
+  //     const row = seat.substring(0,1)
+  //     const number = seat.substring(1,2)
+  //     const id = seat.substring(2,seat.length)
+  //     addSeatCallback({row,number,id})
+  //   })
+  // }, []);
 
   let FirstClassSeats = 60;
   let BusinessClassSeats = 30;
@@ -378,16 +399,18 @@ const ReturnFlights = () => {
     addCb(row, number, id, newTooltip);
     const seat = { row, number, id };
     setTakenSeats((oldArray) => [...oldArray, seat]);
+    console.log(takenSeats)
   };
 
   const removeSeatCallback = ({ row, number, id }, removeCb) => {
     const newTooltip = ["A", "B", "C"].includes(row) ? null : "";
     removeCb(row, number, newTooltip);
     setTakenSeats(takenSeats.filter((item) => item.id !== id));
+    console.log(takenSeats)
   };
 
   let history = useHistory();
-  const handleConfirmSeats = () => {
+  const handleConfirmSeats = async() => {
     const flight = {
       TakenSeats: takenSeats,
       Flight_id: localStorage.getItem("SelectedFlightChooseSeats"),
@@ -408,6 +431,29 @@ const ReturnFlights = () => {
         localStorage.setItem("returnSeats", JSON.stringify(takenSeats));
         localStorage.setItem("retSeatsFlag", true);
       }
+
+      const updatedSeats = {
+        _id: localStorage.getItem("FlightIDAro"),
+        Return_id: localStorage.getItem("FlightIDKizo"),
+        TakenSeats: JSON.parse(localStorage.getItem("departureSeats")),
+        ReturnTakenSeats: JSON.parse(localStorage.getItem("returnSeats")),
+        Cabin: localStorage.getItem("UFSFClass"),
+        ReturnCabin: localStorage.getItem("UFSFClass"),
+        BookingNumber: localStorage.getItem("bookingNumber"),
+        TotalPrice: localStorage.getItem("totalPrice"),
+        User_id: localStorage.getItem("userID"),
+      };
+
+      const updatedBooking = {
+        BookingNumber: localStorage.getItem("EditedBookingNumber"),
+        TakenSeats: JSON.parse(localStorage.getItem("departureSeats")),
+        ReturnTakenSeats: JSON.parse(localStorage.getItem("returnSeats")),
+      }
+  
+      console.log(updatedSeats)
+      console.log(updatedBooking)
+      await updateSeatsAPI(updatedSeats);
+      await updateBookingAPI(updatedBooking).then(() => console.log("ay haga 2"));
 
       history.push("/user-reserved-flights");
     } else {
