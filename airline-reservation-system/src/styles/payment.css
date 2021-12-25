@@ -1,51 +1,8 @@
-.box {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 0;
-}
-.card {
-  z-index: 1;
-  margin: 0 auto;
-  position: absolute;
-  top: 400px;
-  left: 10%;
-  right: 10%;
-}
-.img {
-  max-width: 100%;
-}
-.wlcmtxt {
-  position: absolute;
-  top: 20%;
-  left: 29%;
-  font-size: 80px;
-
-  z-index: 1;
-  font-family: Philosopher;
-  color: #ffffff;
-}
-.wlcmtxt2 {
-  position: absolute;
-  top: 34%;
-  left: 35%;
-  font-size: 30px;
-  font-style: italic;
-  z-index: 1;
-  font-family: Philosopher;
-  color: #ffffff;
-}
-.colour {
-  color: #082567;
-}
-
 .FormGroup {
 	margin: 0 15px 20px;
 	padding: 0;
 	border-style: none;
-	background-color: #082567;
+	background-color: #7795f8;
 	will-change: opacity, transform;
 	box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 #829fff;
 	border-radius: 4px;
@@ -57,7 +14,7 @@
 	-ms-flex-align: center;
 	align-items: center;
 	margin-left: 15px;
-	border-top: 1px solid #082567;
+	border-top: 1px solid #819efc;
 }
 
 .StripeElement--webkit-autofill {
@@ -75,8 +32,8 @@ button {
 	width: calc(100% - 30px);
 	height: 40px;
 	margin: 40px 15px 0;
-	background-color: #4caf50;
-	box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 #4caf50;
+	background-color: #f6a4eb;
+	box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 #ffb9f6;
 	border-radius: 4px;
 	color: #fff;
 	font-weight: 600;
@@ -87,8 +44,8 @@ button {
 }
 
 button:active {
-	background-color: #4caf50;
-	box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 #4caf50;
+	background-color: #d782d9;
+	box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 #e298d8;
 	transform: scale(0.99);
 }
 
