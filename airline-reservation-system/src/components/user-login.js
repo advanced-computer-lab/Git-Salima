@@ -69,7 +69,8 @@ const Profile = () => {
       console.dir(userData);
       console.log(userData);
       localStorage.setItem("userToken", token);
-      localStorage.setItem("userID", userData._id);
+      localStorage.setItem("userID", userData[0]._id);
+      console.log(userData[0]._id)
       //dont forget to get all of these from db
       localStorage.setItem("userFName", userData[0].FirstName);
       localStorage.setItem("userLName", userData[0].LastName);
