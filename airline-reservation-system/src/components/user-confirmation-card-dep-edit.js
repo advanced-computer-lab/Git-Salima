@@ -53,26 +53,37 @@ export default function MultiActionAreaCard() {
   };
   let history = useHistory();
   const confirmHandler = async () => {
+
+    const booking = {
+      Flight_ID: localStorage.getItem("FlightIDAro"),
+      TakenSeats: JSON.parse(localStorage.getItem("departureSeats")),
+      Cabin: localStorage.getItem("UFSFClass"),
+      BookingNumber: localStorage.getItem("bookingNumber"),
+      TotalPrice: localStorage.getItem("totalPrice"),
+      User_ID: localStorage.getItem("userID")
+    };
+
     const bookedFlight = {
       _id: localStorage.getItem("FlightIDAro"),
       TakenSeats: JSON.parse(localStorage.getItem("departureSeats")),
       Cabin: localStorage.getItem("UFSFClass"),
-      //departure cabin^^^^^
       BookingNumber: localStorage.getItem("bookingNumber"),
       TotalPrice: localStorage.getItem("totalPrice"),
-      User_id: localStorage.getItem("userID"),
+      User_id: localStorage.getItem("userID")
     };
+
     const oldFlight = {
       Flight_ID: localStorage.getItem("OldDepID"),
       TakenSeats: localStorage.getItem("OldTakenSeatsDep"),
-      Cabin: localStorage.getItem("OldDepCabin"),
+      Cabin: localStorage.getItem("OldDepCabin")
     };
 
+
     handleClickOpenNext();
-    ///here remove seats from previously booked flight
+
     await removeSeatsAPI(oldFlight);
     await updateSeatsAPI(bookedFlight);
-    await updateBookingAPI(bookedFlight).then(() => console.log("ay haga 2"));
+    await updateBookingAPI(booking);
   };
   const handleOK = () => {
     history.push("/user-reserved-flights");

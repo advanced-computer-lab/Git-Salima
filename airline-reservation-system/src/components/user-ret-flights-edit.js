@@ -9,6 +9,7 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Stack from "@mui/material/Stack";
 import Link from "@mui/material/Link";
+import { userSearchFlightsAPI } from "../../src/apis";
 
 const steps = [
     "Choose Outbound Flight",
@@ -29,12 +30,15 @@ const ReturnFlights = () => {
     };
 
     useEffect(() => {
-        const temp1 = JSON.stringify(flight);
-        const temp2 = JSON.parse(temp1);
-        axios.get("http://localhost:8000/search", { params: temp2 }).then((res) => {
-            setAllFlights(res.data);
-        });
+        (async function () {
+            try {
+                setAllFlights(await userSearchFlightsAPI(flight));
+            } catch (e) {
+                console.error(e);
+            }
+        })();
     }, []);
+
     if (allFlights.length > 0) resultsAvailable = true;
     let history = useHistory();
     const clickHandlerSelect = async (input) => {

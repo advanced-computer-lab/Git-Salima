@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import UserFlightCard from "./user-flight-card";
 import { useHistory } from "react-router-dom";
-
 import Header from "./Header.js";
 import HeaderLinks from "./HeaderLinks.js";
 import Stepper from "@mui/material/Stepper";
@@ -11,7 +9,6 @@ import StepLabel from "@mui/material/StepLabel";
 import Stack from "@mui/material/Stack";
 import Link from "@mui/material/Link";
 import "../styles/header.css";
-import { fontFamily } from "@mui/system";
 import { userSearchFlightsAPI } from "../../src/apis";
 
 const steps = [
@@ -104,10 +101,10 @@ const DepartureFlights = () => {
         fixed
         brand="Git Salima Airlines"
         rightLinks={<HeaderLinks />}
-        // changeColorOnScroll={{
-        //   height: 0,
-        //   color: "#082567",
-        // }}
+      // changeColorOnScroll={{
+      //   height: 0,
+      //   color: "#082567",
+      // }}
       />
       <br />
       <br />

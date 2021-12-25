@@ -29,15 +29,17 @@ const bookingSchema = new Schema({
     },
     Cabin: {
         type: String,
-        required: true},
-        ReturnCabin: {
-            type: String,
-            required: true},
+        required: true
+    },
+    ReturnCabin: {
+        type: String,
+        required: true
+    },
     TotalPrice: {
         type: Number,
         required: true
     }
-    
+
 }, { timestamps: true });
 
 const Booking = mongoose.model('Bookings', bookingSchema);

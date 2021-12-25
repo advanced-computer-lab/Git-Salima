@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import UserFlightCardItinerary from "./user-flight-card-itinerary";
 import UserConfirmationCardEdit from "./user-confirmation-card-ret-edit";
-import axios from "axios";
 import Header from "./Header.js";
 import HeaderLinks from "./HeaderLinks.js";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-
+import { userSearchFlightsAPI } from "../../src/apis";
 import LinearProgress from "@mui/material/LinearProgress";
 
 import "../styles/header.css";
@@ -30,11 +29,13 @@ const FlightsItinerary = () => {
       _id: localStorage.getItem("FlightIDKizo"),
     };
 
-    axios
-      .get("http://localhost:8000/search", { params: returnFlight })
-      .then((res) => {
-        setReturnFlight(res.data);
-      });
+    (async function () {
+      try {
+        setReturnFlight(await userSearchFlightsAPI(returnFlight));
+      } catch (e) {
+        console.error(e);
+      }
+    })();
 
     setTimeout(() => setSpinner(false), 3000);
   }, []);
@@ -45,12 +46,12 @@ const FlightsItinerary = () => {
 
   const diff =
     parseInt(localStorage.getItem("returnFlightPrice")) *
-      parseInt(returnSeats.length) -
+    parseInt(returnSeats.length) -
     parseInt(localStorage.getItem("OldRetFlightPrice"));
 
   const newTotalPrice =
     parseInt(localStorage.getItem("returnFlightPrice")) *
-      parseInt(returnSeats.length) +
+    parseInt(returnSeats.length) +
     parseInt(localStorage.getItem("CurrentDepFlightPrice"));
   localStorage.setItem("totalPrice", newTotalPrice);
   localStorage.setItem("priceDiff", diff);
@@ -64,10 +65,10 @@ const FlightsItinerary = () => {
             fixed
             brand="Git Salima Airlines"
             rightLinks={<HeaderLinks />}
-            // changeColorOnScroll={{
-            //   height: 0,
-            //   color: "#082567",
-            // }}
+          // changeColorOnScroll={{
+          //   height: 0,
+          //   color: "#082567",
+          // }}
           />
           <br />
           <br />
