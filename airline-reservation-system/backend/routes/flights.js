@@ -303,7 +303,7 @@ router.post("/searchBookings", async (req, res) => {
     let fl = {};
     fl = await Flight.findById(a.ReturnFlight_ID).lean();
     for (const p in fl) {
-      if (!(p == "TakenSeats" || p == "_id")) {
+      if (!(p == "TakenSeats")) {
         a[`${"Return" + p}`] = fl[p];
       }
     }
@@ -625,28 +625,28 @@ router.post("/removeSeats", async (req, res) => {
 const stripe = Stripe('sk_test_51K9b9SK25DXcjTVNrfciNXbdJpBEVmXATZbkCrJfA0Lvd5n5vQuCNH2Uytch1GrGxsdofEyphHmCR81fT2yWpCB6005t6juaCY');
 
 router.post("/payment", cors(), async (req, res) => {
-	let { amount, id } = req.body
+  let { amount, id } = req.body
   console.log("test payment")
-	try {
-		const payment = await stripe.paymentIntents.create({
-			amount,
-			currency: "USD",
-			description: "Git Salima airlines",
-			payment_method: id,
-			confirm: true
-		})
-		console.log("Payment", payment)
-		res.json({
-			message: "Payment successful",
-			success: true
-		})
-	} catch (error) {
-		console.log("Error", error)
-		res.json({
-			message: "Payment failed",
-			success: false
-		})
-	}
+  try {
+    const payment = await stripe.paymentIntents.create({
+      amount,
+      currency: "USD",
+      description: "Git Salima airlines",
+      payment_method: id,
+      confirm: true
+    })
+    console.log("Payment", payment)
+    res.json({
+      message: "Payment successful",
+      success: true
+    })
+  } catch (error) {
+    console.log("Error", error)
+    res.json({
+      message: "Payment failed",
+      success: false
+    })
+  }
 })
 
 module.exports = router;

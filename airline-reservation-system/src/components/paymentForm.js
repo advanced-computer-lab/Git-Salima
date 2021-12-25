@@ -95,7 +95,7 @@ export default function PaymentForm() {
         })
 
         if (response.data.success) {
-          console.log("successful payment");
+          console.log("Successful Payment");
           setSuccess(true);
         }
         sendEmailAPI(email);

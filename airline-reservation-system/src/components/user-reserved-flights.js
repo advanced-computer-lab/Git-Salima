@@ -103,13 +103,19 @@ const ReservedFlights = () => {
       Cabin: temp2.ReturnCabin
     };
 
-    const deletebooking = {
-      BookingNumber: temp2.BookingNumber,
+    const deleteBooking = {
+      BookingNumber: temp2.BookingNumber
     }
 
-    removeSeatsAPI(u1);
-    removeSeatsAPI(u2);
-    removeBookingAPI(deletebooking);
+    removeSeatsAPI(u1).then((result) => {
+      console.log("yareit");
+    });
+    removeSeatsAPI(u2).then((result) => {
+      console.log("yareit2");
+    });
+    removeBookingAPI(deleteBooking).then((result) => {
+      console.log("yareit3");
+    });
     sendEmailAPI(email);
   };
 
@@ -151,7 +157,7 @@ const ReservedFlights = () => {
                 {reservedFlights.map((flight) => (
                   <div>
                     <UserFlightCardReservation
-                      _id={flight._id}
+                      _id={flight.Departure_id}
                       FlightNo={flight.FlightNo}
                       DepartureDate={flight.DepartureDate}
                       ArrivalDate={flight.ArrivalDate}
