@@ -25,6 +25,9 @@ router.get("/", (req, res) => {
 router.post("/checkauth", authenticateToken, (req, res) => {
   res.send(true);
 });
+router.post("/checkauthadmin", authenticateTokenAdmin, (req, res) => {
+  res.send(true);
+});
 router.post("/email", (req, res) => {
   var mailOptions = {
     from: "git.salima.airlines@gmail.com",
@@ -90,7 +93,34 @@ router.post("/createBooking", async (req, res) => {
 async function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) return res.sendStatus(401);
+  if (token == null) {return res.send(false);}
+  let refreshTokens = [];
+  await axios.get("http://localhost:8000/listTokens").then((res1) => {
+    refreshTokens = res1.data;
+  });
+  // console.log(refreshTokens)
+  if (!refreshTokens.includes(token)) {
+    res.send(false);
+    return
+  };
+  jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+    //console.log(err)
+    console.log("alomeen");
+
+    if (err) {
+      res.send(false);
+      return;
+    }
+    req.user = user;
+    next();
+  });
+
+  // next();
+}
+async function authenticateTokenAdmin(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (token == null) {return res.send(false);}
   let refreshTokens = [];
   await axios.get("http://localhost:8000/listTokens").then((res1) => {
     refreshTokens = res1.data;
@@ -107,8 +137,13 @@ async function authenticateToken(req, res, next) {
       res.send(false);
       return;
     }
+    if(user.Email=="admin@gitsalima.com"){
     req.user = user;
-    next();
+    next();}
+    else{
+      res.send(false);
+      return;
+    }
   });
 
   // next();
@@ -147,7 +182,7 @@ router.post("/login", async (req, res) => {
           });
         });
     } else {
-      return res.sendStatus(403);
+      return res.send(false);
     }
   } catch (error) {
     throw error;
