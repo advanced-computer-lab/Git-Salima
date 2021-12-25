@@ -152,8 +152,10 @@ export default function PaymentForm2() {
     handleClickOpenNext();
 
     await removeSeatsAPI(oldFlight);
+
     await updateSeatsAPI(bookedFlight);
     await updateBookingAPI(booking);
+    console.log(booking);
   };
   const handleOK = async () => {
     await handleSubmit();

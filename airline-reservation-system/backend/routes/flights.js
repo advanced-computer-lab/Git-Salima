@@ -667,11 +667,11 @@ router.post("/removeSeats", async (req, res) => {
         $inc: { FreeFirstClassSeats: flight.TakenSeats.length * 1 },
       });
 
-    Flight.findById(flight.Flight_ID).then((result) => {
-      res.send(result);
-    });
+   return res.send(true);
   } else {
-    res.send(true);
+    console.log(req.body)
+    console.log("done")
+    return res.send(true);
   }
 });
 
