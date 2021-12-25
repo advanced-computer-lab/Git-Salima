@@ -22,7 +22,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { searchUsersAPI } from "../apis";
+import { searchUsersAPI, changePassword } from "../apis";
 const Profile = () => {
   const [userFirstName, setuserFirstName] = useState(
     localStorage.getItem("userFName")
@@ -38,7 +38,10 @@ const Profile = () => {
   const [popup, setpopup] = React.useState(false);
   const [currentPassword, setcurrentPassword] = useState("");
   const [IncorrectCurrentPassword, setIncorrectCurrentPassword] =
-    useState(true);
+    useState(false);
+  const [userNewPassword1, setuserNewPassword1] = useState("");
+  const [userNewPassword2, setuserNewPassword2] = useState("");
+  const [match, setmatch] = useState(true);
   const profileInfo = {
     FirstName: userFirstName,
     LastName: userLastName,
@@ -95,13 +98,25 @@ const Profile = () => {
       //5AALI BALAK
       Password: currentPassword,
     };
-    const res = searchUsersAPI(profile);
-    if (
-      res[0]._id === localStorage.getItem("userID") &&
-      res[0].Password === currentPassword
-    ) {
-      //editUser
-    } else setIncorrectCurrentPassword(false);
+    const res = await searchUsersAPI(profile);
+    console.log(res);
+    //if (
+    //res[0].Email === localStorage.getItem("userEmail") &&
+    // res[0].Password === currentPassword
+    // ) {
+    //setIncorrectCurrentPassword(false);
+    if (userNewPassword1 === userNewPassword2) {
+      setmatch(true);
+      try {
+        changePassword(profile);
+        setIncorrectCurrentPassword(true);
+      } catch {
+        setIncorrectCurrentPassword(false);
+      }
+    } else {
+      setmatch(false);
+    }
+    // } else setIncorrectCurrentPassword(true);
   };
   return (
     <div>
@@ -204,42 +219,95 @@ const Profile = () => {
                   </AccordionSummary>
                   <AccordionDetails>
                     <form onSubmit={passwordHandler}>
-                      <div className="col">
-                        <TextField
-                          label="Your Current Password"
-                          variant="filled"
-                          onChange={(e) => {
-                            setcurrentPassword(e.target.value);
-                          }}
-                        />
-                      </div>
+                      {IncorrectCurrentPassword === false && (
+                        <div className="col">
+                          <TextField
+                            label="Your Current Password"
+                            variant="filled"
+                            type="password"
+                            onChange={(e) => {
+                              setcurrentPassword(e.target.value);
+                            }}
+                          />
+                        </div>
+                      )}
+                      {IncorrectCurrentPassword === true && (
+                        <div className="col">
+                          <TextField
+                            id="filled-error"
+                            error
+                            label="Your Current Password"
+                            variant="filled"
+                            type="password"
+                            helperText="Incorrect password"
+                            onChange={(e) => {
+                              setcurrentPassword(e.target.value);
+                            }}
+                          />
+                        </div>
+                      )}
                       <br />
-                      <div className="col">
-                        <TextField
-                          label="New Password"
-                          variant="filled"
-                          onChange={(e) => {
-                            setuserPassport(e.target.value);
-                            seteditOccured("true");
-                          }}
-                        />
-                      </div>
-                      <br />
-                      <div className="col">
-                        <TextField
-                          label="Confirm New Password"
-                          variant="filled"
-                          onChange={(e) => {
-                            setuserPassport(e.target.value);
-                            seteditOccured("true");
-                          }}
-                        />
-                      </div>
+                      {match === true && (
+                        <div>
+                          <div className="col">
+                            <TextField
+                              label="New Password"
+                              variant="filled"
+                              type="password"
+                              onChange={(e) => {
+                                setuserNewPassword1(e.target.value);
+                              }}
+                            />
+                          </div>
+                          <br />
+                          <div className="col">
+                            <TextField
+                              label="Confirm New Password"
+                              variant="filled"
+                              type="password"
+                              onChange={(e) => {
+                                setuserNewPassword2(e.target.value);
+                              }}
+                            />
+                          </div>
+                        </div>
+                      )}
+                      {match === false && (
+                        <div>
+                          <div className="col">
+                            <TextField
+                              id="filled-error"
+                              error
+                              label="New Password"
+                              variant="filled"
+                              type="password"
+                              helperText="Passwords do not match"
+                              onChange={(e) => {
+                                setuserNewPassword1(e.target.value);
+                              }}
+                            />
+                          </div>
+                          <br />
+                          <div className="col">
+                            <TextField
+                              id="filled-error"
+                              error
+                              label="Confirm New Password"
+                              variant="filled"
+                              type="password"
+                              helperText="Passwords do not match"
+                              onChange={(e) => {
+                                setuserNewPassword2(e.target.value);
+                              }}
+                            />
+                          </div>
+                        </div>
+                      )}
                       <div style={{ marginLeft: "60%" }}>
                         <br />
                         <ColorButton
                           variant="contained"
-                          onClick={editHandler}
+                          type="submit"
                           style={{ fontFamily: "Philosopher" }}
                         >
                           Edit Password

@@ -131,3 +131,13 @@ export const updateBookingAPI = async (flight) => {
       return res.data;
     });
 };
+export const changePassword = async (flight) => {
+  const temp1 = JSON.stringify(flight);
+  const temp2 = JSON.parse(temp1);
+
+  return await axios
+    .post("http://localhost:8000/updateUserPassword", temp2)
+    .then((res) => {
+      return res.data;
+    });
+};

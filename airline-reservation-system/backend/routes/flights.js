@@ -453,6 +453,8 @@ router.post("/updateUserPassword", async (req, res) => {
       ).then((result) => {
         res.send(result);
       });
+    } else {
+      res.sendStatus(403);
     }
   } catch (error) {
     throw error;
