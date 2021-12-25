@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import SeatPicker from "react-seat-picker";
 import { styled } from "@mui/material/styles";
 import { Button, CardActions } from "@mui/material";
@@ -10,7 +10,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-const ReturnFlights = () => {
+const Seats = () => {
   const [takenSeats, setTakenSeats] = useState([]);
 
   let FirstClassSeats = 60;
@@ -31,24 +31,24 @@ const ReturnFlights = () => {
     EconomyClassSeats = localStorage.getItem("EconomySeatsKizo");
   }
 
-  const BookedSeats = [];
   const BookedSeatsAro = JSON.parse(localStorage.getItem("BookedSeatsAro"));
   const BookedSeatsKizo = JSON.parse(localStorage.getItem("BookedSeatsKizo"));
+  // const BookedSeatsKizo = localStorage.getItem("BookedSeatsKizo")
   const BookedSeatsIDs = [];
   let i;
   if (
-    localStorage.getItem("SelectedFlightChooseSeats") ==
+    localStorage.getItem("SelectedFlightChooseSeats") ===
     localStorage.getItem("FlightIDAro")
   ) {
     for (i = 0; i < BookedSeatsAro.length; i++) {
-      if (BookedSeatsAro[i].substring(2, BookedSeatsAro[i].length) != ",")
+      if (BookedSeatsAro[i].substring(2, BookedSeatsAro[i].length) !== ",")
         BookedSeatsIDs.push(
           parseInt(BookedSeatsAro[i].substring(2, BookedSeatsAro[i].length))
         );
     }
   } else {
     for (i = 0; i < BookedSeatsKizo.length; i++) {
-      if (BookedSeatsKizo[i].substring(2, BookedSeatsKizo[i].length) != ",")
+      if (BookedSeatsKizo[i].substring(2, BookedSeatsKizo[i].length) !== ",")
         BookedSeatsIDs.push(
           parseInt(BookedSeatsKizo[i].substring(2, BookedSeatsKizo[i].length))
         );
@@ -60,7 +60,7 @@ const ReturnFlights = () => {
   let numberOfRowsB = 0;
   let numberOfRowsE = 0;
 
-  if (localStorage.getItem("UFSFClass") == "First Class") {
+  if (localStorage.getItem("UFSFClass") === "First Class") {
     let temp = FirstClassSeats;
     numberOfRowsF = FirstClassSeats / 6;
     for (let i = 0; i < numberOfRowsF; i++) {
@@ -68,7 +68,7 @@ const ReturnFlights = () => {
       for (let j = 1; j <= 6; j++) {
         if (
           contains(Math.floor(i * 10 + j), BookedSeatsIDs) &&
-          j % 2 != 0 &&
+          j % 2 !== 0 &&
           temp > 0
         ) {
           row.push({
@@ -79,7 +79,7 @@ const ReturnFlights = () => {
           });
         } else if (
           contains(Math.floor(i * 10 + j), BookedSeatsIDs) &&
-          j % 2 != 1 &&
+          j % 2 !== 1 &&
           temp > 0
         ) {
           row.push({
@@ -89,7 +89,7 @@ const ReturnFlights = () => {
             orientation: "west",
           });
           row.push(null);
-        } else if (j % 2 != 0 && temp > 0) {
+        } else if (j % 2 !== 0 && temp > 0) {
           row.push({
             id: i * 10 + j,
             number: j,
@@ -114,7 +114,7 @@ const ReturnFlights = () => {
     for (let i = 0; i < numberOfRowsB; i++) {
       const row = [];
       for (let j = 1; j <= 6; j++) {
-        if (j % 2 != 0) {
+        if (j % 2 !== 0) {
           row.push({
             id: (numberOfRowsF + i) * 10 + j,
             number: j,
@@ -138,7 +138,7 @@ const ReturnFlights = () => {
     for (let i = 0; i < numberOfRowsE; i++) {
       const row = [];
       for (let j = 1; j <= 6; j++) {
-        if (j % 2 != 0) {
+        if (j % 2 !== 0) {
           row.push({
             id: (numberOfRowsF + numberOfRowsB + i) * 10 + j,
             number: j,
@@ -157,13 +157,13 @@ const ReturnFlights = () => {
       }
       rows.push(row);
     }
-  } else if (localStorage.getItem("UFSFClass") == "Business") {
+  } else if (localStorage.getItem("UFSFClass") === "Business") {
     let temp = BusinessClassSeats;
     numberOfRowsF = FirstClassSeats / 6;
     for (let i = 0; i < numberOfRowsF; i++) {
       const row = [];
       for (let j = 1; j <= 6; j++) {
-        if (j % 2 != 0) {
+        if (j % 2 !== 0) {
           row.push({
             id: i * 10 + j,
             number: j,
@@ -189,7 +189,7 @@ const ReturnFlights = () => {
       for (let j = 1; j <= 6; j++) {
         if (
           contains(Math.floor((numberOfRowsF + i) * 10 + j), BookedSeatsIDs) &&
-          j % 2 != 0 &&
+          j % 2 !== 0 &&
           temp > 0
         ) {
           row.push({
@@ -200,7 +200,7 @@ const ReturnFlights = () => {
           });
         } else if (
           contains(Math.floor((numberOfRowsF + i) * 10 + j), BookedSeatsIDs) &&
-          j % 2 != 1 &&
+          j % 2 !== 1 &&
           temp > 0
         ) {
           row.push({
@@ -210,7 +210,7 @@ const ReturnFlights = () => {
             orientation: "west",
           });
           row.push(null);
-        } else if (j % 2 != 0 && temp > 0) {
+        } else if (j % 2 !== 0 && temp > 0) {
           row.push({
             id: (numberOfRowsF + i) * 10 + j,
             number: j,
@@ -235,7 +235,7 @@ const ReturnFlights = () => {
     for (let i = 0; i < numberOfRowsE; i++) {
       const row = [];
       for (let j = 1; j <= 6; j++) {
-        if (j % 2 != 0) {
+        if (j % 2 !== 0) {
           row.push({
             id: (numberOfRowsF + numberOfRowsB + i) * 10 + j,
             number: j,
@@ -260,7 +260,7 @@ const ReturnFlights = () => {
     for (let i = 0; i < numberOfRowsF; i++) {
       const row = [];
       for (let j = 1; j <= 6; j++) {
-        if (j % 2 != 0) {
+        if (j % 2 !== 0) {
           row.push({
             id: i * 10 + j,
             number: j,
@@ -284,7 +284,7 @@ const ReturnFlights = () => {
     for (let i = 0; i < numberOfRowsB; i++) {
       const row = [];
       for (let j = 1; j <= 6; j++) {
-        if (j % 2 != 0) {
+        if (j % 2 !== 0) {
           row.push({
             id: (numberOfRowsF + i) * 10 + j,
             number: j,
@@ -313,7 +313,7 @@ const ReturnFlights = () => {
             Math.floor((numberOfRowsF + numberOfRowsB + i) * 10 + j),
             BookedSeatsIDs
           ) &&
-          j % 2 != 0 &&
+          j % 2 !== 0 &&
           temp > 0
         ) {
           row.push({
@@ -327,7 +327,7 @@ const ReturnFlights = () => {
             Math.floor((numberOfRowsF + numberOfRowsB + i) * 10 + j),
             BookedSeatsIDs
           ) &&
-          j % 2 != 1 &&
+          j % 2 !== 1 &&
           temp > 0
         ) {
           row.push({
@@ -337,7 +337,7 @@ const ReturnFlights = () => {
             orientation: "west",
           });
           row.push(null);
-        } else if (j % 2 != 0 && temp > 0) {
+        } else if (j % 2 !== 0 && temp > 0) {
           row.push({
             id: (numberOfRowsF + numberOfRowsB + i) * 10 + j,
             number: j,
@@ -396,9 +396,9 @@ const ReturnFlights = () => {
       EconomySeats: EconomyClassSeats,
     };
 
-    if (numOfSeats == takenSeats.length) {
+    if (numOfSeats === takenSeats.length) {
       if (
-        localStorage.getItem("SelectedFlightChooseSeats") ==
+        localStorage.getItem("SelectedFlightChooseSeats") ===
         localStorage.getItem("FlightIDAro")
       ) {
         localStorage.setItem("departureSeats", JSON.stringify(takenSeats));
@@ -407,7 +407,7 @@ const ReturnFlights = () => {
         localStorage.setItem("returnSeats", JSON.stringify(takenSeats));
         localStorage.setItem("retSeatsFlag", true);
       }
-      history.push("/user-flights-summary");
+      history.push("/user-dep-summary-edit");
     } else {
       handleClickOpen();
     }
@@ -425,7 +425,7 @@ const ReturnFlights = () => {
 
   return (
     <div>
-      <h1>Choose your seat/s</h1>
+      <h1>Choose your seat(s)</h1>
       <div style={{ marginTop: "100px" }}>
         <SeatPicker
           rows={rows}
@@ -465,4 +465,4 @@ const ReturnFlights = () => {
   );
 };
 
-export default ReturnFlights;
+export default Seats;

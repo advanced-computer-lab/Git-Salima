@@ -4,6 +4,31 @@ export const createFlightAPI = async (flight) => {
   await axios.post("http://localhost:8000/create", flight);
 };
 
+export const accessCheck = async (accessT) => {
+  const config = {
+    headers: { Authorization: `Bearer ${accessT}` },
+  };
+
+
+  return await axios.post("http://localhost:8000/checkauth", null, config);
+};
+export const logout = async (accessT) => {
+  const config = {
+    headers: { Authorization: `Bearer ${accessT}` },
+  };
+  
+
+  return await axios.post("http://localhost:8000/logout", null, config);
+};
+
+export const accessCheckAdmin = async (accessT) => {
+  const config = {
+    headers: { Authorization: `Bearer ${accessT}` },
+  };
+
+  return await axios.post("http://localhost:8000/checkauthadmin", null, config);
+};
+
 export const createUserAPI = async (flight) => {
   const temp1 = JSON.stringify(flight);
   const temp2 = JSON.parse(temp1);
@@ -15,22 +40,29 @@ export const createUserAPI = async (flight) => {
     });
 };
 
+export const loginAPI = async (flight) => {
+  const temp1 = JSON.stringify(flight);
+  const temp2 = JSON.parse(temp1);
+
+  return await axios.post("http://localhost:8000/login", temp2).then((res) => {
+    return res.data;
+  });
+};
+
 export const searchFlightsAPI = async (flight) => {
   const temp1 = JSON.stringify(flight);
   const temp2 = JSON.parse(temp1);
 
-  return await axios
-    .get("http://localhost:8000/search", { params: temp2 })
-    .then((res) => {
-      return res.data;
-    });
+  return await axios.post("http://localhost:8000/search", temp2).then((res) => {
+    return res.data;
+  });
 };
 export const searchUsersAPI = async (flight) => {
   const temp1 = JSON.stringify(flight);
   const temp2 = JSON.parse(temp1);
 
   return await axios
-    .get("http://localhost:8000/searchUsers", { params: temp2 })
+    .post("http://localhost:8000/searchUsers", temp2)
     .then((res) => {
       return res.data;
     });
@@ -41,13 +73,13 @@ export const userSearchFlightsAPI = async (flight) => {
   const temp2 = JSON.parse(temp1);
 
   return await axios
-    .get("http://localhost:8000/user/search", { params: temp2 })
+    .post("http://localhost:8000/user/search", temp2)
     .then((res) => {
       return res.data;
     });
 };
 
-export const userFlightsAPI = async (flight) => {
+export const searchBookingsAPI = async (flight) => {
   const temp1 = JSON.stringify(flight);
   const temp2 = JSON.parse(temp1);
 
@@ -62,11 +94,9 @@ export const deleteFlightsAPI = async (flight) => {
   const temp = JSON.stringify(flight);
   const temp2 = JSON.parse(temp);
 
-  return await axios
-    .get("http://localhost:8000/delete", { params: temp2 })
-    .then((res) => {
-      return res.data;
-    });
+  return await axios.post("http://localhost:8000/delete", temp2).then((res) => {
+    return res.data;
+  });
 };
 
 export const editFlightsAPI = async (flight) => {
@@ -102,12 +132,12 @@ export const createBookingAPI = async (flight) => {
 
 export const removeSeatsAPI = async (flight) => {
   await axios.post("http://localhost:8000/removeSeats", flight).then((res) => {
-    return res.data;
+    return ;
   });
 };
 
 export const removeBookingAPI = async (flight) => {
-  await axios.post("http://localhost:8000/deleteBooking", flight);
+return  await axios.post("http://localhost:8000/deleteBooking", flight);
 };
 
 export const getAirportsAPI = async () => {
@@ -119,4 +149,21 @@ export const sendEmailAPI = async (flight) => {
   return await axios.post("http://localhost:8000/email", flight).then((res) => {
     return res.data;
   });
+};
+export const updateBookingAPI = async (flight) => {
+  return await axios
+    .post("http://localhost:8000/updateBooking", flight)
+    .then((res) => {
+      return res.data;
+    });
+};
+export const changePassword = async (flight) => {
+  const temp1 = JSON.stringify(flight);
+  const temp2 = JSON.parse(temp1);
+
+  return await axios
+    .post("http://localhost:8000/updateUserPassword", temp2)
+    .then((res) => {
+      return res.data;
+    });
 };
