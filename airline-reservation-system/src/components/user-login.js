@@ -20,6 +20,9 @@ const Profile = () => {
   const [userEmail, setuserEmail] = useState("");
   const [userPassport, setuserPassport] = useState("");
   const [userPassword, setuserPassword] = useState("");
+  const [homeAddress, setHomeAddress] = useState("");
+  const [countryCode, setCountryCode] = useState("");
+  const [telephoneNumber, setTelephoneNumber] = useState([]);
   const [popup, setpopup] = React.useState(false);
 
   const theme = createTheme({
@@ -46,6 +49,9 @@ const Profile = () => {
       LastName: userLastName,
       Email: userEmail,
       PassportNumber: userPassport,
+      HomeAddress: homeAddress,
+      CountryCode: countryCode,
+      TelephoneNumber: telephoneNumber,
     };
     const userProfile = await createUserAPI(profile);
 
@@ -139,6 +145,50 @@ const Profile = () => {
                   required
                   onChange={(e) => {
                     setuserPassport(e.target.value);
+                  }}
+                />
+              </div>
+
+              <br />
+
+              <div className="col-md-4">
+                <TextField
+                  id="filled-helperText"
+                  label="Home Address"
+                  variant="filled"
+                  required
+                  onChange={(e) => {
+                    setHomeAddress(e.target.value);
+                  }}
+                />
+              </div>
+
+              <br />
+
+              <div className="col-md-4">
+                <TextField
+                  id="filled-helperText"
+                  label="Country Code"
+                  variant="filled"
+                  type="number"
+                  required
+                  onChange={(e) => {
+                    setCountryCode(e.target.value);
+                  }}
+                />
+              </div>
+
+              <br />
+
+              <div className="col-md-4">
+                <TextField
+                  id="filled-helperText"
+                  label="Telephone Number"
+                  variant="filled"
+                  type="number"
+                  required
+                  onChange={(e) => {
+                    setTelephoneNumber(e.target.value);
                   }}
                 />
               </div>
