@@ -33,7 +33,7 @@ const Flight = () => {
       try {
         console.log(localStorage.getItem("userToken"));
         const bhb = await accessCheck(localStorage.getItem("userToken"));
-        // setToken(bhb.data);
+        setToken(bhb.data);
         console.dir(bhb.data);
       } catch (e) {
         console.error(e);

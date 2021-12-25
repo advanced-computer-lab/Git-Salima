@@ -50,8 +50,13 @@ const Profile = () => {
       Email: userEmail,
     };
     // const userProfile = await createUserAPI(profile);
-    try {
-      const token = await loginAPI(profile);
+
+    const token = await loginAPI(profile);
+    console.log(token); //console.log(token.data);
+
+    if (token === false) {
+      setloginError(true);
+    } else {
       const userData = await searchUsersAPI(profileSuccess);
       console.dir(userData);
       console.log(userData);
@@ -68,8 +73,6 @@ const Profile = () => {
       localStorage.setItem("type", "User");
       console.log(token);
       setpopup(true);
-    } catch (e) {
-      setloginError(true);
     }
   };
 

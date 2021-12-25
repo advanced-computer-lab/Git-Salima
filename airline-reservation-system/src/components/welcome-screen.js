@@ -1,4 +1,4 @@
-import react from "react";
+import react, { useState, useEffect } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -16,6 +16,8 @@ import AF from "./allFlightsImg.jpg";
 import SR from "./searchIMG.jpg";
 import { CardActionArea } from "@mui/material";
 import Link from "@mui/material/Link";
+
+import { accessCheckAdmin } from "../apis";
 
 const theme = createTheme({
   typography: {
@@ -36,139 +38,162 @@ const theme = createTheme({
 export default function Home() {
   const w = window.innerWidth;
   const h = window.innerHeight;
+  const [Token, setToken] = useState(false);
+
+  useEffect(() => {
+    (async function () {
+      try {
+        console.log(localStorage.getItem("userToken"));
+        const bhb = await accessCheckAdmin(localStorage.getItem("userToken"));
+        setToken(bhb.data);
+        console.dir(bhb.data);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, []);
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Box
-        sx={{
-          fontFamily: "Roboto",
-          textalign: "center",
-          display: "flex",
-          flexWrap: "wrap",
-          "& > :not(style)": {
-            m: 1,
-            width: window.innerWidth,
-            height: 250,
-            //backgroundImage: `url(${Photo})`,
-            backgroundColor: "#EFEAE4",
-          },
-        }}
-      >
-        <Card sx={{}}>
-          <CardContent>
-            <Typography
-              variant="h1"
-              component="div"
-              marginLeft={w / 50}
-              color="#1a237e"
-            >
-              Git Salima Airlines
-            </Typography>
-            <Typography
-              variant="h3"
-              color="text.secondary"
-              marginLeft={w / 45}
-              marginRight={w / 45}
-              textAlign="center"
-              color="#3D44C2"
-            >
-              We Git you where you want to go
-            </Typography>
-          </CardContent>
-        </Card>
-      </Box>
-      <Box sx={{ fontFamily: "Roboto" }}>
-        <Stack direction="row" spacing={4.5}>
-          <Card
+    <div>
+      {Token === true && (
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Box
             sx={{
-              width: 380,
-              height: 300,
-              backgroundColor: "#3D44C2",
-              marginLeft: "40px",
+              fontFamily: "Roboto",
+              textalign: "center",
+              display: "flex",
+              flexWrap: "wrap",
+              "& > :not(style)": {
+                m: 1,
+                width: window.innerWidth,
+                height: 250,
+                //backgroundImage: `url(${Photo})`,
+                backgroundColor: "#EFEAE4",
+              },
             }}
           >
-            <CardActionArea>
-              <Link href="/create" underline="none">
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={CF}
-                  alt="create flight"
-                />
-                <CardContent>
-                  <Typography
-                    marginLeft="2px"
-                    marginTop="50px"
-                    marginBottom="50px"
-                    textAlign="center"
-                    variant="h4"
-                    component="div"
-                    color="#EFEAE4"
-                  >
-                    Create Flights
-                  </Typography>
-                </CardContent>
-              </Link>
-            </CardActionArea>
-          </Card>
-          <Card sx={{ width: 380, height: 300, backgroundColor: "#F77970" }}>
-            <CardActionArea>
-              <Link href="/tickets" underline="none">
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={AF}
-                  alt="all flights"
-                />
-                <CardContent>
-                  <Typography
-                    marginLeft="2px"
-                    marginTop="50px"
-                    marginBottom="50px"
-                    textAlign="center"
-                    variant="h4"
-                    component="div"
-                    color="#EFEAE4"
-                  >
-                    View All Flights
-                  </Typography>
-                </CardContent>
-              </Link>
-            </CardActionArea>
-          </Card>
-          <Card sx={{ width: 380, height: 300, backgroundColor: "#DD4E5B" }}>
-            <CardActionArea>
-              <Link href="/search" underline="none">
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={SR}
-                  alt="search"
-                />
-                <CardContent>
-                  <Typography
-                    marginLeft="2px"
-                    marginTop="50px"
-                    marginBottom="50px"
-                    textAlign="center"
-                    variant="h4"
-                    component="div"
-                    color="#EFEAE4"
-                  >
-                    Search Flights
-                  </Typography>
-                </CardContent>
-              </Link>
-            </CardActionArea>
-          </Card>
-        </Stack>
-      </Box>
+            <Card sx={{}}>
+              <CardContent>
+                <Typography
+                  variant="h1"
+                  component="div"
+                  marginLeft={w / 50}
+                  color="#1a237e"
+                >
+                  Git Salima Airlines
+                </Typography>
+                <Typography
+                  variant="h3"
+                  color="text.secondary"
+                  marginLeft={w / 45}
+                  marginRight={w / 45}
+                  textAlign="center"
+                  color="#3D44C2"
+                >
+                  We Git you where you want to go
+                </Typography>
+              </CardContent>
+            </Card>
+          </Box>
+          <Box sx={{ fontFamily: "Roboto" }}>
+            <Stack direction="row" spacing={4.5}>
+              <Card
+                sx={{
+                  width: 380,
+                  height: 300,
+                  backgroundColor: "#3D44C2",
+                  marginLeft: "40px",
+                }}
+              >
+                <CardActionArea>
+                  <Link href="/create" underline="none">
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image={CF}
+                      alt="create flight"
+                    />
+                    <CardContent>
+                      <Typography
+                        marginLeft="2px"
+                        marginTop="50px"
+                        marginBottom="50px"
+                        textAlign="center"
+                        variant="h4"
+                        component="div"
+                        color="#EFEAE4"
+                      >
+                        Create Flights
+                      </Typography>
+                    </CardContent>
+                  </Link>
+                </CardActionArea>
+              </Card>
+              <Card
+                sx={{ width: 380, height: 300, backgroundColor: "#F77970" }}
+              >
+                <CardActionArea>
+                  <Link href="/tickets" underline="none">
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image={AF}
+                      alt="all flights"
+                    />
+                    <CardContent>
+                      <Typography
+                        marginLeft="2px"
+                        marginTop="50px"
+                        marginBottom="50px"
+                        textAlign="center"
+                        variant="h4"
+                        component="div"
+                        color="#EFEAE4"
+                      >
+                        View All Flights
+                      </Typography>
+                    </CardContent>
+                  </Link>
+                </CardActionArea>
+              </Card>
+              <Card
+                sx={{ width: 380, height: 300, backgroundColor: "#DD4E5B" }}
+              >
+                <CardActionArea>
+                  <Link href="/search" underline="none">
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image={SR}
+                      alt="search"
+                    />
+                    <CardContent>
+                      <Typography
+                        marginLeft="2px"
+                        marginTop="50px"
+                        marginBottom="50px"
+                        textAlign="center"
+                        variant="h4"
+                        component="div"
+                        color="#EFEAE4"
+                      >
+                        Search Flights
+                      </Typography>
+                    </CardContent>
+                  </Link>
+                </CardActionArea>
+              </Card>
+            </Stack>
+          </Box>
 
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-    </ThemeProvider>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+        </ThemeProvider>
+      )}
+      {Token === false && <h1>Unauthorized Access</h1>}
+    </div>
   );
 }
