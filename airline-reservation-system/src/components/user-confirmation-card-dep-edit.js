@@ -14,6 +14,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { updateSeatsAPI, updateBookingAPI, removeSeatsAPI } from "../apis";
 import Stack from "@mui/material/Stack";
 import { useHistory } from "react-router-dom";
+
 export default function MultiActionAreaCard() {
   const theme = createTheme({
     palette: {
@@ -174,6 +175,8 @@ export default function MultiActionAreaCard() {
               <Button onClick={confirmHandler} autoFocus>
                 Confirm
               </Button>
+              {/* <><StripeContainer/></> */}
+              
               <Dialog
                 open={openNext}
                 onClose={handleClose}

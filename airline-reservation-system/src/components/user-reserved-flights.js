@@ -56,18 +56,59 @@ const ReservedFlights = () => {
     const temp = JSON.stringify(input);
     const temp2 = JSON.parse(temp);
 
-    const deletedBooking = {
-      Flight_ID: temp2._id,
-      ReturnFlight_ID: temp2.Return_id,
-      TakenSeats: temp2.TakenSeats,
-      ReturnTakenSeats: temp2.ReturnTakenSeats,
-      Cabin: temp2.Cabin,
-      ReturnCabin: temp2.ReturnCabin,
-      BookingNumber: temp2.BookingNumber,
+    let s = ""
+    let TakenSeats
+    if(temp2.TakenSeats.length > 1){
+       TakenSeats = (temp2.TakenSeats).map((seat)=>{ s += seat+","})
+    }
+    else{
+       TakenSeats = s+temp2.TakenSeats[0];
+    }
+
+
+    if(s.charAt(s.length-1) === ','){
+      s = s.substring(0,s.length-1)
+    }
+
+    let s2 = ""
+    let TakenSeats2
+    if(temp2.ReturnTakenSeats.length > 1){
+       TakenSeats2 = (temp2.ReturnTakenSeats).map((seat)=>{ 
+         let tmp = seat +""
+         for(let i=0;i<tmp.length;i++){
+           if(tmp.charAt(i) === '.'){
+             tmp = tmp.substring(0,i)
+           }
+         }
+         s2 += tmp+","})
+    }
+    else{
+       TakenSeats2 = s2+temp2.ReturnTakenSeats[0];
+    }
+
+    if(s2.charAt(s2.length-1) === ','){
+      s2 = s2.substring(0,s2.length-1)
+    }
+
+    const u1 = {
+      Flight_ID: temp2._id,  
+      TakenSeats: s, 
+      Cabin: temp2.Cabin,  
     };
 
-    removeSeatsAPI(deletedBooking);
-    removeBookingAPI(deletedBooking);
+    const u2 = {
+      Flight_ID: temp2.Return_id,
+      TakenSeats: s2,
+      Cabin: temp2.ReturnCabin,
+    };
+
+    const deletebooking = {
+      BookingNumber: temp2.BookingNumber,
+    }
+ 
+    removeSeatsAPI(u1);
+    removeSeatsAPI(u2);
+    removeBookingAPI(deletebooking);
     sendEmailAPI(email);
   };
 

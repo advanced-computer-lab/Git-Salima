@@ -8,6 +8,7 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import { userSearchFlightsAPI } from "../../src/apis";
+import StripeContainer from "./stripeContainer";
 
 import LinearProgress from "@mui/material/LinearProgress";
 
@@ -119,6 +120,8 @@ const FlightsItinerary = () => {
           <br />
           {
             <div>
+              <StripeContainer/>
+              <br/>
               <UserConfirmationCardEdit />
             </div>
           }
