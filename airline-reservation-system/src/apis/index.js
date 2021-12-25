@@ -8,8 +8,9 @@ export const accessCheck = async (accessT) => {
   const config = {
     headers: { Authorization: `Bearer ${accessT}` },
   };
+  localStorage.getItem("userToken");
 
-  await axios.post("http://localhost:8000/checkauth", null, config);
+  return await axios.post("http://localhost:8000/checkauth", null, config);
 };
 
 export const accessCheckAdmin = async (accessT) => {
@@ -17,7 +18,7 @@ export const accessCheckAdmin = async (accessT) => {
     headers: { Authorization: `Bearer ${accessT}` },
   };
 
-  await axios.post("http://localhost:8000/checkauthadmin", null, config);
+  return await axios.post("http://localhost:8000/checkauthadmin", null, config);
 };
 
 export const createUserAPI = async (flight) => {
@@ -35,11 +36,9 @@ export const loginAPI = async (flight) => {
   const temp1 = JSON.stringify(flight);
   const temp2 = JSON.parse(temp1);
 
-  return await axios
-    .post("http://localhost:8000/login", temp2)
-    .then((res) => {
-      return res.data;
-    });
+  return await axios.post("http://localhost:8000/login", temp2).then((res) => {
+    return res.data;
+  });
 };
 
 export const searchFlightsAPI = async (flight) => {

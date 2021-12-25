@@ -31,9 +31,10 @@ const Flight = () => {
   useEffect(() => {
     (async function () {
       try {
+        console.log(localStorage.getItem("userToken"));
         const bhb = await accessCheck(localStorage.getItem("userToken"));
-        setToken(bhb);
-        console.log(bhb);
+        // setToken(bhb.data);
+        console.dir(bhb.data);
       } catch (e) {
         console.error(e);
       }
@@ -239,6 +240,7 @@ const Flight = () => {
           </ThemeProvider>
         </div>
       )}
+      {Token === false && <h1>Unauthorized Access</h1>}
     </div>
   );
 };
