@@ -34,19 +34,35 @@ const Profile = () => {
   const [userPassport, setuserPassport] = useState(
     localStorage.getItem("userPassport")
   );
+  const [userHomeAddress, setuserHomeAddress] = useState(
+    localStorage.getItem("userHomeAddress")
+  );
+  const [userCountryCode, setuserCountryCode] = useState(
+    localStorage.getItem("userCountryCode")
+  );
+  const [userTelephoneNumbers, setuserTelephoneNumbers] = useState(
+    localStorage.getItem("userTelephoneNumbers")
+  );
+
   const [editOccured, seteditOccured] = useState("false");
   const [popup, setpopup] = React.useState(false);
+  const [passwordpopup, setpasswordpopup] = React.useState(false);
   const [currentPassword, setcurrentPassword] = useState("");
   const [IncorrectCurrentPassword, setIncorrectCurrentPassword] =
     useState(false);
   const [userNewPassword1, setuserNewPassword1] = useState("");
   const [userNewPassword2, setuserNewPassword2] = useState("");
   const [match, setmatch] = useState(true);
+  const [errorText, seterrorText] = useState("");
+
   const profileInfo = {
     FirstName: userFirstName,
     LastName: userLastName,
     Email: userEmail,
     PassportNumber: userPassport,
+    HomeAddress: userHomeAddress,
+    CountryCode: userCountryCode,
+    TelephoneNumber: userTelephoneNumbers,
   };
   const theme = createTheme({
     palette: {
@@ -78,12 +94,19 @@ const Profile = () => {
       LastName: userLastName,
       Email: userEmail,
       PassportNumber: userPassport,
+      HomeAddress: userHomeAddress,
+      CountryCode: userCountryCode,
+      TelephoneNumber: userTelephoneNumbers,
     };
     editUsersAPI(profile);
     localStorage.setItem("userFName", userFirstName);
     localStorage.setItem("userLName", userLastName);
     localStorage.setItem("userEmail", userEmail);
     localStorage.setItem("userPassport", userPassport);
+
+    localStorage.setItem("userHomeAddress", userHomeAddress);
+    localStorage.setItem("userCountryCode", userCountryCode);
+    localStorage.setItem("userTelephoneNumbers", userTelephoneNumbers);
     setpopup(true);
   };
   let history = useHistory();
@@ -91,12 +114,17 @@ const Profile = () => {
     e.preventDefault();
     history.push("/user-home");
   };
+  const handleClosePassword = (e) => {
+    e.preventDefault();
+    window.location.reload(false);
+  };
   const passwordHandler = async (e) => {
     e.preventDefault();
     const profile = {
       Email: localStorage.getItem("userEmail"),
       //5AALI BALAK
       Password: currentPassword,
+      newPassword: userNewPassword2,
     };
     const res = await searchUsersAPI(profile);
     console.log(res);
@@ -106,15 +134,22 @@ const Profile = () => {
     // ) {
     //setIncorrectCurrentPassword(false);
     if (userNewPassword1 === userNewPassword2) {
-      setmatch(true);
-      try {
-        changePassword(profile);
-        setIncorrectCurrentPassword(true);
-      } catch {
-        setIncorrectCurrentPassword(false);
+      if (userNewPassword1.length >= 6) {
+        setmatch(true);
+        try {
+          await changePassword(profile);
+          setIncorrectCurrentPassword(false);
+          setpasswordpopup(true);
+        } catch (error) {
+          setIncorrectCurrentPassword(true);
+        }
+      } else {
+        setmatch(false);
+        seterrorText("New password must be at least 6 characters");
       }
     } else {
       setmatch(false);
+      seterrorText("Passwords do not match");
     }
     // } else setIncorrectCurrentPassword(true);
   };
@@ -202,6 +237,45 @@ const Profile = () => {
                     />
                   </div>
                 </div>
+                <div className="row">
+                  <div className="col-md-4 offset-md-2">
+                    <TextField
+                      id="filled-helperText"
+                      label="Home Address"
+                      defaultValue={profileInfo.HomeAddress}
+                      variant="filled"
+                      onChange={(e) => {
+                        setuserHomeAddress(e.target.value);
+                        seteditOccured("true");
+                      }}
+                    />
+                  </div>
+                  <div className="col-md-4 offset-md-1">
+                    <TextField
+                      id="filled-helperText"
+                      label="Country Code"
+                      defaultValue={profileInfo.CountryCode}
+                      variant="filled"
+                      onChange={(e) => {
+                        setuserCountryCode(e.target.value);
+                        seteditOccured("true");
+                      }}
+                    />
+                  </div>
+                  <div className="col-md-4 offset-md-1">
+                    <TextField
+                      id="filled-helperText"
+                      label="Telephone Number(s)"
+                      defaultValue={profileInfo.TelephoneNumber}
+                      variant="filled"
+                      onChange={(e) => {
+                        setuserTelephoneNumbers(e.target.value);
+                        seteditOccured("true");
+                      }}
+                    />
+                  </div>
+                  <br />
+                </div>
                 <br />
                 <Accordion
                   style={{
@@ -281,7 +355,7 @@ const Profile = () => {
                               label="New Password"
                               variant="filled"
                               type="password"
-                              helperText="Passwords do not match"
+                              helperText={errorText}
                               onChange={(e) => {
                                 setuserNewPassword1(e.target.value);
                               }}
@@ -295,7 +369,7 @@ const Profile = () => {
                               label="Confirm New Password"
                               variant="filled"
                               type="password"
-                              helperText="Passwords do not match"
+                              helperText={errorText}
                               onChange={(e) => {
                                 setuserNewPassword2(e.target.value);
                               }}
@@ -359,6 +433,24 @@ const Profile = () => {
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={handleClose}>OK</Button>
+                </DialogActions>
+              </Dialog>
+            </Card>
+            <Card>
+              <Dialog
+                open={passwordpopup}
+                onClose={handleClosePassword}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Password Changed Successfully
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClosePassword}>OK</Button>
                 </DialogActions>
               </Dialog>
             </Card>

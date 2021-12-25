@@ -29,6 +29,7 @@ import UserRetChooseSeatsEdit from "./components/user-ret-choose-seats-edit";
 import UserDepItineraryEdit from "./components/user-dep-itinerary-edit";
 import UserRetItineraryEdit from "./components/user-ret-itinerary-edit";
 import ChangeSeats from "./components/changeSeats/change-seats";
+import UserSignUp from "./components/user-signup";
 function App() {
   return (
     <Router>
@@ -191,6 +192,9 @@ function App() {
       </div>
       <div className="container">
         <Route path="/change-seats" component={ChangeSeats} />
+      </div>
+      <div className="container">
+        <Route path="/user-signup" component={UserSignUp} />
       </div>
     </Router>
   );
