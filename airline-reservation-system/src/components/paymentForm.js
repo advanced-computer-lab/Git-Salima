@@ -141,17 +141,20 @@ export default function PaymentForm() {
       TakenSeats: JSON.parse(localStorage.getItem("departureSeats")),
       ReturnTakenSeats: JSON.parse(localStorage.getItem("returnSeats")),
       Cabin: localStorage.getItem("UFSFClass"),
+      ReturnCabin: localStorage.getItem("UFSFClass"),
       BookingNumber: localStorage.getItem("bookingNumber"),
       TotalPrice: localStorage.getItem("totalPrice"),
       User_id: localStorage.getItem("userID"),
     };
-    handleSubmit();
+    //handleSubmit();
 
     handleClickOpenNext();
     await updateSeatsAPI(bookedFlight);
     await createBookingAPI(bookedFlight).then(() => console.log("ay haga 2"));
+    // await handleSubmit();
   };
-  const handleOK = () => {
+  const handleOK = async() => {
+    await handleSubmit();
     history.push("/user-reserved-flights");
   };
   

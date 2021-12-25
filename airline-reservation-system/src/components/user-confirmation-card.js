@@ -50,6 +50,7 @@ export default function MultiActionAreaCard() {
     setOpenNext(false);
   };
   let history = useHistory();
+
   const confirmHandler = async () => {
     const bookedFlight = {
       _id: localStorage.getItem("FlightIDAro"),
@@ -62,6 +63,7 @@ export default function MultiActionAreaCard() {
       TotalPrice: localStorage.getItem("totalPrice"),
       User_id: localStorage.getItem("userID"),
     };
+    console.log(bookedFlight)
 
     handleClickOpenNext();
     await updateSeatsAPI(bookedFlight);
