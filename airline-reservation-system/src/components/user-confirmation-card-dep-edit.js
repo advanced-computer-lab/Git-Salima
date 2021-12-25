@@ -2,18 +2,9 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Button, CardActions } from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import { styled } from "@mui/material/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { updateSeatsAPI, updateBookingAPI, removeSeatsAPI } from "../apis";
 import Stack from "@mui/material/Stack";
-import { useHistory } from "react-router-dom";
 
 export default function MultiActionAreaCard() {
   const theme = createTheme({
@@ -28,67 +19,8 @@ export default function MultiActionAreaCard() {
       fontFamily: "Philosopher",
     },
   });
-  const ColorButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText("#082567"),
-    backgroundColor: "#082567",
-    "&:hover": {
-      backgroundColor: "#5F9CC5",
-    },
-  }));
+
   const w = 500;
-
-  const [open, setOpen] = React.useState(false);
-  const [openNext, setOpenNext] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClickOpenNext = () => {
-    setOpenNext(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-    setOpenNext(false);
-  };
-  let history = useHistory();
-  const confirmHandler = async () => {
-
-    const booking = {
-      Flight_ID: localStorage.getItem("FlightIDAro"),
-      TakenSeats: JSON.parse(localStorage.getItem("departureSeats")),
-      Cabin: localStorage.getItem("UFSFClass"),
-      BookingNumber: localStorage.getItem("bookingNumber"),
-      TotalPrice: localStorage.getItem("totalPrice"),
-      User_ID: localStorage.getItem("userID")
-    };
-
-    const bookedFlight = {
-      _id: localStorage.getItem("FlightIDAro"),
-      TakenSeats: JSON.parse(localStorage.getItem("departureSeats")),
-      Cabin: localStorage.getItem("UFSFClass"),
-      BookingNumber: localStorage.getItem("bookingNumber"),
-      TotalPrice: localStorage.getItem("totalPrice"),
-      User_id: localStorage.getItem("userID")
-    };
-
-    const oldFlight = {
-      Flight_ID: localStorage.getItem("OldDepID"),
-      TakenSeats: localStorage.getItem("OldTakenSeatsDep"),
-      Cabin: localStorage.getItem("OldDepCabin")
-    };
-
-
-    handleClickOpenNext();
-
-    await removeSeatsAPI(oldFlight);
-    await updateSeatsAPI(bookedFlight);
-    await updateBookingAPI(booking);
-  };
-  const handleOK = () => {
-    history.push("/user-reserved-flights");
-  };
 
   return (
     <Card sx={{ maxWidth: w }}>
@@ -154,51 +86,6 @@ export default function MultiActionAreaCard() {
             Total Price: {localStorage.getItem("totalPrice")} EGP
           </Typography>
         </CardContent>
-        <CardActions>
-          <ColorButton variant="contained" onClick={handleClickOpen}>
-            Confirm Booking
-          </ColorButton>
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Are you sure you want to book this flight?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button onClick={confirmHandler} autoFocus>
-                Confirm
-              </Button>
-              {/* <><StripeContainer/></> */}
-              
-              <Dialog
-                open={openNext}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-              >
-                <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-description">
-                    Flight updated successfully!
-                    <br />
-                    Your Flight Booking Number is Still{" "}
-                    {localStorage.getItem("bookingNumber")}
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleOK}>Ok</Button>
-                </DialogActions>
-              </Dialog>
-            </DialogActions>
-          </Dialog>
-        </CardActions>
       </ThemeProvider>
     </Card>
   );
