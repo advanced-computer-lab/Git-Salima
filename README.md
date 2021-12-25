@@ -17,7 +17,52 @@ Users could search across the whole database of flights with their preferred cri
 <h3>Regarding Admins:</h3>
 Admins have unrestricted access to all website functions, with a difference from the users of the ability to view all flights , create flights and editing flights. The aforementioned are displayed through a clear, concise and effective UI with proactive UX that guides through the features swiftly providing a subtle flight administering experience.
 <h2>Code Examples</h2>
-This is where you try to compress your project and make the reader understand what it does as simply as possible. This should help the reader understand if your code solves their issue.
+Text Fields Display: "   <form onSubmit={loginHandler}>
+                {loginError === false && (
+                  <div>
+                    <div className="form-group col-md-4">
+                      <TextField
+                        required
+                        id="filled-helperText"
+                        type="email"
+                        aria-describedby="emailHelp"
+                        label="Email"
+                        variant="filled"
+                        onChange={(e) => {
+                          setuserEmail(e.target.value);
+                        }}
+                      />
+                    </div>"
+ Backend login route : "router.post("/login", async (req, res) => {
+  const user1 = req.body.Email;
+  const user2 = await User.find({ Email: user1 });
+  if (user2.length == 0) res.send("naah");
+  const Password12 = user2[0].Password;
+  console.log(Password12);
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash("1234", salt);
+  const Password1 = hashedPassword;
+  try {
+    if (await bcrypt.compare(req.body.Password, Password12)) {
+      console.log("lakad wasalt");
+      await axios
+        .post("http://localhost:4000/login", { Email: user1 })
+        .then((res1) => {
+          console.log(res1.data.refreshToken);
+
+          User.findByIdAndUpdate(user2[0]._id, {
+            Token: res1.data.refreshToken,
+          }).then((resu) => {
+            res.send(res1.data.refreshToken);
+          });
+        });
+    } else {
+      return res.send(false);
+    }
+  } catch (error) {
+    throw error;
+  }
+});"                    
 <h2>Installation</h2>
 The project heavily depended on Material UI for frontend purposes , so all libraries of material UI including lab and font were used. Stripes API and Nodemailer API were used for payment and email sending respectively , providing swift communication between server , user and payment servers.
 <h2>API reference</h2>
