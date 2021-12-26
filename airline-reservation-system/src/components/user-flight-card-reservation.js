@@ -11,6 +11,7 @@ import CardMedia from "@mui/material/CardMedia";
 import EH from "./Economy Header.png";
 import FH from "./First Header.png";
 import BH from "./Business Header.png";
+import logo from "./images/logo.JPG";
 import LuggageIcon from "@mui/icons-material/Luggage";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import EventIcon from "@mui/icons-material/Event";
@@ -21,6 +22,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { sendEmailAPI } from "../apis";
 
 const theme = createTheme({
   palette: {
@@ -45,7 +47,27 @@ const w = window.innerWidth;
 
 export default function ReservationFlightCard(props) {
   const [open, setOpen] = React.useState(false);
-
+  const [OpenEmail, setOpenEmail] = React.useState(false);
+  const email = {
+    to: localStorage.getItem("userEmail"),
+    subject: "Flight Cancellation Confirmation",
+    text:
+      "<body>Dear " +
+      localStorage.getItem("userFName") +
+      " " +
+      localStorage.getItem("userLName") +
+      ",</body>" +
+      "\n" +
+      "<body>Your flight with the booking number " +
+      props.BookingNumber +
+      " has been cancelled.</body>" +
+      "\n" +
+      "<body>An amount of " +
+      props.TotalPrice +
+      " EGP will be refunded to your account.</body>" +
+      "\n" +
+      "<body>The Git Salima Team</body>",
+  };
   let departureTakenSeats = "";
   let returnTakenSeats = "";
 
@@ -60,14 +82,80 @@ export default function ReservationFlightCard(props) {
   const handleClickOpen = () => {
     setOpen(true);
   };
+  const handleClickOpenEmail = () => {
+    setOpenEmail(true);
+    const confemail = {
+      to: localStorage.getItem("userEmail"),
+      subject: "Your Flight Itinerary",
+      text:
+        "<body>Dear " +
+        localStorage.getItem("userFName") +
+        " " +
+        localStorage.getItem("userLName") +
+        ",</body>" +
+        "\n" +
+        "<body>Your outbound flight with the Flight number " +
+        props.FlightNo +
+        " will depart from " +
+        props.DepartureAirport +
+        " airport at " +
+        props.DepartureTime +
+        " on " +
+        props.DepartureDate +
+        ".</body>" +
+        "\n" +
+        "<body>It will arrive at " +
+        props.ArrivalAirport +
+        " airport at " +
+        props.ArrivalTime +
+        " on " +
+        props.ArrivalDate +
+        "</body>" +
+        "\n" +
+        "<body>Your return flight with the Flight number " +
+        props.ReturnFlightNo +
+        " will depart from " +
+        props.ReturnDepartureAirport +
+        " airport at " +
+        props.ReturnDepartureTime +
+        " on " +
+        props.ReturnDepartureDate +
+        ".</body>" +
+        "\n" +
+        "<body>It will arrive at " +
+        props.ReturnArrivalAirport +
+        " airport at " +
+        props.ReturnArrivalTime +
+        " on " +
+        props.ReturnArrivalDate +
+        "</body>" +
+        "\n" +
+        "<body>Your booking number is " +
+        props.BookingNumber +
+        " .</body>" +
+        "\n" +
+        "<body>With a total amount amount of " +
+        props.TotalPrice +
+        " EGP for both the outbound and the return flights.</body>" +
+        "\n" +
+        "<body>Have a safe flight,</body>" +
+        "\n" +
+        "<body>The Git Salima Team</body>",
+    };
+    sendEmailAPI(confemail);
+  };
 
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleCloseEmail = () => {
+    setOpenEmail(false);
   };
 
   const cancelHandler = () => {
     props.onClickCancel(props);
     setOpen(false);
+    sendEmailAPI(email);
     window.location.reload(false);
   };
 
@@ -399,7 +487,7 @@ export default function ReservationFlightCard(props) {
               maxHeight="10"
               justifyContent="space-around"
               alignItems="center"
-              marginRight="5px"
+              marginRight="20px"
             >
               {props.ReturnCabin === "First Class" && (
                 <Stack direction="row">
@@ -471,10 +559,10 @@ export default function ReservationFlightCard(props) {
               }}
             />
             <Stack
-              spacing={0}
+              spacing={30}
               direction="row"
-              justifyContent="space-between"
-              marginLeft="50px"
+              justifyContent="space-around"
+              marginLeft="10px"
               alignItems="center"
             >
               <Stack>
@@ -495,17 +583,32 @@ export default function ReservationFlightCard(props) {
                 >
                   Booking Number:
                 </Typography>
-                <Typography variant="h5" color="primary.main" marginLeft="60px">
+                <Typography
+                  variant="h5"
+                  color="primary.main"
+                  marginLeft="60px"
+                  justifyContent="center"
+                  justifySelf="center"
+                >
                   {props.BookingNumber}
                 </Typography>
               </Stack>
+
               <CardActions>
-                <ColorButton variant="contained" onClick={editHandler}>
-                  Edit Reservation
-                </ColorButton>
-                <ColorButton variant="contained" onClick={handleClickOpen}>
-                  Cancel Reservation
-                </ColorButton>
+                <Stack direction="column" spacing={2}>
+                  <ColorButton variant="contained" onClick={editHandler}>
+                    Edit Reservation
+                  </ColorButton>
+                  <ColorButton variant="contained" onClick={handleClickOpen}>
+                    Cancel Reservation
+                  </ColorButton>
+                  <ColorButton
+                    variant="contained"
+                    onClick={handleClickOpenEmail}
+                  >
+                    Email Itinerary
+                  </ColorButton>
+                </Stack>
                 <Dialog
                   open={open}
                   onClose={handleClose}
@@ -523,6 +626,22 @@ export default function ReservationFlightCard(props) {
                     <Button onClick={cancelHandler} autoFocus>
                       Confirm
                     </Button>
+                  </DialogActions>
+                </Dialog>
+                <Dialog
+                  open={OpenEmail}
+                  onClose={handleCloseEmail}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                      An Email with this flight's itinerary has been sent to you
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleCloseEmail}>OK</Button>
                   </DialogActions>
                 </Dialog>
               </CardActions>

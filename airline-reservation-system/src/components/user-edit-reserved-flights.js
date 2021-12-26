@@ -17,10 +17,11 @@ import { searchBookingsAPI } from "../../src/apis";
 import "../styles/header.css";
 
 const steps = [
-  "Choose Outbound Flight",
-  "Choose Return Flight",
+  "Choose Flight/Seats to Change",
+  "Search For Your New Flight",
+  "Chooser Your New Flight",
   "Choose your Seats",
-  "Confirm your Flights",
+  "Confirm your New Flight",
 ];
 
 const theme = createTheme({
@@ -153,21 +154,20 @@ const ReservedFlights = () => {
     const temp2 = JSON.parse(temp);
 
     const f = {
-      _id: temp2._id
-    }
-    console.log(temp2._id + "test1")
+      _id: temp2._id,
+    };
+    console.log(temp2._id + "test1");
     const b = await searchBookingsAPI(f);
-    localStorage.setItem("EditedBookingNumber", b[0].BookingNumber)
+    localStorage.setItem("EditedBookingNumber", b[0].BookingNumber);
     let f2 = await searchFlightsAPI({ _id: b[0].Departure_id });
 
-    console.log(b)
-    let s = ""
-    localStorage.setItem("clickedSeats", temp2.TakenSeats)
-    let TakenSeats
+    console.log(b);
+    let s = "";
+    localStorage.setItem("clickedSeats", temp2.TakenSeats);
+    let TakenSeats;
     if (temp2.TakenSeats.length > 1) {
-      TakenSeats = (temp2.TakenSeats).map((seat) => s += seat + ",")
-    }
-    else {
+      TakenSeats = temp2.TakenSeats.map((seat) => (s += seat + ","));
+    } else {
       TakenSeats = s + temp2.TakenSeats[0];
     }
 
@@ -176,10 +176,9 @@ const ReservedFlights = () => {
       Cabin: b[0].Cabin,
       TakenSeats: s,
     };
-    console.dir(b)
-    console.log(seatsToRemove)
+    console.dir(b);
+    console.log(seatsToRemove);
     await removeSeatsAPI(seatsToRemove);
-
 
     f2 = await searchFlightsAPI({ _id: b[0].Departure_id });
 
@@ -211,8 +210,6 @@ const ReservedFlights = () => {
 
     // ----
 
-
-
     history.push("/change-seats");
   };
 
@@ -222,24 +219,22 @@ const ReservedFlights = () => {
     const temp2 = JSON.parse(temp);
 
     // remove seats
-    console.log("INNNNN")
+    console.log("INNNNN");
 
     const f = {
-      _id: temp2._id
-    }
-    console.log(temp2)
+      _id: temp2._id,
+    };
+    console.log(temp2);
     const b = await searchBookingsAPI(f);
-    localStorage.setItem("EditedBookingNumber", b[0].BookingNumber)
+    localStorage.setItem("EditedBookingNumber", b[0].BookingNumber);
     let f2 = await searchFlightsAPI({ _id: b[0].ReturnFlight_ID });
 
-
-    let s = ""
-    localStorage.setItem("clickedSeats", temp2.TakenSeats)
-    let TakenSeats
+    let s = "";
+    localStorage.setItem("clickedSeats", temp2.TakenSeats);
+    let TakenSeats;
     if (temp2.TakenSeats.length > 1) {
-      TakenSeats = (temp2.TakenSeats).map((seat) => s += seat + ",")
-    }
-    else {
+      TakenSeats = temp2.TakenSeats.map((seat) => (s += seat + ","));
+    } else {
       TakenSeats = s + temp2.TakenSeats[0];
     }
 
@@ -248,10 +243,9 @@ const ReservedFlights = () => {
       Cabin: b[0].Cabin,
       TakenSeats: s,
     };
-    console.dir(b)
-    console.log(seatsToRemove)
+    console.dir(b);
+    console.log(seatsToRemove);
     await removeSeatsAPI(seatsToRemove);
-
 
     f2 = await searchFlightsAPI({ _id: b[0].ReturnFlight_ID });
 
@@ -276,8 +270,6 @@ const ReservedFlights = () => {
 
     // ----
 
-
-
     history.push("/change-seats");
   };
 
@@ -292,7 +284,7 @@ const ReservedFlights = () => {
       <br />
       <br />
       <br />
-      <Stepper activeStep={2} alternativeLabel>
+      <Stepper activeStep={0} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>

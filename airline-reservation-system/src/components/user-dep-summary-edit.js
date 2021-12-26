@@ -21,10 +21,11 @@ import { userSearchFlightsAPI } from "../../src/apis";
 import "../styles/header.css";
 
 const steps = [
-  "Choose Outbound Flight",
-  "Choose Return Flight",
+  "Choose Flight/Seats to Change",
+  "Search For Your New Flight",
+  "Chooser Your New Flight",
   "Choose your Seats",
-  "Confirm your Flights",
+  "Confirm your New Flight",
 ];
 
 const theme = createTheme({
@@ -104,7 +105,7 @@ const FlightsSummary = () => {
       <br />
       <br />
       <br />
-      <Stepper activeStep={2} alternativeLabel>
+      <Stepper activeStep={3} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>

@@ -12,10 +12,11 @@ import "../styles/header.css";
 import { userSearchFlightsAPI } from "../../src/apis";
 
 const steps = [
-  "Choose Outbound Flight",
-  "Choose Return Flight",
+  "Choose Flight/Seats to Change",
+  "Search For Your New Flight",
+  "Chooser Your New Flight",
   "Choose your Seats",
-  "Confirm your Flights",
+  "Confirm your New Flight",
 ];
 
 const DepartureFlights = () => {
@@ -101,15 +102,15 @@ const DepartureFlights = () => {
         fixed
         brand="Git Salima Airlines"
         rightLinks={<HeaderLinks />}
-      // changeColorOnScroll={{
-      //   height: 0,
-      //   color: "#082567",
-      // }}
+        // changeColorOnScroll={{
+        //   height: 0,
+        //   color: "#082567",
+        // }}
       />
       <br />
       <br />
       <br />
-      <Stepper activeStep={0} alternativeLabel>
+      <Stepper activeStep={2} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>

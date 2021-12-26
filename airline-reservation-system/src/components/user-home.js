@@ -17,6 +17,34 @@ import HeaderLinks from "./HeaderLinks.js";
 import bg from "./bg4.jpg";
 import { accessCheck } from "../apis";
 import "../styles/header.css";
+import { makeStyles } from "@material-ui/core/styles";
+import styles from "../styles/teamStyle.js";
+import classNames from "classnames";
+import GridContainer from "./GridContainer";
+import Button2 from "./Button";
+//import Card2 from "components/Card/Card.js";
+import GridItem from "./GridItem";
+import CardBody from "./CardBody";
+import CardFooter from "./CardFooter";
+import team1 from "./images/mario.jpg";
+import team2 from "./images/atef.jpg";
+import team3 from "./images/kizo.jpg";
+
+const useStyles = makeStyles(styles);
+const ColorButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.getContrastText("#082567"),
+  backgroundColor: "#082567",
+  fontFamily: "Philosopher",
+  "&:hover": {
+    backgroundColor: "#5F9CC5",
+    fontFamily: "Philosopher",
+  },
+}));
+const theme = createTheme({
+  typography: {
+    fontFamily: "Philosopher",
+  },
+});
 
 const Flight = () => {
   const [DepartureDate, setDepartureDate] = useState("");
@@ -27,24 +55,24 @@ const Flight = () => {
   const [numofAdults, setnumofAdults] = useState(1);
   const [FlightClass, setFlightClass] = React.useState("");
   const [Token, setToken] = useState(false);
-
+  const classes = useStyles();
+  const imageClasses = classNames(
+    classes.imgRaised,
+    classes.imgRoundedCircle,
+    classes.imgFluid
+  );
   useEffect(() => {
     (async function () {
       try {
         console.log(localStorage.getItem("userToken"));
         const bhb = await accessCheck(localStorage.getItem("userToken"));
         setToken(bhb.data);
-        console.dir(bhb.data);
       } catch (e) {
         console.error(e);
       }
     })();
   }, []);
-  const theme = createTheme({
-    typography: {
-      fontFamily: "Philosopher",
-    },
-  });
+
   let history = useHistory();
   const searchFlight = async (e) => {
     e.preventDefault();
@@ -64,15 +92,7 @@ const Flight = () => {
   const handleChange = (event) => {
     setFlightClass(event.target.value);
   };
-  const ColorButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText("#082567"),
-    backgroundColor: "#082567",
-    fontFamily: "Philosopher",
-    "&:hover": {
-      backgroundColor: "#5F9CC5",
-      fontFamily: "Philosopher",
-    },
-  }));
+
   const tweakDate = (s) => {
     const temp = JSON.stringify(s);
     const temp2 = JSON.parse(temp);
@@ -84,9 +104,10 @@ const Flight = () => {
     console.log("ahoooooooooooooooooo");
     return await accessCheck(localStorage.getItem("userToken"));
   };
+
   return (
     <div>
-      {Token === true && (
+      {(Token === true) | (localStorage.getItem("type") === "Guest") && (
         <div>
           <ThemeProvider theme={theme}>
             <div class="box">
@@ -112,9 +133,12 @@ const Flight = () => {
             />
             <br />
             <div class="card">
-              <Typography variant="h2">Flight Search</Typography>
-              <Card>
+              <Card elevation={24}>
                 <CardContent style={{ backgroundColor: "#EFEAE4" }}>
+                  <Typography variant="h2" sx={{ marginLeft: "35%" }}>
+                    Flight Search
+                  </Typography>
+                  <br />
                   <form onSubmit={searchFlight}>
                     <div className="row">
                       <div className="col">
@@ -236,6 +260,185 @@ const Flight = () => {
                   </form>
                 </CardContent>
               </Card>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br /> <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <div className={classes.section} elevation={24}>
+              <h2 className={classes.title}>Here is our team</h2>
+              <div>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={4}>
+                    <Card plain>
+                      <GridItem
+                        xs={12}
+                        sm={12}
+                        md={6}
+                        className={classes.itemGrid}
+                      >
+                        <img src={team1} alt="..." className={imageClasses} />
+                      </GridItem>
+                      <h4 className={classes.cardTitle}>
+                        Mario Ayman
+                        <br />
+                        <small className={classes.smallTitle}>Model</small>
+                      </h4>
+                      <CardBody>
+                        <p className={classes.description}>
+                          You can write here details about one of your team
+                          members. You can give more details about what they do.
+                          Feel free to add some <a href="#pablo">links</a> for
+                          people to be able to follow them outside the site.
+                        </p>
+                      </CardBody>
+                      <CardFooter className={classes.justifyCenter}>
+                        <Button2
+                          justIcon
+                          color="transparent"
+                          className={classes.margin5}
+                        >
+                          <i className={classes.socials + " fab fa-twitter"} />
+                        </Button2>
+                        <Button2
+                          justIcon
+                          color="transparent"
+                          className={classes.margin5}
+                        >
+                          <i
+                            className={classes.socials + " fab fa-instagram"}
+                          />
+                        </Button2>
+                        <Button2
+                          justIcon
+                          color="transparent"
+                          className={classes.margin5}
+                        >
+                          <i className={classes.socials + " fab fa-facebook"} />
+                        </Button2>
+                      </CardFooter>
+                    </Card>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={4}>
+                    <Card plain>
+                      <GridItem
+                        xs={12}
+                        sm={12}
+                        md={6}
+                        className={classes.itemGrid}
+                      >
+                        <img src={team2} alt="..." className={imageClasses} />
+                      </GridItem>
+                      <h4 className={classes.cardTitle}>
+                        Christian Louboutin
+                        <br />
+                        <small className={classes.smallTitle}>Designer</small>
+                      </h4>
+                      <CardBody>
+                        <p className={classes.description}>
+                          You can write here details about one of your team
+                          members. You can give more details about what they do.
+                          Feel free to add some <a href="#pablo">links</a> for
+                          people to be able to follow them outside the site.
+                        </p>
+                      </CardBody>
+                      <CardFooter className={classes.justifyCenter}>
+                        <Button2
+                          justIcon
+                          color="transparent"
+                          className={classes.margin5}
+                        >
+                          <i className={classes.socials + " fab fa-twitter"} />
+                        </Button2>
+                        <Button2
+                          justIcon
+                          color="transparent"
+                          className={classes.margin5}
+                        >
+                          <i className={classes.socials + " fab fa-linkedin"} />
+                        </Button2>
+                      </CardFooter>
+                    </Card>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={4}>
+                    <Card plain>
+                      <GridItem
+                        xs={12}
+                        sm={12}
+                        md={6}
+                        className={classes.itemGrid}
+                      >
+                        <img src={team3} alt="..." className={imageClasses} />
+                      </GridItem>
+                      <h4 className={classes.cardTitle}>
+                        Kendall Jenner
+                        <br />
+                        <small className={classes.smallTitle}>Model</small>
+                      </h4>
+                      <CardBody>
+                        <p className={classes.description}>
+                          You can write here details about one of your team
+                          members. You can give more details about what they do.
+                          Feel free to add some <a href="#pablo">links</a> for
+                          people to be able to follow them outside the site.
+                        </p>
+                      </CardBody>
+                      <CardFooter className={classes.justifyCenter}>
+                        <Button2
+                          justIcon
+                          color="#000000"
+                          className={classes.margin5}
+                        >
+                          <i className={classes.socials + " fab fa-twitter"} />
+                        </Button2>
+                        <Button2
+                          justIcon
+                          color="transparent"
+                          className={classes.margin5}
+                        >
+                          <i
+                            className={classes.socials + " fab fa-instagram"}
+                          />
+                        </Button2>
+                        <Button2
+                          justIcon
+                          color="transparent"
+                          className={classes.margin5}
+                        >
+                          <i className={classes.socials + " fab fa-facebook"} />
+                        </Button2>
+                      </CardFooter>
+                    </Card>
+                  </GridItem>
+                </GridContainer>
+              </div>
             </div>
           </ThemeProvider>
         </div>

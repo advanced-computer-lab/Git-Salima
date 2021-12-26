@@ -12,10 +12,11 @@ import LinearProgress from "@mui/material/LinearProgress";
 
 import "../styles/header.css";
 const steps = [
-  "Choose Outbound Flight",
-  "Choose Return Flight",
+  "Choose Flight/Seats to Change",
+  "Search For Your New Flight",
+  "Chooser Your New Flight",
   "Choose your Seats",
-  "Confirm your Flights",
+  "Confirm your New Flight",
 ];
 
 const FlightsItinerary = () => {
@@ -47,12 +48,12 @@ const FlightsItinerary = () => {
 
   const diff =
     parseInt(localStorage.getItem("departureFlightPrice")) *
-    parseInt(departureSeats.length) -
+      parseInt(departureSeats.length) -
     parseInt(localStorage.getItem("OldDepFlightPrice"));
 
   const newTotalPrice =
     parseInt(localStorage.getItem("departureFlightPrice")) *
-    parseInt(departureSeats.length) +
+      parseInt(departureSeats.length) +
     parseInt(localStorage.getItem("CurrentRetFlightPrice"));
   localStorage.setItem("totalPrice", newTotalPrice);
   localStorage.setItem("priceDiff", diff);
@@ -66,12 +67,11 @@ const FlightsItinerary = () => {
             fixed
             brand="Git Salima Airlines"
             rightLinks={<HeaderLinks />}
-
           />
           <br />
           <br />
           <br />
-          <Stepper activeStep={3} alternativeLabel>
+          <Stepper activeStep={4} alternativeLabel>
             {steps.map((label) => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>

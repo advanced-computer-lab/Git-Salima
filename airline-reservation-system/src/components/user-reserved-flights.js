@@ -10,6 +10,7 @@ import Link from "@mui/material/Link";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useHistory } from "react-router-dom";
 import { searchBookingsAPI } from "../../src/apis";
+import Wait from "./spinnerscreen";
 
 var resultsAvailable = false;
 const ReservedFlights = () => {
@@ -23,21 +24,21 @@ const ReservedFlights = () => {
     to: localStorage.getItem("userEmail"),
     subject: "Flight Cancellation Confirmation",
     text:
-      "Dear " +
+      "<body>Dear " +
       localStorage.getItem("userFName") +
       " " +
       localStorage.getItem("userLName") +
-      "," +
+      ",</body>" +
       "\n" +
-      "Your flight with the booking number " +
+      "<body>Your flight with the booking number " +
       localStorage.getItem("bookingNumber") +
-      " has been cancelled." +
+      " has been cancelled.</body>" +
       "\n" +
-      "An amount of " +
+      "<body>An amount of " +
       localStorage.getItem("totalPrice") +
-      " EGP will be refunded to your account." +
+      " EGP will be refunded to your account.</body>" +
       "\n" +
-      "The Git Salima Team",
+      "<body>The Git Salima Team</body>",
   };
 
   useEffect(() => {
@@ -48,7 +49,7 @@ const ReservedFlights = () => {
         console.error(e);
       }
     })();
-    setTimeout(() => setSpinner(false), 4000);
+    setTimeout(() => setSpinner(false), 2000);
   }, []);
   if (reservedFlights.length > 0) resultsAvailable = true;
 
@@ -56,70 +57,69 @@ const ReservedFlights = () => {
     const temp = JSON.stringify(input);
     const temp2 = JSON.parse(temp);
 
-    let s = ""
-    let TakenSeats
+    let s = "";
+    let TakenSeats;
     if (temp2.TakenSeats.length > 1) {
-      TakenSeats = (temp2.TakenSeats).map((seat) => { s += seat + "," })
-    }
-    else {
+      TakenSeats = temp2.TakenSeats.map((seat) => {
+        s += seat + ",";
+      });
+    } else {
       TakenSeats = s + temp2.TakenSeats[0];
     }
 
-
-    if (s.charAt(s.length - 1) === ',') {
-      s = s.substring(0, s.length - 1)
+    if (s.charAt(s.length - 1) === ",") {
+      s = s.substring(0, s.length - 1);
     }
 
-    let s2 = ""
-    let TakenSeats2
+    let s2 = "";
+    let TakenSeats2;
     if (temp2.ReturnTakenSeats.length > 1) {
-      TakenSeats2 = (temp2.ReturnTakenSeats).map((seat) => {
-        let tmp = seat + ""
+      TakenSeats2 = temp2.ReturnTakenSeats.map((seat) => {
+        let tmp = seat + "";
         for (let i = 0; i < tmp.length; i++) {
-          if (tmp.charAt(i) === '.') {
-            tmp = tmp.substring(0, i)
+          if (tmp.charAt(i) === ".") {
+            tmp = tmp.substring(0, i);
           }
         }
-        s2 += tmp + ","
-      })
-    }
-    else {
+        s2 += tmp + ",";
+      });
+    } else {
       TakenSeats2 = s2 + temp2.ReturnTakenSeats[0];
     }
 
-    if (s2.charAt(s2.length - 1) === ',') {
-      s2 = s2.substring(0, s2.length - 1)
+    if (s2.charAt(s2.length - 1) === ",") {
+      s2 = s2.substring(0, s2.length - 1);
     }
-console.log("lakad wasalt")
+    console.log("lakad wasalt");
     const u1 = {
       Flight_ID: temp2._id,
       TakenSeats: s,
-      Cabin: temp2.Cabin
+      Cabin: temp2.Cabin,
     };
 
     const u2 = {
       Flight_ID: temp2.Return_id,
       TakenSeats: s2,
-      Cabin: temp2.ReturnCabin
+      Cabin: temp2.ReturnCabin,
     };
 
     const deletebooking = {
       BookingNumber: temp2.BookingNumber,
-    }
+    };
     console.log(u1);
-     removeSeatsAPI(u1).then((result) => {
-     console.log("ay 7aga 1")
+    removeSeatsAPI(u1).then((result) => {
+      console.log("ay 7aga 1");
     });
     console.log(u2);
-      removeSeatsAPI(u2).then((result) => {
-        console.log("ay 7aga 2")
-       });
-     
-     removeBookingAPI(deletebooking).then((result) => {
-      console.log("ay 7aga 3")
-     });
-     console.log("ay 7aga 4")
-    sendEmailAPI(email);
+    removeSeatsAPI(u2).then((result) => {
+      console.log("ay 7aga 2");
+    });
+
+    removeBookingAPI(deletebooking).then((result) => {
+      console.log("ay 7aga 3");
+    });
+    console.log("ay 7aga 4");
+    //await sendEmailAPI(email);
   };
 
   let history = useHistory();
@@ -132,7 +132,6 @@ console.log("lakad wasalt")
   };
 
   return (
-
     <div>
       {!spinner ? (
         <div>
@@ -141,7 +140,6 @@ console.log("lakad wasalt")
             fixed
             brand="Git Salima Airlines"
             rightLinks={<HeaderLinks />}
-
           />
           <br />
           <br />
@@ -248,7 +246,7 @@ console.log("lakad wasalt")
           )}
         </div>
       ) : (
-        <LinearProgress />
+        <Wait />
       )}
     </div>
   );

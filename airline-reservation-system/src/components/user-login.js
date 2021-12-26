@@ -70,7 +70,7 @@ const Profile = () => {
       console.log(userData);
       localStorage.setItem("userToken", token);
       localStorage.setItem("userID", userData[0]._id);
-      console.log(userData[0]._id)
+      console.log(userData[0]._id);
       //dont forget to get all of these from db
       localStorage.setItem("userFName", userData[0].FirstName);
       localStorage.setItem("userLName", userData[0].LastName);
@@ -99,13 +99,15 @@ const Profile = () => {
 
   const signUpHandler = async (e) => {
     e.preventDefault();
+
     history.push("/user-signup");
   };
 
   const handleClose = (e) => {
     e.preventDefault();
-    // iffaya here
-    history.push("/user-home");
+    if (localStorage.getItem("userEmail") === "admin@gitsalima.com")
+      history.push("/home");
+    else history.push("/user-home");
   };
   return (
     <div>

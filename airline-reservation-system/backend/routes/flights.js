@@ -10,17 +10,15 @@ require("dotenv").config();
 //const passport = require('passport')
 const jwt = require("jsonwebtoken");
 let accessT;
-const cors = require("cors")
-const Stripe = require('stripe');
+const cors = require("cors");
+const Stripe = require("stripe");
 
 var transporter = nodemailer.createTransport({
-  
   service: "gmail",
   auth: {
-    user:  process.env.USER1,
-    pass:  process.env.PASS1
+    user: process.env.USER1,
+    pass: process.env.PASS1,
   },
-
 });
 router.get("/", (req, res) => {
   res.status(200).send("You have everything installed !");
@@ -32,15 +30,25 @@ router.post("/checkauthadmin", authenticateTokenAdmin, (req, res) => {
   res.send(true);
 });
 router.post("/email", (req, res) => {
+  const htmlToSend =
+    "<img src='cid:git.salima.airlines@gmail.com'/>" + req.body.text;
   var mailOptions = {
     from: "git.salima.airlines@gmail.com",
     to: req.body.to,
     subject: req.body.subject,
     text: req.body.text,
+    html: htmlToSend,
+    attachments: [
+      {
+        filename: "logo.JPG",
+        path: __dirname + "/logo.JPG",
+        cid: "git.salima.airlines@gmail.com", //my mistake was putting "cid:logo@cid" here!
+      },
+    ],
   };
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      console.log(transporter)
+      console.log(transporter);
       console.log(error);
     } else {
       console.log("Email sent: " + info.response);
@@ -86,11 +94,12 @@ router.post("/createBooking", async (req, res) => {
     TotalPrice,
   });
 
-  try{ await newBooking.save().then((result) => {
-    res.send(result);
-  });}
-  catch (error) {
-    res.send( error);
+  try {
+    await newBooking.save().then((result) => {
+      res.send(result);
+    });
+  } catch (error) {
+    res.send(error);
   }
 });
 
@@ -351,7 +360,7 @@ router.post("/searchBookings", async (req, res) => {
     let fl = {};
     fl = await Flight.findById(a.ReturnFlight_ID).lean();
     for (const p in fl) {
-      if (!(p == "TakenSeats" )) {
+      if (!(p == "TakenSeats")) {
         a[`${"Return" + p}`] = fl[p];
       }
     }
@@ -505,10 +514,11 @@ router.post("/updateBooking", async (req, res) => {
   //console.log(user2);
   const Password12 = user2[0]._id;
   //console.log(Password12);
-  Booking.findByIdAndUpdate(Password12, query, { upsert: true }     ).then((result) => {
-
-    res.send(result);
-  });
+  Booking.findByIdAndUpdate(Password12, query, { upsert: true }).then(
+    (result) => {
+      res.send(result);
+    }
+  );
 });
 router.post("/updateUser", async (req, res) => {
   const user = req.body;
@@ -625,7 +635,7 @@ router.post("/updateSeats", async (req, res) => {
   }
 });
 
-router.post("/removeSeats", async (req, res) => {
+router.post("/ Seats", async (req, res) => {
   const flight = req.body;
   console.log(flight);
   const myArray = flight.TakenSeats.split(",");
@@ -667,40 +677,42 @@ router.post("/removeSeats", async (req, res) => {
         $inc: { FreeFirstClassSeats: flight.TakenSeats.length * 1 },
       });
 
-   return res.send(true);
+    return res.send(true);
   } else {
-    console.log(req.body)
-    console.log("done")
+    console.log(req.body);
+    console.log("done");
     return res.send(true);
   }
 });
 
 // const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST)
-const stripe = Stripe('sk_test_51K9b9SK25DXcjTVNrfciNXbdJpBEVmXATZbkCrJfA0Lvd5n5vQuCNH2Uytch1GrGxsdofEyphHmCR81fT2yWpCB6005t6juaCY');
+const stripe = Stripe(
+  "sk_test_51K9b9SK25DXcjTVNrfciNXbdJpBEVmXATZbkCrJfA0Lvd5n5vQuCNH2Uytch1GrGxsdofEyphHmCR81fT2yWpCB6005t6juaCY"
+);
 
 router.post("/payment", cors(), async (req, res) => {
-	let { amount, id } = req.body
-  console.log("test payment")
-	try {
-		const payment = await stripe.paymentIntents.create({
-			amount,
-			currency: "USD",
-			description: "Git Salima airlines",
-			payment_method: id,
-			confirm: true
-		})
-		console.log("Payment", payment)
-		res.json({
-			message: "Payment successful",
-			success: true
-		})
-	} catch (error) {
-		console.log("Error", error)
-		res.json({
-			message: "Payment failed",
-			success: false
-		})
-	}
-})
+  let { amount, id } = req.body;
+  console.log("test payment");
+  try {
+    const payment = await stripe.paymentIntents.create({
+      amount,
+      currency: "USD",
+      description: "Git Salima airlines",
+      payment_method: id,
+      confirm: true,
+    });
+    console.log("Payment", payment);
+    res.json({
+      message: "Payment successful",
+      success: true,
+    });
+  } catch (error) {
+    console.log("Error", error);
+    res.json({
+      message: "Payment failed",
+      success: false,
+    });
+  }
+});
 
 module.exports = router;

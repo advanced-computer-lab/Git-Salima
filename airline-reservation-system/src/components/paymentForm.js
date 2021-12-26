@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
-import axios from 'axios'
+import React, { useState } from "react";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import axios from "axios";
 import "../styles/header.css";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -29,7 +29,6 @@ const theme = createTheme({
 
 const w = 500;
 
-
 const CARD_OPTIONS = {
   iconStyle: "solid",
   style: {
@@ -41,14 +40,14 @@ const CARD_OPTIONS = {
       fontSize: "16px",
       fontSmoothing: "antialiased",
       ":-webkit-autofill": { color: "#fce883" },
-      "::placeholder": { color: "#87bbfd" }
+      "::placeholder": { color: "#87bbfd" },
     },
     invalid: {
       iconColor: "#ffc7ee",
-      color: "#ffc7ee"
-    }
-  }
-}
+      color: "#ffc7ee",
+    },
+  },
+};
 
 export default function PaymentForm() {
   const [success, setSuccess] = useState(false);
@@ -62,37 +61,38 @@ export default function PaymentForm() {
     to: localStorage.getItem("userEmail"),
     subject: "Flight Itinerary",
     text:
-      "Dear " +
+      "<body>Dear " +
       localStorage.getItem("userFName") +
       " " +
       localStorage.getItem("userLName") +
-      "," +
+      ",</body>" +
       "\n" +
-      "Thank you for booking with Git Salima Airlines \n" +
+      "<body>Thank you for booking with Git Salima Airlines." +
       "Your airline's booking number is: " +
-      localStorage.getItem("bookingNumber") + "\n" +
+      localStorage.getItem("bookingNumber") +
+      "\n" +
       "Your flight booking has been confirmed and electronic ticket has been issued" +
-      "\n" +
-      "Ticket total price: " +
+      "\n</body>" +
+      "<body>Ticket total price: " +
       localStorage.getItem("totalPrice") +
-      " EGP" +
+      " EGP</body>" +
       "\n" +
-      "The Git Salima Team",
+      "<body>The Git Salima Team</body>",
   };
 
   const handleSubmit = async (e) => {
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
-      card: elements.getElement(CardElement)
-    })
+      card: elements.getElement(CardElement),
+    });
 
     if (!error) {
       try {
-        const { id } = paymentMethod
+        const { id } = paymentMethod;
         const response = await axios.post("http://localhost:8000/payment", {
           amount: parseInt(localStorage.getItem("totalPrice")) * 100,
-          id
-        })
+          id,
+        });
 
         if (response.data.success) {
           console.log("successful payment");
@@ -103,11 +103,10 @@ export default function PaymentForm() {
       } catch (error) {
         console.log("Error", error);
       }
-    }
-    else {
+    } else {
       console.log(error.message);
     }
-  }
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -144,16 +143,13 @@ export default function PaymentForm() {
     history.push("/user-reserved-flights");
   };
 
-
-
-
   return (
     <>
       <Card sx={{ maxWidth: w }}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <CardContent style={{ backgroundColor: "#EFEAE4" }}>
-            {!success ?
+            {!success ? (
               <div>
                 <fieldset className="FormGroup">
                   <div className="FormRow">
@@ -162,14 +158,13 @@ export default function PaymentForm() {
                 </fieldset>
                 <button onClick={handleClickOpen}>Pay</button>
               </div>
-              :
+            ) : (
               <div>
                 <h2>Successful Payment</h2>
               </div>
-            }
+            )}
           </CardContent>
           <CardActions>
-
             <Dialog
               open={open}
               onClose={handleClose}
@@ -209,9 +204,8 @@ export default function PaymentForm() {
               </DialogActions>
             </Dialog>
           </CardActions>
-
         </ThemeProvider>
       </Card>
     </>
-  )
+  );
 }

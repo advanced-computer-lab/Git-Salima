@@ -108,6 +108,21 @@ const headerLinksStyle = (theme) => ({
       padding: "10px 20px",
     },
   },
+  dropdownLink2: {
+    "&": {
+      color: "inherit",
+      textDecoration: "none",
+      display: "block",
+      padding: "10px 20px",
+    },
+    "&:hover,&:focus": {
+      color: "#ffffff",
+      backgroundColor: "#ff0000",
+      textDecoration: "none",
+      display: "block",
+      padding: "10px 20px",
+    },
+  },
   ...tooltip,
   marginRight5: {
     marginRight: "5px",
