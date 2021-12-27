@@ -15,6 +15,7 @@ import { loginAPI, searchUsersAPI } from "../apis";
 import Stack from "@mui/material/Stack";
 import { useHistory } from "react-router-dom";
 import bg from "./images/boarding.jpg";
+import Divider from "@mui/material/Divider";
 
 import { Typography } from "@mui/material";
 import "../styles/header.css";
@@ -126,108 +127,127 @@ const Profile = () => {
                 Please Login or Continue As a Guest
               </Typography>
               <form onSubmit={loginHandler}>
-                {loginError === false && (
-                  <div>
-                    <div className="form-group col-md-4">
-                      <TextField
-                        required
-                        id="filled-helperText"
-                        type="email"
-                        aria-describedby="emailHelp"
-                        label="Email"
-                        variant="filled"
-                        onChange={(e) => {
-                          setuserEmail(e.target.value);
-                        }}
-                      />
-                    </div>
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  justifyContent="space-around"
+                  divider={
+                    <Divider orientation="vertical" flexItem>
+                      Or
+                    </Divider>
+                  }
+                >
+                  <Stack>
+                    {loginError === false && (
+                      <Stack
+                        // sx={{ marginLeft: "20%", marginRight: "20%" }}
+                        spacing={3}
+                      >
+                        <TextField
+                          required
+                          id="filled-helperText"
+                          type="email"
+                          aria-describedby="emailHelp"
+                          label="Email"
+                          variant="filled"
+                          onChange={(e) => {
+                            setuserEmail(e.target.value);
+                          }}
+                        />
 
+                        <TextField
+                          id="filled-helperText"
+                          label="Password"
+                          variant="filled"
+                          type="password"
+                          required
+                          onChange={(e) => {
+                            setuserPassword(e.target.value);
+                          }}
+                        />
+                      </Stack>
+                    )}
+                    {loginError === true && (
+                      <div>
+                        <div className="form-group col-md-4">
+                          <TextField
+                            required
+                            error
+                            id="filled-helperText"
+                            type="email"
+                            aria-describedby="emailHelp"
+                            label="Email"
+                            variant="filled"
+                            onChange={(e) => {
+                              setuserEmail(e.target.value);
+                            }}
+                          />
+                        </div>
+
+                        <br />
+
+                        <div className="col-md-4">
+                          <TextField
+                            id="filled-helperText"
+                            error
+                            label="Password"
+                            variant="filled"
+                            type="password"
+                            required
+                            helperText="Incorrect credentials"
+                            onChange={(e) => {
+                              setuserPassword(e.target.value);
+                            }}
+                          />
+                        </div>
+                      </div>
+                    )}
                     <br />
-
-                    <div className="col-md-4">
-                      <TextField
-                        id="filled-helperText"
-                        label="Password"
-                        variant="filled"
-                        type="password"
-                        required
-                        onChange={(e) => {
-                          setuserPassword(e.target.value);
-                        }}
-                      />
+                    <div className="form-group">
+                      <ColorButton
+                        variant="contained"
+                        type="submit"
+                        fullWidth
+                        style={{ fontFamily: "Philosopher" }}
+                      >
+                        Login
+                      </ColorButton>
                     </div>
-                  </div>
-                )}
-                {loginError === true && (
-                  <div>
-                    <div className="form-group col-md-4">
-                      <TextField
-                        required
-                        error
-                        id="filled-helperText"
-                        type="email"
-                        aria-describedby="emailHelp"
-                        label="Email"
-                        variant="filled"
-                        onChange={(e) => {
-                          setuserEmail(e.target.value);
-                        }}
-                      />
+                    <div>
+                      <br />
+                      <Typography> Dont have an account?</Typography>
                     </div>
 
-                    <br />
-
-                    <div className="col-md-4">
-                      <TextField
-                        id="filled-helperText"
-                        error
-                        label="Password"
-                        variant="filled"
-                        type="password"
-                        required
-                        helperText="Incorrect credentials"
-                        onChange={(e) => {
-                          setuserPassword(e.target.value);
-                        }}
-                      />
+                    <div className="form-group">
+                      <ColorButton
+                        variant="contained"
+                        fullWidth
+                        onClick={signUpHandler}
+                        style={{ fontFamily: "Philosopher" }}
+                      >
+                        Sign Up
+                      </ColorButton>
                     </div>
-                  </div>
-                )}
-                <br />
-                <Stack direction="row" spacing={2}>
-                  <div className="form-group">
-                    <ColorButton
-                      variant="contained"
-                      type="submit"
-                      style={{ fontFamily: "Philosopher" }}
-                    >
-                      Login
-                    </ColorButton>
-                  </div>
-
-                  <div className="form-group">
-                    <ColorButton
-                      variant="contained"
-                      onClick={guestHandler}
-                      style={
-                        ({ fontFamily: "Philosopher" }, { marginLeft: "10px" })
-                      }
-                    >
-                      Continue As Guest
-                    </ColorButton>
-                  </div>
-
-                  <div className="form-group">
-                    <ColorButton
-                      variant="contained"
-                      onClick={signUpHandler}
-                      style={
-                        ({ fontFamily: "Philosopher" }, { marginLeft: "10px" })
-                      }
-                    >
-                      Sign Up
-                    </ColorButton>
-                  </div>
+                  </Stack>
+                  <Stack
+                    direction="column"
+                    spacing={3}
+                    justifyContent="space-around"
+                    divider={<Divider>Or</Divider>}
+                  >
+                    <div className="form-group">
+                      <ColorButton
+                        variant="contained"
+                        onClick={guestHandler}
+                        style={
+                          ({ fontFamily: "Philosopher" },
+                          { marginLeft: "10px" })
+                        }
+                      >
+                        Continue As Guest
+                      </ColorButton>
+                    </div>
+                  </Stack>
                 </Stack>
               </form>
             </CardContent>

@@ -22,6 +22,7 @@ import styles from "../styles/teamStyle.js";
 import classNames from "classnames";
 import GridContainer from "./GridContainer";
 import Button2 from "./Button";
+import Stack from "@mui/material/Stack";
 //import Card2 from "components/Card/Card.js";
 import GridItem from "./GridItem";
 import CardBody from "./CardBody";
@@ -29,6 +30,11 @@ import CardFooter from "./CardFooter";
 import team1 from "./images/mario.jpg";
 import team2 from "./images/atef.jpg";
 import team3 from "./images/kizo.jpg";
+import team4 from "./images/amgad.jpg";
+import team5 from "./images/ya.jpg";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import InstagramIcon from "@mui/icons-material/Instagram";
 
 const useStyles = makeStyles(styles);
 const ColorButton = styled(Button)(({ theme }) => ({
@@ -140,111 +146,133 @@ const Flight = () => {
                   </Typography>
                   <br />
                   <form onSubmit={searchFlight}>
-                    <div className="row">
-                      <div className="col">
-                        <TextField
-                          required
-                          id="filled-required"
-                          label="Departure Airport"
-                          defaultValue="Departure Airport"
-                          variant="filled"
-                          value={DepartureAirport}
-                          onChange={(e) => setDepartureAirport(e.target.value)}
-                        />
-                      </div>
-
-                      <div className="col-md-10">
-                        <TextField
-                          required
-                          id="filled-required"
-                          label="Arrival Airport"
-                          defaultValue="Arrival Airport"
-                          variant="filled"
-                          value={ArrivalAirport}
-                          onChange={(e) => setArrivalAirport(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                    <br />
-                    <div className="row">
-                      <div className="form-group" className="col-md-2">
-                        <Typography>Departure Date: </Typography>
-                        <input
-                          type="date"
-                          required
-                          className="form-control"
-                          value={DepartureDate}
-                          onChange={(e) => setDepartureDate(e.target.value)}
-                        />
-                      </div>
-
-                      <div className="form-group col">
-                        <div className="form-group" className="col-md-8">
-                          <Typography>Return Date: </Typography>
-                          <input
-                            type="date"
+                    <Stack>
+                      <Stack
+                        direction="row"
+                        spacing={4}
+                        justifyContent="space-around"
+                      >
+                        <div>
+                          <TextField
                             required
-                            min={DepartureDate}
-                            font-family="Philosopher"
-                            className="form-control"
-                            value={ReturnDate}
-                            onChange={(e) => setReturnDate(e.target.value)}
+                            id="filled-required"
+                            label="Departure Airport"
+                            defaultValue="Departure Airport"
+                            variant="filled"
+                            value={DepartureAirport}
+                            onChange={(e) =>
+                              setDepartureAirport(e.target.value)
+                            }
                           />
                         </div>
-                      </div>
-                      <div className="form-group col">
-                        <TextField
-                          id="filled-number"
-                          label="Number of Adults"
-                          type="number"
-                          defaultValue="1"
-                          InputProps={{ inputProps: { min: 1 } }}
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                          variant="filled"
-                          onChange={(e) => setnumofAdults(e.target.value)}
-                        />
-                      </div>
 
-                      <div className="col-md-2 ">
-                        <TextField
-                          id="filled-number"
-                          label="Number of Children"
-                          type="number"
-                          defaultValue="0"
-                          InputProps={{ inputProps: { min: 0 } }}
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                          variant="filled"
-                          onChange={(e) => setnumofChildren(e.target.value)}
-                        />
-                      </div>
-                      <div className="col-md-2">
-                        <FormControl sx={{ m: 1, minWidth: 120 }}>
-                          <InputLabel id="demo-simple-select-label">
-                            Flight Class
-                          </InputLabel>
-                          <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={FlightClass}
-                            label="Class"
+                        <div>
+                          <TextField
                             required
-                            onChange={handleChange}
-                          >
-                            <MenuItem value={"Economy"}>Economy</MenuItem>
-                            <br />
-                            <MenuItem value={"Business"}>Business</MenuItem>
-                            <br />
-                            <MenuItem value={"First Class"}>
-                              First Class
-                            </MenuItem>
-                          </Select>
-                        </FormControl>
-                      </div>
-                    </div>
+                            id="filled-required"
+                            label="Arrival Airport"
+                            defaultValue="Arrival Airport"
+                            variant="filled"
+                            value={ArrivalAirport}
+                            onChange={(e) => setArrivalAirport(e.target.value)}
+                          />
+                        </div>
+                        <div>
+                          <TextField
+                            id="filled-number"
+                            label="Number of Adults"
+                            type="number"
+                            defaultValue="1"
+                            InputProps={{ inputProps: { min: 1 } }}
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            variant="filled"
+                            onChange={(e) => setnumofAdults(e.target.value)}
+                          />
+                        </div>
+
+                        <div>
+                          <TextField
+                            id="filled-number"
+                            label="Number of Children"
+                            type="number"
+                            defaultValue="0"
+                            InputProps={{ inputProps: { min: 0 } }}
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            variant="filled"
+                            onChange={(e) => setnumofChildren(e.target.value)}
+                          />
+                        </div>
+                      </Stack>
+                      <br />
+                      <Stack
+                        direction="row"
+                        spacing={6}
+                        justifyContent="space-around"
+                      >
+                        <Stack
+                          direction="row"
+                          spacing={12}
+                          justifyContent="space-around"
+                        >
+                          <div>
+                            <Typography>Departure Date: </Typography>
+                            <input
+                              type="date"
+                              required
+                              className="form-control"
+                              value={DepartureDate}
+                              onChange={(e) => setDepartureDate(e.target.value)}
+                            />
+                          </div>
+
+                          <div>
+                            <Typography>Return Date: </Typography>
+                            <input
+                              type="date"
+                              required
+                              min={DepartureDate}
+                              font-family="Philosopher"
+                              className="form-control"
+                              value={ReturnDate}
+                              onChange={(e) => setReturnDate(e.target.value)}
+                            />
+                          </div>
+                        </Stack>
+                        <Stack direction="row" fullwidth>
+                          <div>
+                            <FormControl sx={{ width: 480 }}>
+                              <InputLabel
+                                id="demo-simple-select-label"
+                                fullwidth
+                              >
+                                Flight Class
+                              </InputLabel>
+                              <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={FlightClass}
+                                label="Class"
+                                fullwidth
+                                required
+                                onChange={handleChange}
+                              >
+                                <MenuItem value={"Economy"}>Economy</MenuItem>
+                                <br />
+                                <MenuItem value={"Business"}>Business</MenuItem>
+                                <br />
+                                <MenuItem value={"First Class"}>
+                                  First Class
+                                </MenuItem>
+                              </Select>
+                            </FormControl>
+                          </div>
+                        </Stack>
+                      </Stack>
+                    </Stack>
                     <br />
 
                     <br />
@@ -277,8 +305,7 @@ const Flight = () => {
             <br />
             <br />
             <br />
-            <br />
-            <br />
+            <br /> <br />
             <br />
             <br />
             <br />
@@ -293,7 +320,10 @@ const Flight = () => {
             <br />
             <br />
             <div className={classes.section} elevation={24}>
-              <h2 className={classes.title}>Here is our team</h2>
+              <Typography variant="h3" className={classes.title}>
+                The Git Salima Team
+              </Typography>
+              <br />
               <div>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={4}>
@@ -306,42 +336,34 @@ const Flight = () => {
                       >
                         <img src={team1} alt="..." className={imageClasses} />
                       </GridItem>
-                      <h4 className={classes.cardTitle}>
+                      <Typography variant="h4" className={classes.cardTitle}>
                         Mario Ayman
                         <br />
-                        <small className={classes.smallTitle}>Model</small>
-                      </h4>
+                        <small className={classes.smallTitle}>Front End</small>
+                      </Typography>
                       <CardBody>
-                        <p className={classes.description}>
-                          You can write here details about one of your team
-                          members. You can give more details about what they do.
-                          Feel free to add some <a href="#pablo">links</a> for
-                          people to be able to follow them outside the site.
-                        </p>
+                        <Typography variant="p" className={classes.description}>
+                          Mario guided this project to fruition with top-notch
+                          work ethic and an observant eye for detail. The focus
+                          and dedication he put to the table was unparalleled.
+                        </Typography>
                       </CardBody>
                       <CardFooter className={classes.justifyCenter}>
                         <Button2
                           justIcon
                           color="transparent"
                           className={classes.margin5}
+                          href="https://github.com/MarioAbdelmalek"
                         >
-                          <i className={classes.socials + " fab fa-twitter"} />
+                          <GitHubIcon />
                         </Button2>
                         <Button2
                           justIcon
                           color="transparent"
                           className={classes.margin5}
+                          href="https://www.linkedin.com/in/mario-ayman/"
                         >
-                          <i
-                            className={classes.socials + " fab fa-instagram"}
-                          />
-                        </Button2>
-                        <Button2
-                          justIcon
-                          color="transparent"
-                          className={classes.margin5}
-                        >
-                          <i className={classes.socials + " fab fa-facebook"} />
+                          <LinkedInIcon />
                         </Button2>
                       </CardFooter>
                     </Card>
@@ -356,33 +378,81 @@ const Flight = () => {
                       >
                         <img src={team2} alt="..." className={imageClasses} />
                       </GridItem>
-                      <h4 className={classes.cardTitle}>
-                        Christian Louboutin
+                      <Typography variant="h4" className={classes.cardTitle}>
+                        Philopateer Atef
                         <br />
-                        <small className={classes.smallTitle}>Designer</small>
-                      </h4>
+                        <small className={classes.smallTitle}>Back End</small>
+                      </Typography>
                       <CardBody>
-                        <p className={classes.description}>
-                          You can write here details about one of your team
-                          members. You can give more details about what they do.
-                          Feel free to add some <a href="#pablo">links</a> for
-                          people to be able to follow them outside the site.
-                        </p>
+                        <Typography variant="p" className={classes.description}>
+                          Philopateer has been of paramount importance to this
+                          project. Weather it was debugging ,co-ordination ,or
+                          even UX design, all of his work was delivered with
+                          utmost professionalism, punctuality and efficiency.
+                        </Typography>
                       </CardBody>
                       <CardFooter className={classes.justifyCenter}>
                         <Button2
                           justIcon
                           color="transparent"
                           className={classes.margin5}
+                          href="https://github.com/philo-atef"
                         >
-                          <i className={classes.socials + " fab fa-twitter"} />
+                          <GitHubIcon />
                         </Button2>
                         <Button2
                           justIcon
                           color="transparent"
                           className={classes.margin5}
+                          href="https://www.linkedin.com/in/philopateer-atef-115316129/"
                         >
-                          <i className={classes.socials + " fab fa-linkedin"} />
+                          <LinkedInIcon />
+                        </Button2>
+                      </CardFooter>
+                    </Card>
+                    <br />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={4}>
+                    <Card plain>
+                      <GridItem
+                        xs={12}
+                        sm={12}
+                        md={6}
+                        className={classes.itemGrid}
+                      >
+                        <img src={team4} alt="..." className={imageClasses} />
+                      </GridItem>
+                      <Typography variant="h4" className={classes.cardTitle}>
+                        Philopateer Amgad
+                        <br />
+                        <small className={classes.smallTitle}>
+                          Scrum Master/Front End
+                        </small>
+                      </Typography>
+                      <CardBody>
+                        <Typography variant="p" className={classes.description}>
+                          Philopateer ensured the presence of harmonious
+                          co-ordination and communication between the team
+                          members. That and his own work in Front End showed
+                          determination and perseverence.
+                        </Typography>
+                      </CardBody>
+                      <CardFooter className={classes.justifyCenter}>
+                        <Button2
+                          justIcon
+                          color="transparent"
+                          className={classes.margin5}
+                          href="https://github.com/PhiloAmgad"
+                        >
+                          <GitHubIcon />
+                        </Button2>
+                        <Button2
+                          justIcon
+                          color="transparent"
+                          className={classes.margin5}
+                          href="https://www.linkedin.com/in/philopateer-amgad/"
+                        >
+                          <LinkedInIcon />
                         </Button2>
                       </CardFooter>
                     </Card>
@@ -397,42 +467,77 @@ const Flight = () => {
                       >
                         <img src={team3} alt="..." className={imageClasses} />
                       </GridItem>
-                      <h4 className={classes.cardTitle}>
-                        Kendall Jenner
+                      <Typography variant="h4" className={classes.cardTitle}>
+                        Kirolos Habib
                         <br />
-                        <small className={classes.smallTitle}>Model</small>
-                      </h4>
+                        <small className={classes.smallTitle}>Full Stack</small>
+                      </Typography>
                       <CardBody>
-                        <p className={classes.description}>
-                          You can write here details about one of your team
-                          members. You can give more details about what they do.
-                          Feel free to add some <a href="#pablo">links</a> for
-                          people to be able to follow them outside the site.
-                        </p>
+                        <Typography variant="p" className={classes.description}>
+                          Kirolos has brought to this project versatility and
+                          flexability. Seeing as to his experiences with both
+                          front and back ends allowed for a cohesive progress of
+                          the development process.
+                        </Typography>
                       </CardBody>
                       <CardFooter className={classes.justifyCenter}>
                         <Button2
                           justIcon
-                          color="#000000"
+                          color="transparent"
                           className={classes.margin5}
+                          href="https://github.com/kirolos-Rezkalla"
                         >
-                          <i className={classes.socials + " fab fa-twitter"} />
+                          <GitHubIcon />
                         </Button2>
                         <Button2
                           justIcon
                           color="transparent"
                           className={classes.margin5}
+                          href="https://www.linkedin.com/in/kirolos-rezkalla-99891a1b9/"
                         >
-                          <i
-                            className={classes.socials + " fab fa-instagram"}
-                          />
+                          <LinkedInIcon />
+                        </Button2>
+                      </CardFooter>
+                    </Card>
+                  </GridItem>
+
+                  <GridItem xs={12} sm={12} md={4}>
+                    <Card plain>
+                      <GridItem
+                        xs={12}
+                        sm={12}
+                        md={6}
+                        className={classes.itemGrid}
+                      >
+                        <img src={team5} alt="..." className={imageClasses} />
+                      </GridItem>
+                      <Typography variant="h4" className={classes.cardTitle}>
+                        Yossef Ahmed
+                        <br />
+                        <small className={classes.smallTitle}>Back End</small>
+                      </Typography>
+                      <CardBody>
+                        <Typography variant="p" className={classes.description}>
+                          Yossef's experience with content creation and graphic
+                          design has allowed for a smooth UI.
+                        </Typography>
+                      </CardBody>
+                      <CardFooter className={classes.justifyCenter}>
+                        <Button2
+                          justIcon
+                          color="transparent"
+                          className={classes.margin5}
+                          href="https://github.com/youssefahmeddd"
+                        >
+                          <GitHubIcon />
                         </Button2>
                         <Button2
                           justIcon
                           color="transparent"
                           className={classes.margin5}
+                          href="https://www.instagram.com/yossef_ahmed/"
                         >
-                          <i className={classes.socials + " fab fa-facebook"} />
+                          <InstagramIcon />
                         </Button2>
                       </CardFooter>
                     </Card>
